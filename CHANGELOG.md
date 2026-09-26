@@ -1,6 +1,6 @@
 # Changelog
 
-Nothing has been published yet. The versions below are milestones in the repository.
+The repository is public on GitHub. Nothing is on PyPI or npm yet (see ROADMAP.md). The versions below are milestones in the repository.
 
 ## Unreleased
 
@@ -12,7 +12,7 @@ Nothing has been published yet. The versions below are milestones in the reposit
 
 ## 0.2.0 (unreleased)
 
-Support-bot readiness, from testing on real support agents (τ-bench) and three adversarial reviews.
+Support-bot readiness, from testing on real support agents (τ-bench), a held-out τ²-bench run, and rounds of adversarial review.
 
 - **Derivations** ([ADR-0007](docs/adr/0007-derivations-come-from-the-output.md)). An unsupported number, amount or percentage now carries the arithmetic that produces it from the reply's own supported values (`$6.32 = $101.12 − $94.80`), with its operand spans. The verdict never changes.
   - `Report.unexplained` lists what neither a source nor such arithmetic accounts for.
@@ -35,6 +35,8 @@ Support-bot readiness, from testing on real support agents (τ-bench) and three 
   - round 5: 12 findings (6 high)
   - round 6: 12 findings (6 high, one of them a crash)
   - round 7, of the τ² fixes: 5 findings (2 high, e.g. "3/16 inch" in a Source vouching for "March 16")
+  - round 8, of the citation rule: 1 high (an answer written as a bracketed list, "the scores were [7, 8, 9]", went unchecked)
+  - round 9, of names: 1 high (quadratic time on 20,000 names) and 3 low (hyphens merging digit runs, full-width digits)
 - **Indexed matching.** Evidence is looked up by keys derived from the matching rules, and checked against brute force in CI. 50 KB of dates: 36 s → 0.34 s.
 - **τ²-bench**, pre-registered as a held-out test of the τ-bench-era rules ([results](docs/reviews/2026-09-26-tau2bench-results.md)). It covers 4 newer agents and a new telecom domain.
   - 98.2% of planted fabrications were caught (prediction ≥ 97%: pass).
@@ -47,7 +49,7 @@ Support-bot readiness, from testing on real support agents (τ-bench) and three 
   - Python renders JSON Sources the JavaScript way: integer-like keys first, whole floats without `.0`.
   - The conformance fixture is compared strictly and includes `feedback()` text.
   - A τ-bench differential runs in CI.
-- **Performance.** Two V8 regex slow paths are gone: TypeScript takes ~0.18 ms per RAGTruth response.
+- **Performance.** Two V8 regex slow paths are gone: TypeScript takes about 0.2 ms per RAGTruth response.
 - **Packaging.** The sdist is an allowlist, and it shrank from 7.8 MB, which included `node_modules`, to 61 KB. `py.typed` is included, CI checks the built release, and the npm package has a README.
 - **Breaking** (for anyone on a local 0.1 build):
   - `Report.to_dict()` claims gain a `derivation` key.

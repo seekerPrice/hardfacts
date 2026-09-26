@@ -6,7 +6,7 @@ A drafting model in a customer-support pipeline once wrote a perfectly plausible
 
 That failure has a shape worth naming. The model wasn't vague or wrong about the world. It supplied a **hard fact**, a value that feels checkable, and nothing it had been given contained that value. Tracking numbers, refund amounts, dates, opening hours, phone numbers, order IDs, percentages: these are exactly the tokens people act on, and the easiest for a fluent model to fabricate.
 
-`hardfacts` is a small library that catches them. It extracts every hard fact from an output, normalises it, and checks it against the sources the model was given. It reports the values nothing supports, and gives evidence for the ones that are supported. This write-up covers how it got from 22% precision to 74%, the ideas the benchmark rejected, and how to measure a checker like this without fooling yourself.
+`hardfacts` is a small library that catches them. It extracts every hard fact from an output, normalises it, and checks it against the sources the model was given. It reports the values nothing supports, and gives evidence for the ones that are supported. This write-up covers how it got from 22% precision to 76%, the ideas the benchmark rejected, and how to measure a checker like this without fooling yourself.
 
 ## Why not ask an LLM to judge?
 
@@ -104,7 +104,7 @@ Four things made the headline numbers trustworthy.
 | …or at any value the source doesn't state | n/a | 0.945 | **0.972** |
 | planted fabrications caught | 100% | 96.2% | 96.4% |
 | clean responses with a false alarm | 19.9% | 1.8% | **1.6%** |
-| time per response (Python / TypeScript) | n/a | 0.9 ms / 0.19 ms (v0.2: ~2 ms / 0.19 ms) |
+| time per response (Python / TypeScript) | n/a | 0.9 ms / ~0.2 ms (v0.2: ~2 ms / ~0.2 ms) |
 
 ## A second dataset, and a humbling first score
 
@@ -117,9 +117,9 @@ The audit of all 85 disputed flags found the cause in minutes. FaithBench's sour
 RAGTruth and FaithBench are news, QA and business write-ups. The case I actually built this for is a support bot stating order IDs, prices and card numbers from a tool's JSON, and neither dataset has it. τ-bench does: Sierra published real runs of GPT-4o and Claude 3.5 Sonnet as retail and airline agents, 22,179 replies, each with every tool result the agent saw.
 
 I recorded the run before reading a single flag. Then two blind auditors classified 160 of them, and the result reframed the tool:
-- **72% of the flags were arithmetic.** These were fare totals, price differences and refunds the agent had computed.
-- **Only 5% were invented.** The inventions were exactly the target: "your gift card ending in **2692**" when the card on file is `gift_card_7250692`, a guessed user ID sent to a tool, a flight duration no tool returned.
-- **23% were my checker's errors, and every one was a tool-output pattern:**
+- **72% of the flags (115 of 160) were arithmetic.** These were fare totals, price differences and refunds the agent had computed.
+- **Only 4% (6 of 160) were invented.** The inventions were exactly the target: "your gift card ending in **2692**" when the card on file is `gift_card_7250692`, a guessed user ID sent to a tool, a flight duration no tool returned.
+- **24% (39 of 160) were my checker's errors, and every one was a tool-output pattern:**
   - float noise like `"amount": 3.759999999999991`, which is $3.76
   - numbers buried in IDs like `credit_card_7574394`
   - dates the user typed without a year

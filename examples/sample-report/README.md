@@ -12,6 +12,6 @@ These are what `hardfacts report` produces, rebuilt from the benchmark data by `
 uv run hardfacts report transcripts.jsonl --html report.html --json report.json --fail-over 0.05
 ```
 
-Each input line is `{"id": ..., "output": "<the model's reply>", "sources": [<what it was given>, ...]}`. This is the deliverable behind the "hallucinated-facts audit" offer in `career/freelance-pitch.md`. Run it on a client's transcripts, then walk them through the examples.
+Each input line is `{"id": ..., "output": "<the model's reply>", "sources": [<what it was given>, ...]}`. Run it on a client's transcripts, then walk them through the examples.
 
 In the support-agent report, 152 of the 309 unsupported values are arithmetic on values the reply itself states: price differences, fare totals. Each is shown with its working (ADR-0007), and those need a different conversation with the client than invented values do. In the blind audit of τ-bench flags, 11 of 115 such computations were wrong: a fare difference taken against one leg of a two-leg trip, 12 T-shirt options "available" when 10 are, a $35.94 refund stated as $235.94.
