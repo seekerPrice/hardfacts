@@ -160,7 +160,7 @@ Four features were prototyped as experiments before any code went in:
 
 | feature | result | built? |
 |---|---|---|
-| ratio Derivations | the loose version "explained" 2.3% of planted fabrications by coincidence; the strict one explained only 8% of the table flags | no |
+| ratio Derivations | the loose version "explained" 2.3% of planted fabrications by coincidence; the strict one explained 8% of the table flags | the strict one, later; a review then showed its chance matches grew with the reply's length, so it now uses only the three nearest values |
 | date-difference Derivations | the support data held only 10 flagged day counts in total | no |
 | space-grouped thousands (`90 973`) | would have fixed 1 answer in 11,802 | no |
 | names with digits (`COVID-19` → `COVID-12`, [ADR-0008](adr/0008-names-are-checked-against-their-siblings.md)) | name fabrications caught went from 46% to 96%, for 1 new false alarm in 10,125 correct answers | yes |
