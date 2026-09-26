@@ -106,6 +106,8 @@ Partial values follow one rule: a claim may be *less* specific than its evidence
 
 Known misses from the v0.1 test audit: ordinal date ranges (`October 20th and 21st, 2023`) and hyphenated number words (`two-kilometer`) have since been fixed. Units glued to numbers (`30minutes`) still aren't read. A later adversarial audit ([deep-check](docs/reviews/2026-09-26-deep-check.md)) found and fixed 60+ more edge cases in both languages: ISO timestamps, non-breaking spaces, Rupiah dot-thousands, unformatted phone numbers, all-digit tracking numbers, `9.30am` and others. A hostile review of those fixes then found 16 regressions in them, all fixed test-first. Among them were `$0.125` read as 125, US phones written with dots, and "2 malam" (two nights) read as 8 PM. The benchmark gate had stayed green through every one.
 
+The known gaps, with their numbers, are in [ROADMAP.md](ROADMAP.md).
+
 ## Results at a glance
 
 | benchmark | what was measured | hardfacts | naive "every number must appear" check |

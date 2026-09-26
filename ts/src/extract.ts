@@ -1095,6 +1095,7 @@ const ONE_FOR_ONE_RE = new RegExp(`[${[...ONE_FOR_ONE.keys()].map((cp) => `\\u${
 function maskEscapes(text: string): string {
   let scan = text.replace(ONE_FOR_ONE_RE, (ch) => ONE_FOR_ONE.get(ch.charCodeAt(0))!);
   if (scan.includes("\\")) scan = scan.replace(ESCAPE, (m) => " ".repeat(m.length));
+  if (scan.includes("·")) scan = scan.replace(/(?<=[0-9])·(?=[0-9])/g, "."); // "37·8": the Lancet's decimal point
   return scan;
 }
 

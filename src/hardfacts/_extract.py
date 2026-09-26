@@ -1089,6 +1089,9 @@ _ONE_FOR_ONE = {
 """Characters read as their ASCII twin. Every mapping is one character for one, so offsets hold."""
 
 
+_MIDDLE_DOT_DECIMAL = _compile(r"(?<=[0-9])·(?=[0-9])")
+
+
 def _mask_escapes(text: str) -> str:
     """Normalise the text that recognisers scan, keeping every offset.
 
@@ -1101,6 +1104,8 @@ def _mask_escapes(text: str) -> str:
     scan = text.translate(_ONE_FOR_ONE)
     if "\\" in scan:
         scan = _ESCAPE.sub(lambda m: " " * len(m.group()), scan)
+    if "·" in scan:  # "37·8": the decimal point of The Lancet and other UK journals
+        scan = _MIDDLE_DOT_DECIMAL.sub(".", scan)
     return scan
 
 
