@@ -85,7 +85,7 @@ Integration examples, all runnable offline:
 | Kind | Read as the same Value | Example it catches |
 |---|---|---|
 | quantity | `1,200` · `1.2k` · `one thousand two hundred` · `二十一` · `dua ratus` | "injured 5 people" when the source says "six people" |
-| money | `$2.1 billion` · `$2,100,000,000` · `RM1.2 juta` · `1200元` | an invented refund amount, or the wrong currency |
+| money | `$2.1 billion` · `$2,100,000,000` · `RM1.2 juta` · `1200元` · `八块五` · `50 sen`; a bare JSON amount is in the currency its source's currency key names | an invented refund amount, or the wrong currency |
 | percent | `15%` · `15 percent` · `15 peratus` · `百分之十五` | "60% chance of rain" against "63 percentage chance" |
 | date | `2022-01-16` · `January 16, 2022` · `16 Jan 2022` · `2022年1月16日` | "February 7, **2022**" when the source only says "February 7" |
 | time | `21:0` · `9 PM` · `9:00 p.m.` | "closes at 10 PM" against hours of `16:30-21:0` |
