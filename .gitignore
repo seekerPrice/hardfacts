@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+dist/
+.pytest_cache/
+bench/data/
+bench/out/
+bench/audit/*/batch-*.jsonl
+site/dist/
+bench/audit/*/cases/

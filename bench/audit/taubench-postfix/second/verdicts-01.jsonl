@@ -1,0 +1,40 @@
+{"case": "gpt-4o-retail_230_20_247", "verdict": "derived", "evidence": "keyboard item 1151293680 price 272.33 - variant 7706410293 (clicky, none, full size) price 269.16 = 3.17", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_319_12_211", "verdict": "derived", "evidence": "HAT169 economy 171 + HAT088 economy 185 = 356", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_826_22_267", "verdict": "derived", "evidence": "(155.33-147.05)=8.28 shoes + (268.77-235.13)=33.64 keyboard = 41.92", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_360_18_206", "verdict": "derived", "evidence": "ordered boots 1615379700 price 253.89 - size 8 synthetic no-waterproof 3613716226 price 253.54 = 0.35", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_124_12_110", "verdict": "derived", "evidence": "HXDUBJ outbound HAT085/HAT023 on 2024-05-18; user: 'a day later' -> 2024-05-19", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_86_26_382", "verdict": "derived", "evidence": "jacket 9385662952 159.92 - 8733974883 (L, red, half) 153.18 = 6.74", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_394_24_401", "verdict": "derived", "evidence": "earbuds 2757705742 258.97 - 8555936349 226.49 = 32.48", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_175_14_1000", "verdict": "derived", "evidence": "HAT083 economy 137 + HAT258 economy 167 = 304", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_317_28_344", "verdict": "derived", "evidence": "1998 - 1671 = 327 arithmetic ok, but 1671 is payment for whole round trip (4 legs x3 pax); outbound economy paid was (126+139)x3=795, so difference should be 1998-795=1203", "derived_correct": "no"}
+{"case": "gpt-4o-retail_94_20_272", "verdict": "derived", "evidence": "laptop 9844888101 2459.74 - current 3478699712 2291.87 = 167.87", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_417_18_336", "verdict": "derived", "evidence": "backpack 5917587651 212.79 - current 2492465580 201.95 = 10.84", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_551_20_353", "verdict": "derived", "evidence": "e-reader 9494281769 252.06 - 7609274509 243.4 = 8.66", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_356_14_249", "verdict": "derived", "evidence": "HAT110 economy 105 + HAT132 economy 190 = 295", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_216_26_334", "verdict": "derived", "evidence": "policy '$50 times the number of passengers' x 3 passengers on M61CQM = 150", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_122_14_246", "verdict": "derived", "evidence": "OWZ4XL basic economy legs HAT202 94 + HAT232 80 = 174 per passenger (also 522/3)", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_230_30_249", "verdict": "derived", "evidence": "thermostat 4983901480 262.47 - 7747408585 249.01 = 13.46", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_334_16_421", "verdict": "derived", "evidence": "(166-65)+(126-83) = 101+43 = 144 per passenger; HAT005 paid 65, HAT178 paid 83, economy prices 166/126", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_336_22_360", "verdict": "derived", "evidence": "kettle 3761330360 101.12 - current 7292993796 94.8 = 6.32", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_368_32_361", "verdict": "derived", "evidence": "grill 5946177616 1057.24 - 7082455361 962.69 = 94.55", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_236_24_354", "verdict": "derived", "evidence": "lamp 7453605304 150.01 - 8384507844 137.94 = 12.07", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_246_40_316", "verdict": "derived", "evidence": "user: 'any dates between June 15-20 for departure'; year 2024 from policy current time 2024-05-15; June 17 enumerated from that range", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_416_22_112", "verdict": "derived", "evidence": "backpack 212.79 - current 201.95 = 10.84", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_734_14_488", "verdict": "derived", "evidence": "lamp 9190635437 153.23 - 5320792178 135.24 = 17.99", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_277_20_351", "verdict": "derived", "evidence": "vacuum 622.12 + air purifier 473.43 = 1095.55", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_671_18_230", "verdict": "derived", "evidence": "laptop 9844888101 2459.74 - 3478699712 2291.87 = 167.87", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_173_22_192", "verdict": "derived", "evidence": "return HAT278 on 2024-05-22; user: 'move both flights by one day' -> May 23, 2024", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_364_26_471", "verdict": "derived", "evidence": "office chair paid 499.28 - cheapest available variant 471.82 = 27.46", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_878_10_673", "verdict": "derived", "evidence": "order #W5272531 has 5 items; minus Espresso Machine kept = 4", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_264_14_71", "verdict": "derived", "evidence": "business HAT235 350 + HAT298 495 = 845; paid 122+127 = 249; 845-249 = 596 x 2 passengers = 1192", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_29_20_256", "verdict": "derived", "evidence": "skateboard 8176740019 208.6 - 4293355847 200.8 = 7.80", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_843_34_169", "verdict": "derived", "evidence": "modified order items 466.75+288.82+135.24+46.85+193.38 = 1131.04 (= 1166.98 - refund 35.94 in tool result); agent's 931.04 is off by 200", "derived_correct": "no"}
+{"case": "gpt-4o-airline_123_8_160", "verdict": "derived", "evidence": "return HAT278 on 2024-05-22; user: 'delay my return flight ... by one day' -> May 23, 2024", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_107_14_790", "verdict": "derived", "evidence": "HAT227 economy 112 + HAT139 economy 104 = 216", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_231_20_429", "verdict": "invented", "evidence": "searched 9513: only inside payment_method_id 'credit_card_9513926'; no last_four field for this card in sources, so 'card ending in 9513' is unsupported (ID digits misread as last four)", "derived_correct": "n/a"}
+{"case": "gpt-4o-retail_336_22_377", "verdict": "derived", "evidence": "(101.12-94.8)=6.32 + (109.58-94.8)=14.78 = 21.10", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_182_16_80", "verdict": "derived", "evidence": "HAT271 economy 174 x 2 passengers = 348", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_73_22_171", "verdict": "derived", "evidence": "282 - 177 = 105 arithmetic ok, but 177 is only leg 1 (HAT085) of original outbound; original outbound paid 177+146=323 (and HAT072 economy is 130), so inputs wrong", "derived_correct": "no"}
+{"case": "sonnet-35-new-airline_323_10_227", "verdict": "derived", "evidence": "return HAT278 on 2024-05-22; user: 'move both flights by one day' -> May 23", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_73_14_42", "verdict": "derived", "evidence": "return HAT278 on 2024-05-22; user: 'move my return flight back by one day' -> 2024-05-23", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_252_24_1019", "verdict": "invented", "evidence": "5662 - (160+130)x2 = 5082; 5662 is BOH180 payment, but economy prices 160/130 for HAT276/HAT279 absent from sources (no search result for those flights; agent says 'approx')", "derived_correct": "n/a"}

@@ -1,0 +1,43 @@
+{
+  "checker": "545f1a3",
+  "flags": 3442,
+  "audited": 80,
+  "verdicts": {
+    "derived": 74,
+    "invented": 3,
+    "missed_support": 3
+  },
+  "verdicts_by_agent": {
+    "gpt-4o-retail": {
+      "derived": 20
+    },
+    "gpt-4o-airline": {
+      "derived": 18,
+      "invented": 1,
+      "missed_support": 1
+    },
+    "sonnet-35-new-retail": {
+      "derived": 19,
+      "invented": 1
+    },
+    "sonnet-35-new-airline": {
+      "derived": 17,
+      "invented": 1,
+      "missed_support": 2
+    }
+  },
+  "precision_invented": 0.0479,
+  "precision_invented_or_derived": 0.9486,
+  "derived_arithmetic": {
+    "yes": 69,
+    "no": 5
+  },
+  "second_auditor": {
+    "cases": 80,
+    "four_way_agreement": 1.0,
+    "four_way_kappa": 1.0,
+    "flag_correct_agreement": 1.0,
+    "flag_correct_kappa": 1.0,
+    "disagreements": []
+  }
+}

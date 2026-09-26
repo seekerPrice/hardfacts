@@ -1,0 +1,60 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python }}
+      - run: uv sync
+      - run: uv run pytest -q
+      - run: uv run pytest -q integrations/claude-code  # the Stop hook
+      - run: uv build && uv run python tools/check_dist.py dist  # the release carries only the library
+      - run: uv run --with "mcp>=2.2" --with anyio --with pytest pytest -q integrations/mcp
+      - name: the TypeScript conformance fixture matches the Python tests
+        if: matrix.python == '3.14'
+        run: uv run python bench/export_fixture.py && git diff --exit-code --stat ts/test/fixture.json
+
+  typescript:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npm test
+      - run: npm run bundle  # build, then the browser bundle with its name-clash check
+
+  benchmark:
+    # Regression gate on RAGTruth train, plus the Python/TypeScript differential test.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: uv sync
+      - run: bench/fetch_ragtruth.sh
+      - run: uv run python bench/gate.py
+      - run: mkdir -p bench/out && node ts/bench/differential.ts bench/data > bench/out/ts-flags.jsonl
+      - run: uv run python bench/differential.py bench/out/ts-flags.jsonl
+      - run: uv run python bench/fuzz_differential.py --cases 20000
+      - run: bench/fetch_taubench.sh
+      - run: uv run python bench/taubench_differential.py --turns 3000
+      - run: uv run python bench/index_differential.py  # the matching index never changes a Report

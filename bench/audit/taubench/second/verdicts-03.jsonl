@@ -1,0 +1,40 @@
+{"case": "gpt-4o-retail_94_20_272", "verdict": "derived", "evidence": "current item price 2291.87, new 2459.74; 2459.74-2291.87=167.87", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_174_28_106", "verdict": "derived", "evidence": "reservation HAT085 date 2024-05-18; user: 'nonstop flight departing the next day' -> 2024-05-19", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_328_20_173", "verdict": "missed_support", "evidence": "tool result payment_history: {\"transaction_type\": \"refund\", \"amount\": 3.759999999999991} (302.67-298.91)", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-retail_544_18_345", "verdict": "invented", "evidence": "only gift_card_7250692 in sources (ends 0692); searched '2692': absent; not computable", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-retail_275_24_392", "verdict": "derived", "evidence": "652.61-642.72=9.89", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_11_14_620", "verdict": "derived", "evidence": "certificate amount 500; tool result 329.0; 500-329=171", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_436_16_456", "verdict": "derived", "evidence": "186.06+202.13+339.85+252.06=980.10", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_74_30_367", "verdict": "missed_support", "evidence": "user: 'I want to move my return flight to May 23rd'", "derived_correct": "n/a"}
+{"case": "gpt-4o-retail_440_22_266", "verdict": "derived", "evidence": "2520.52-2459.74=60.78", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_173_24_232", "verdict": "derived", "evidence": "HAT278 date 2024-05-22; user: 'move my return flight from SFO back by one day' -> 2024-05-23", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_200_24_461", "verdict": "derived", "evidence": "159.92-153.18=6.74", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_75_20_530", "verdict": "derived", "evidence": "HAT083 economy 137 + HAT011 economy 177 = 314", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_41_24_188", "verdict": "missed_support", "evidence": "tool result payment_history: {\"transaction_type\": \"refund\", \"amount\": 7.979999999999997} (54.11-46.13)", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-retail_687_46_345", "verdict": "derived", "evidence": "1985.3-1908.15=77.15", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_86_26_352", "verdict": "derived", "evidence": "159.92-153.18=6.74", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_182_16_80", "verdict": "derived", "evidence": "HAT271 economy 174 x 2 passengers ('for two passengers') = 348", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_146_30_391", "verdict": "missed_support", "evidence": "user: 'returning on June 20th'", "derived_correct": "n/a"}
+{"case": "gpt-4o-airline_73_14_42", "verdict": "derived", "evidence": "HAT278 date 2024-05-22; user: 'move my return flight back by one day' -> 2024-05-23", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_877_24_361", "verdict": "missed_support", "evidence": "tool result payment_history: {\"transaction_type\": \"payment\", \"amount\": 10.840000000000003, \"payment_method_id\": \"paypal_7729105\"}", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-airline_74_18_444", "verdict": "derived", "evidence": "HAT072 economy 130 + HAT278 economy 187 = 317", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_83_34_423", "verdict": "derived", "evidence": "NM1VX1 flights HAT300 price 100 + HAT208 price 53 = 153 (fare sum; payment_history 183 includes insurance)", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_23_48_179", "verdict": "missed_support", "evidence": "tool result payment_history: {\"transaction_type\": \"refund\", \"amount\": 94.54999999999995}", "derived_correct": "n/a"}
+{"case": "gpt-4o-airline_173_18_93", "verdict": "derived", "evidence": "HAT085 date 2024-05-18; user: 'nonstop one, delayed by a day' -> 2024-05-19", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_416_22_112", "verdict": "derived", "evidence": "212.79-201.95=10.84", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_74_12_605", "verdict": "derived", "evidence": "HAT072 business 282 + HAT278 business 443 = 725; paid 533 (payment_history); 725-533=192", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_173_24_616", "verdict": "derived", "evidence": "agent: (282-130)+(443-180)=152+263=415; sum right but 130 is new-flight economy price, original outgoing fares were 177+146; true diff 725-503=222 (or 725-317=408)", "derived_correct": "no"}
+{"case": "sonnet-35-new-airline_145_26_66", "verdict": "missed_support", "evidence": "\"id\": \"credit_card_7574394\"; payment_history payment_id credit_card_7574394", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-retail_909_38_464", "verdict": "derived", "evidence": "return_items 3614853563 (46.99) + 4900661478 (463.04) = 510.03", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_11_30_145", "verdict": "derived", "evidence": "error 'total price is 375'; gift card amount 128; 375-128=247", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_343_30_148", "verdict": "missed_support", "evidence": "tool result payment_history: {\"transaction_type\": \"refund\", \"amount\": 77.14999999999986}", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-retail_486_16_374", "verdict": "derived", "evidence": "153.25+231.37=384.62", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_73_12_391", "verdict": "derived", "evidence": "HAT278 date 2024-05-22; user: 'move my return flight back by one day' -> 2024-05-23", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_90_14_358", "verdict": "derived", "evidence": "3066.23-2909.87=156.36", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_221_16_367", "verdict": "derived", "evidence": "101.12-94.8=6.32", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_30_18_516", "verdict": "derived", "evidence": "951.21-950.96=0.25", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_276_22_129", "verdict": "derived", "evidence": "652.61+473.43=1126.04", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_58_24_191", "verdict": "derived", "evidence": "flights 53+71+65=189 per passenger; labelled 'Total Price' but reservation has 3 passengers, paid 567", "derived_correct": "unclear"}
+{"case": "gpt-4o-airline_7_20_543", "verdict": "derived", "evidence": "HAT004 economy 122 + HAT142 economy 121 = 243; paid 2787; 2787-243=2544", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_195_16_455", "verdict": "derived", "evidence": "54.84-46.85=7.99", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_417_24_215", "verdict": "missed_support", "evidence": "tool result payment_history: {\"transaction_type\": \"payment\", \"amount\": 10.840000000000003, \"payment_method_id\": \"paypal_7729105\"}", "derived_correct": "n/a"}

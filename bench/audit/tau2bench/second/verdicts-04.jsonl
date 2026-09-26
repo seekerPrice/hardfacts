@@ -1,0 +1,30 @@
+{"case": "gpt-4.1-mini_airline_195_26_74", "verdict": "derived", "evidence": "1707 = 380 (SOURCE 15 calc result) + 1000 (SOURCE 6) + 327 (SOURCE 5); also = 3 x (310 HAT274 + 259 HAT100), second legs only. Cheapest business round trip per pax = 364 (HAT023) + 248 (HAT204) + 259 (HAT100) = 871, x3 = 2613 (2046 over the 567 paid), so the 'total cost' is wrong", "derived_correct": "no"}
+{"case": "claude-3-7-sonnet_telecom_92_24_746", "verdict": "invented", "evidence": "searched '30', 'thirty', 'second', 'minute': only '10:30:00' timestamp; no wait duration in sources", "derived_correct": "n/a"}
+{"case": "gpt-4.1-mini_retail_386_19_355", "verdict": "derived", "evidence": "235.13 + 346.97 + 511.24 = 1093.34 (item prices in SOURCE 7 order)", "derived_correct": "yes"}
+{"case": "gpt-4.1_telecom_222_46_136", "verdict": "invented", "evidence": "searched 'google', 'www.': absent", "derived_correct": "n/a"}
+{"case": "o4-mini_telecom_21_43_188", "verdict": "invented", "evidence": "searched '50', 'Mbps', '150': absent; policy only says speed is 'unknown/very poor/poor/fair/good/excellent'", "derived_correct": "n/a"}
+{"case": "gpt-4.1_airline_78_27_383", "verdict": "derived", "evidence": "HAT069 business 470 + HAT274 business 310 = 780 (SOURCE 12)", "derived_correct": "yes"}
+{"case": "claude-3-7-sonnet_retail_85_25_437", "verdict": "derived", "evidence": "159.92 (item 9385662952) - 153.18 (item 8733974883) = 6.74", "derived_correct": "yes"}
+{"case": "gpt-4.1_retail_74_28_373", "verdict": "derived", "evidence": "Grill 985.66 + Grill 953.39 = 1939.05 (order #W8668939; the other 5 orders fetched have no grill)", "derived_correct": "yes"}
+{"case": "gpt-4.1-mini_retail_150_23_137", "verdict": "invented", "evidence": "searched '270': absent; cheapest available Bluetooth Speaker variant is 271.89 (SOURCE 13); 270 is a rounded bound, not stated or computed", "derived_correct": "n/a"}
+{"case": "claude-3-7-sonnet_retail_211_23_458", "verdict": "derived", "evidence": "2459.74 (item 9844888101, SOURCE 10) x 2 = 4919.48", "derived_correct": "yes"}
+{"case": "gpt-4.1-mini_retail_30_16_606", "verdict": "derived", "evidence": "219.88 (item 9013366374) - 197.33 (item 3358616356) = 22.55", "derived_correct": "yes"}
+{"case": "gpt-4.1_telecom_396_15_20", "verdict": "missed_support", "evidence": "\"phone_number\": \"555-123-2002\" (SOURCE 4, 6)", "derived_correct": "n/a"}
+{"case": "gpt-4.1_telecom_135_26_444", "verdict": "not_a_claim", "evidence": "settings-menu option label ('4G/3G/2G (auto)'), a UI name; sources say modes like 2G/3G, '4g_5g_preferred'", "derived_correct": "n/a"}
+{"case": "gpt-4.1_telecom_375_23_568", "verdict": "not_a_claim", "evidence": "settings-menu option label ('5G/4G/3G/2G (auto)'), a UI name, not a checkable value", "derived_correct": "n/a"}
+{"case": "gpt-4.1_airline_171_13_139", "verdict": "derived", "evidence": "original outbound HAT085/HAT023 on 2024-05-18 + 1 day ('departs the next day', SOURCE 4) = 2024-05-19", "derived_correct": "yes"}
+{"case": "gpt-4.1-mini_telecom_81_69_42", "verdict": "missed_support", "evidence": "SOURCE 30 (user): 'the MMSC URL is “http://mms.carrier.com/mms/wapenc.”'", "derived_correct": "n/a"}
+{"case": "o4-mini_telecom_356_19_305", "verdict": "not_a_claim", "evidence": "list of network-type options in a question '(2G/3G/4G/5G)?'; policy also lists '(e.g., 5G, 4G, 3G, 2G)'", "derived_correct": "n/a"}
+{"case": "gpt-4.1_retail_73_13_42", "verdict": "missed_support", "evidence": "SOURCE 6 (user): 'I think the order number is 9502126'; agent restates it in #W format", "derived_correct": "n/a"}
+{"case": "gpt-4.1-mini_telecom_425_47_42", "verdict": "missed_support", "evidence": "SOURCE 22 (user): 'the MMSC URL is “http://mms.carrier.com/mms/wapenc.”'", "derived_correct": "n/a"}
+{"case": "o4-mini_retail_341_17_128", "verdict": "derived", "evidence": "101.12 + 109.58 = 210.70 (SOURCE 8 variant prices)", "derived_correct": "yes"}
+{"case": "gpt-4.1_retail_234_19_392", "verdict": "derived", "evidence": "262.47 (item 4983901480) - 249.01 (item 7747408585) = 13.46", "derived_correct": "yes"}
+{"case": "gpt-4.1_telecom_174_17_20", "verdict": "missed_support", "evidence": "\"phone_number\": \"555-123-2002\" (SOURCE 4, 7)", "derived_correct": "n/a"}
+{"case": "claude-3-7-sonnet_telecom_38_24_485", "verdict": "invented", "evidence": "searched '30', 'thirty', 'second', 'minute': only '10:30:00' and '2026-06-30'; no wait duration in sources", "derived_correct": "n/a"}
+{"case": "o4-mini_retail_433_33_33", "verdict": "derived", "evidence": "#W4836353 1429.81 + #W7342738 1030.40 (pending, cancel) + #W4597054 1186.47 (return all) = 3646.68", "derived_correct": "yes"}
+{"case": "gpt-4.1-mini_airline_183_27_498", "verdict": "derived", "evidence": "3 pax x [(228 HAT131 + 202 HAT047) - (126 HAT190 + 139 HAT047 paid)] = 3 x 165 = 495; also 306 + 189 (SOURCE 15, 16 calc results) = 495", "derived_correct": "yes"}
+{"case": "o4-mini_retail_42_21_245", "verdict": "missed_support", "evidence": "payment method id \"gift_card_7711863\" (SOURCE 6) ends in 1863", "derived_correct": "n/a"}
+{"case": "gpt-4.1_airline_65_7_238", "verdict": "derived", "evidence": "return HAT278 on 2024-05-22 + 1 day ('return from SFO by one day later', SOURCE 2) = 2024-05-23", "derived_correct": "yes"}
+{"case": "gpt-4.1-mini_airline_149_12_372", "verdict": "missed_support", "evidence": "UHDAHF flight HAT270 EWR-CLT \"date\": \"2024-05-28\"", "derived_correct": "n/a"}
+{"case": "gpt-4.1_airline_167_16_326", "verdict": "derived", "evidence": "policy: gold member '4 free checked bags for each business passenger' x 2 passengers (Chen Lee, Noah Hernandez) = 8", "derived_correct": "yes"}
+{"case": "o4-mini_airline_127_9_554", "verdict": "derived", "evidence": "158 (HAT097) + 141 (HAT251) + 30 insurance = 329; also 128 + 201 = 329", "derived_correct": "yes"}

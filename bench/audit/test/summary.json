@@ -1,0 +1,43 @@
+{
+  "split": "test",
+  "audited": 76,
+  "verdicts": {
+    "derived": 31,
+    "invented": 29,
+    "missed_support": 16
+  },
+  "verdicts_by_task": {
+    "QA": {
+      "invented": 12,
+      "derived": 7,
+      "missed_support": 4
+    },
+    "Summary": {
+      "derived": 11,
+      "missed_support": 7,
+      "invented": 7
+    },
+    "Data2txt": {
+      "derived": 13,
+      "invented": 10,
+      "missed_support": 5
+    }
+  },
+  "gold_precision": 0.737,
+  "audited_precision_strict": 0.8374,
+  "audited_precision_with_derived": 0.9446,
+  "unmatched_flags": 76,
+  "second_auditor": {
+    "cases": 76,
+    "four_way_agreement": 0.9474,
+    "four_way_kappa": 0.918,
+    "flag_correct_agreement": 0.9868,
+    "flag_correct_kappa": 0.9595,
+    "disagreements": [
+      "derived vs invented",
+      "derived vs invented",
+      "derived vs invented",
+      "missed_support vs derived"
+    ]
+  }
+}

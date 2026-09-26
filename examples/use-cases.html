@@ -1,0 +1,176 @@
+<title>hardfacts in the wild</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#f4f6f8; --card:#ffffff; --ink:#18212b; --muted:#5b6673; --rule:#d9dee4;
+  --ok:#23704a; --ok-bg:#e3f2ea; --bad:#b3321f; --bad-bg:#fbe7e3; --calc:#8a5a00; --calc-bg:#fbf0d9;
+  --accent:#2c4bb3; --code:#eef1f5;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#11161c; --card:#19212a; --ink:#e6eaef; --muted:#9aa5b1; --rule:#2c3642;
+    --ok:#6fcf98; --ok-bg:#16301f; --bad:#ff8a73; --bad-bg:#3a1c16; --calc:#f0c060; --calc-bg:#352a12;
+    --accent:#8ea4ff; --code:#0f141a;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#11161c; --card:#19212a; --ink:#e6eaef; --muted:#9aa5b1; --rule:#2c3642;
+  --ok:#6fcf98; --ok-bg:#16301f; --bad:#ff8a73; --bad-bg:#3a1c16; --calc:#f0c060; --calc-bg:#352a12;
+  --accent:#8ea4ff; --code:#0f141a;
+}
+body{background:var(--paper);color:var(--ink);font:16px/1.55 "IBM Plex Sans",system-ui,sans-serif;padding-inline:16px;padding-block:40px 64px}
+.wrap{max-width:1040px;margin:0 auto;display:grid;gap:28px}
+h1,h2{font-family:"IBM Plex Sans Condensed","Arial Narrow",sans-serif;text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.1;font-weight:600}
+h2{font-size:22px;font-weight:600}
+.lede{max-width:66ch;color:var(--muted);margin:10px 0 0}
+.lede b{color:var(--ink);font-weight:500}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted)}
+.case{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:22px;display:grid;gap:16px}
+.head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;align-items:baseline}
+.who{font:500 12px/1 "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.io{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:720px){.io{grid-template-columns:1fr}}
+.label{font:500 11px/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.draft{margin:0;padding:12px 14px;border-left:3px solid var(--rule);background:var(--code);border-radius:0 6px 6px 0}
+pre{margin:0;padding:12px 14px;background:var(--code);border-radius:6px;overflow-x:auto;font:13px/1.5 "IBM Plex Mono",monospace;white-space:pre}
+mark{background:none;color:inherit;padding:0 2px;border-radius:3px}
+mark.ok{background:var(--ok-bg);color:var(--ok)}
+mark.bad{background:var(--bad-bg);color:var(--bad);font-weight:500}
+mark.calc{background:var(--calc-bg);color:var(--calc)}
+.report{display:grid;gap:4px;font:13.5px/1.5 "IBM Plex Mono",monospace}
+.row{display:grid;grid-template-columns:22px 92px 1fr;gap:8px;align-items:baseline}
+.row .kind{color:var(--muted)}
+.row.ok .sym{color:var(--ok)} .row.bad .sym{color:var(--bad)} .row.calc .sym{color:var(--calc)}
+.row .note{color:var(--muted)}
+.row .why{grid-column:3;color:var(--muted);font-size:12.5px;margin-top:-2px}
+.then{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:15px;border-top:1px solid var(--rule);padding-top:14px}
+.then dt{font-weight:500}
+.then dd{margin:0;color:var(--muted)}
+.honest{border-style:dashed}
+.fine{font-size:14px;color:var(--muted);max-width:70ch}
+code{font:13px "IBM Plex Mono",monospace;background:var(--code);padding:1px 5px;border-radius:4px}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Five places a bot can quietly invent a number</h1>
+    <p class="lede">hardfacts reads a draft reply, pulls out every <b>hard fact</b> (amounts, dates, IDs, tracking numbers, counts, percentages) and looks for each one in the data the model was given. It uses no second LLM and gives the same answer every time, in about a millisecond. <b>Every result below is real output from the library</b>, including the two it gets wrong.</p>
+  </header>
+
+  <div class="legend" aria-label="Legend">
+    <span><mark class="ok">✓ found in the source</mark></span>
+    <span><mark class="bad">✗ no source states it</mark></span>
+    <span><mark class="calc">= arithmetic, shown for review</mark></span>
+  </div>
+
+  <!-- 1 -->
+  <section class="case">
+    <div class="head"><h2>Order-status replies on WhatsApp</h2><span class="who">E-commerce support bot</span></div>
+    <div class="io">
+      <div><div class="label">Draft reply</div>
+        <p class="draft">Hi Aina! Your order <mark class="ok">ORD-2024-0012</mark> ships via Pos Laju. Tracking: <mark class="bad">EN123456780MY</mark>, arriving <mark class="bad">2 October</mark>. Shipping was <mark class="ok">RM 12.90</mark>.</p></div>
+      <div><div class="label">What the model was given (order API)</div>
+<pre>{"order_id": "ORD-2024-0012",
+ "tracking": "EN123456789MY",
+ "eta": "2026-10-03",
+ "shipping_fee": 12.9}</pre></div>
+    </div>
+    <div class="report" role="list">
+      <div class="row ok" role="listitem"><span class="sym">✓</span><span class="kind">identifier</span><span>ORD-2024-0012</span></div>
+      <div class="row bad" role="listitem"><span class="sym">✗</span><span class="kind">identifier</span><span>EN123456780MY</span><span class="why">one digit off: a parcel that doesn't exist</span></div>
+      <div class="row bad" role="listitem"><span class="sym">✗</span><span class="kind">date</span><span>2 October</span><span class="why">the record says 3 October</span></div>
+      <div class="row ok" role="listitem"><span class="sym">✓</span><span class="kind">money</span><span>RM 12.90</span><span class="why">matched by value against 12.9</span></div>
+    </div>
+    <dl class="then"><dt>Then</dt><dd>Block the send. Pass <code>feedback(report)</code> back to the model for a second draft, or route the message to a human.</dd></dl>
+  </section>
+
+  <!-- 2 -->
+  <section class="case">
+    <div class="head"><h2>Refunds and fare differences</h2><span class="who">Airline or retail agent with tools</span></div>
+    <div class="io">
+      <div><div class="label">Draft reply</div>
+        <p class="draft">Your new fare is <mark class="ok">$101.12</mark> and you paid <mark class="ok">$94.80</mark>, so the difference of <mark class="calc">$6.32</mark> will be charged to your card ending in <mark class="ok">1784</mark>.</p></div>
+      <div><div class="label">Tool results</div>
+<pre>{"new_fare": 101.12,
+ "paid": 94.8,
+ "payment_method_id": "credit_card_9921784"}</pre></div>
+    </div>
+    <div class="report" role="list">
+      <div class="row ok" role="listitem"><span class="sym">✓</span><span class="kind">money</span><span>$101.12</span></div>
+      <div class="row ok" role="listitem"><span class="sym">✓</span><span class="kind">money</span><span>$94.80</span></div>
+      <div class="row calc" role="listitem"><span class="sym">✗</span><span class="kind">money</span><span>$6.32 = $101.12 − $94.80</span><span class="why">not in any source, but the working is shown: check two operands, not the whole reply</span></div>
+      <div class="row ok" role="listitem"><span class="sym">✓</span><span class="kind">identifier</span><span>ending in 1784</span><span class="why">matches the end of credit_card_9921784</span></div>
+    </div>
+    <dl class="then"><dt>Then</dt><dd>Allow it when <code>report.unexplained</code> is empty (only arithmetic was flagged), or send it for review. On real support-agent runs, about 1 in 10 of these computed values was wrong, so the working is worth a glance.</dd></dl>
+  </section>
+
+  <!-- 3 -->
+  <section class="case">
+    <div class="head"><h2>Answers from an internal policy (RAG)</h2><span class="who">HR, insurance or compliance assistant</span></div>
+    <div class="io">
+      <div><div class="label">Draft answer</div>
+        <p class="draft">Full-time staff get <mark class="bad">16</mark> days of annual leave, and unused leave expires on <mark class="ok">31 March 2027</mark>. Claims above <mark class="ok">RM 500</mark> need HR approval.</p></div>
+      <div><div class="label">Retrieved passage</div>
+<pre>Annual leave: full-time employees are
+entitled to 14 days per year. Unused
+leave may be carried forward until
+31 March 2027. Expense claims above
+RM 500 require approval from HR.</pre></div>
+    </div>
+    <div class="report" role="list">
+      <div class="row bad" role="listitem"><span class="sym">✗</span><span class="kind">quantity</span><span>16</span><span class="why">the policy says 14</span></div>
+      <div class="row ok" role="listitem"><span class="sym">✓</span><span class="kind">date</span><span>31 March 2027</span></div>
+      <div class="row ok" role="listitem"><span class="sym">✓</span><span class="kind">money</span><span>RM 500</span></div>
+    </div>
+    <dl class="then"><dt>Then</dt><dd>Retry, or show the answer with the wrong figure highlighted. It won't catch "expires" vs "carried forward": a wrong word with no number in it is outside what this library checks.</dd></dl>
+  </section>
+
+  <!-- 4 -->
+  <section class="case">
+    <div class="head"><h2>A coding agent's "all done" summary</h2><span class="who">Claude Code Stop hook</span></div>
+    <div class="io">
+      <div><div class="label">Agent's final message</div>
+        <p class="draft">Done: PR <mark class="ok">#3337</mark> is merged, all <mark class="bad">251</mark> tests pass, and the build finished in <mark class="bad">42</mark> s.</p></div>
+      <div><div class="label">What the session's tools printed</div>
+<pre>$ gh pr view 3337 --json state
+{"state": "MERGED"}
+$ pytest -q
+249 passed, 2 failed in 4.21s
+$ npm run build
+Built in 41.8s</pre></div>
+    </div>
+    <div class="report" role="list">
+      <div class="row ok" role="listitem"><span class="sym">✓</span><span class="kind">identifier</span><span>#3337</span></div>
+      <div class="row bad" role="listitem"><span class="sym">✗</span><span class="kind">quantity</span><span>251</span><span class="why">the test run said 249 passed, 2 failed</span></div>
+      <div class="row bad" role="listitem"><span class="sym">✗</span><span class="kind">quantity</span><span>42</span><span class="why">false alarm: 41.8 rounded. Rounding is flagged on purpose (a looser rule let too many inventions through)</span></div>
+    </div>
+    <dl class="then"><dt>Then</dt><dd>The hook warns before you trust the summary. Measured on real sessions, it would have fired on 16% of turns, which is why it warns by default instead of blocking.</dd></dl>
+  </section>
+
+  <!-- 5 -->
+  <section class="case honest">
+    <div class="head"><h2>Creator shortlists for a KOL campaign</h2><span class="who">Influencer-matching agent</span></div>
+    <div class="io">
+      <div><div class="label">Draft recommendation</div>
+        <p class="draft">Top pick: @makan.with.mei, <mark class="ok">128K</mark> followers, <mark class="bad">4.2%</mark> engagement, quoting <mark class="ok">RM 3,500</mark> per Reel. Her last campaign drove <mark class="bad">1,240</mark> sign-ups.</p></div>
+      <div><div class="label">Creator record</div>
+<pre>{"followers": 128000,
+ "engagement_rate": 0.042,
+ "rate_card": {"reel": 3500},
+ "past_campaigns": [{"signups": 1204}]}</pre></div>
+    </div>
+    <div class="report" role="list">
+      <div class="row ok" role="listitem"><span class="sym">✓</span><span class="kind">quantity</span><span>128K</span><span class="why">matched against 128000</span></div>
+      <div class="row bad" role="listitem"><span class="sym">✗</span><span class="kind">percent</span><span>4.2%</span><span class="why">false alarm: the record stores the rate as a fraction (0.042). Store percentages as percentages, or expect this flag</span></div>
+      <div class="row ok" role="listitem"><span class="sym">✓</span><span class="kind">money</span><span>RM 3,500</span></div>
+      <div class="row bad" role="listitem"><span class="sym">✗</span><span class="kind">quantity</span><span>1,240</span><span class="why">transposed digits: the record says 1,204</span></div>
+    </div>
+    <dl class="then"><dt>Then</dt><dd>Send the flags to the account manager before the shortlist reaches a brand. A client quoting a wrong performance number back is the expensive version of this bug.</dd></dl>
+  </section>
+
+  <p class="fine"><b>Where it doesn't help:</b> hallucinations with no specific value in them (a wrong policy <em>rule</em>, a made-up reason), sources that are themselves wrong, and wording it has no rule for yet. On the held-out support-agent test it caught 98.2% of planted fabrications, and 19.7% of its flags were its own mistakes before the fixes that audit led to. Python and TypeScript give identical results: <code>from hardfacts import check</code> or <code>import { check } from "hardfacts"</code>.</p>
+</div>

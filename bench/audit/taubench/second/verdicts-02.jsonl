@@ -1,0 +1,40 @@
+{"case": "sonnet-35-new-airline_83_34_520", "verdict": "derived", "evidence": "NM1VX1 flights HAT300 $100 + HAT208 $53 = 153 paid; business 280+357=637; 637-153=484", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_10_30_633", "verdict": "derived", "evidence": "outbound basic_economy 51 + HAT276 basic_economy 55 = 106", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_267_20_613", "verdict": "derived", "evidence": "business 290 (HAT021) + 308 (HAT279) = 598; paid 148+114=262; 598-262=336", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_150_14_380", "verdict": "derived", "evidence": "HAT218 economy 158 + HAT039 economy 103 = 261", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_258_6_115", "verdict": "derived", "evidence": "gift_card_8020792 amount 198 + gift_card_6136092 amount 129 = 327", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_34_26_278", "verdict": "derived", "evidence": "payment_history 7WPL39 402 + 3EMQJ6 306 + A90KR2 308 = 1016", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_119_10_21", "verdict": "derived", "evidence": "count of T-Shirt variants = 12, but only 10 have available:true (5047954489, 3542102174 false); claim says 12 available", "derived_correct": "no"}
+{"case": "gpt-4o-retail_349_10_21", "verdict": "derived", "evidence": "count of T-Shirt variants = 12, but only 10 have available:true; agent itself lists 2 as unavailable; claim says 12 available", "derived_correct": "no"}
+{"case": "sonnet-35-new-airline_298_20_106", "verdict": "derived", "evidence": "economy HAT238 129 + HAT229 192 + HAT266 146 + HAT044 163 = 630 + insurance 30 = 660; 660 - certificate 500 = 160", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_450_48_187", "verdict": "missed_support", "evidence": "payment_history: {\"transaction_type\": \"payment\", \"amount\": 17.860000000000014}", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-retail_221_26_279", "verdict": "derived", "evidence": "new kettles ceramic/2L/gas 101.12 + glass/1.5L/gas 109.58 = 210.70; old 94.8*2 = 189.60; diff 21.10 - gift card balance 17 = 4.10", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_23_20_269", "verdict": "invented", "evidence": "user: 'my original flight is on the 5th. I want to move it to the next day, the 6th.' - no month stated; searched 'May 6', '05-06': absent (current date 2024-05-15, so an upcoming 6th would not be May)", "derived_correct": "n/a"}
+{"case": "gpt-4o-airline_73_22_268", "verdict": "derived", "evidence": "HAT072 business 282 - HAT085 price 177 = 105; arithmetic holds but 177 is only one leg of the original outbound (HAT085 177 + HAT023 146 = 323), so the upgrade difference is wrong", "derived_correct": "no"}
+{"case": "gpt-4o-retail_60_20_174", "verdict": "missed_support", "evidence": "payment_history: {\"transaction_type\": \"refund\", \"amount\": 13.750000000000028}", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-retail_854_16_248", "verdict": "derived", "evidence": "258.97 (item 2757705742) - 226.49 (item 8555936349) = 32.48", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_147_10_350", "verdict": "missed_support", "evidence": "payment_history: {\"payment_id\": \"gift_card_1591784\", \"amount\": 3720}", "derived_correct": "n/a"}
+{"case": "gpt-4o-retail_2_10_18", "verdict": "derived", "evidence": "count of T-Shirt variants = 12, but only 10 have available:true; agent itself lists 2 as unavailable; claim says 12 available", "derived_correct": "no"}
+{"case": "sonnet-35-new-retail_563_20_186", "verdict": "derived", "evidence": "current 8886009523 price 1944.02 - new 2407258246 price 1822.82 = 121.20", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_51_24_255", "verdict": "derived", "evidence": "count of characters in reservation IDs e.g. \"Z7GOZK\", \"K67C4W\", \"THY2DG\" = 6; searched 'character', 'six': absent", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_432_22_140", "verdict": "not_a_claim", "evidence": "'2' is the field label '**Address 2:** Suite 501', not a quantity", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-airline_135_10_233", "verdict": "missed_support", "evidence": "user: 'can I at least change my flight to May 22nd?'; year from policy 'The current time is 2024-05-15'", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-airline_164_14_169", "verdict": "derived", "evidence": "upgraded reservation flights HAT235 price 350 + HAT298 price 499 = 849", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_100_36_770", "verdict": "derived", "evidence": "original camera 5996159312 price 2895.55 - new 8363011723 price 2823.96 = 71.59", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_152_30_159", "verdict": "derived", "evidence": "order total 1166.98 - (481.5+150.01+53.27) + (466.75+135.24+46.85) = 1131.04", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_71_26_51", "verdict": "derived", "evidence": "212.79 (5917587651) - 201.95 (2492465580) = 10.84", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_406_18_189", "verdict": "missed_support", "evidence": "payment_history: {\"transaction_type\": \"refund\", \"amount\": 30.180000000000007}", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-airline_163_24_245", "verdict": "missed_support", "evidence": "\"gift_card_4643416\": {\"source\": \"gift_card\", \"amount\": 113}", "derived_correct": "n/a"}
+{"case": "gpt-4o-retail_276_20_281", "verdict": "derived", "evidence": "Air Purifier 473.43 + Vacuum Cleaner 652.61 = 1126.04", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_391_18_190", "verdict": "derived", "evidence": "Air Purifier 473.43 + Vacuum Cleaner 652.61 = 1126.04", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_177_34_385", "verdict": "derived", "evidence": "HAT268 economy 119 + HAT146 economy 190 = 309", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_58_30_1246", "verdict": "derived", "evidence": "gift_card_6136092 amount 129 + refunded 567 (payment_history -567 on cancelled reservation) = 696", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_425_16_203", "verdict": "derived", "evidence": "54.84 (5047954489) - 46.85 (9354168549) = 7.99", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_638_28_288", "verdict": "missed_support", "evidence": "payment_history: {\"transaction_type\": \"refund\", \"amount\": 30.78000000000003}", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-airline_252_24_1051", "verdict": "invented", "evidence": "sum 6654+3926+5448+2530+5082=23640, but inputs include 'approx' economy prices absent from sources: searched \"economy\": 150/180/120/160/130: absent; no searches for X7BYG1/EQ1G6C/BOH180 routes", "derived_correct": "n/a"}
+{"case": "gpt-4o-airline_50_12_407", "verdict": "derived", "evidence": "HAT136 economy 152 + HAT039 economy 103 = 255", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_109_36_739", "verdict": "derived", "evidence": "gift_card_8020792 amount 198 + gift_card_6136092 amount 129 = 327", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_185_22_473", "verdict": "derived", "evidence": "219.88 (9013366374) - 197.33 (3358616356) = 22.55", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_729_24_428", "verdict": "not_a_claim", "evidence": "hyperbolic joke 'things probably dry in about 2 minutes on your balcony in that Phoenix heat' - no checkable value", "derived_correct": "n/a"}
+{"case": "gpt-4o-retail_75_18_281", "verdict": "derived", "evidence": "243.34 (4063058357) - 226.49 (8555936349) = 16.85", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_736_18_138", "verdict": "derived", "evidence": "Vacuum Cleaner 652.61 + Air Purifier 473.43 = 1126.04", "derived_correct": "yes"}

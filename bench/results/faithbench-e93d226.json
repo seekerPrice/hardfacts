@@ -1,0 +1,85 @@
+{
+  "dataset": "FaithBench",
+  "commit": "e93d226",
+  "samples": 750,
+  "gold": {
+    "unwanted": {
+      "naive": {
+        "span_precision": 0.1762,
+        "hard_fact_recall": 0.1938,
+        "all_span_recall": 0.0513,
+        "response_precision": 0.7355,
+        "response_recall": 0.2027,
+        "flags": 210,
+        "flags_true": 37,
+        "hard_gold": 289,
+        "responses": 750,
+        "flagged_responses": 121,
+        "us_per_response": 8.2
+      },
+      "hardfacts": {
+        "span_precision": 0.2353,
+        "hard_fact_recall": 0.1834,
+        "all_span_recall": 0.0513,
+        "response_precision": 0.6696,
+        "response_recall": 0.1754,
+        "flags": 153,
+        "flags_true": 36,
+        "hard_gold": 289,
+        "responses": 750,
+        "flagged_responses": 115,
+        "us_per_response": 526.5
+      }
+    },
+    "not-in-source": {
+      "naive": {
+        "span_precision": 0.2952,
+        "hard_fact_recall": 0.2161,
+        "all_span_recall": 0.0507,
+        "response_precision": 0.843,
+        "response_recall": 0.1774,
+        "flags": 210,
+        "flags_true": 62,
+        "hard_gold": 509,
+        "responses": 750,
+        "flagged_responses": 121,
+        "us_per_response": 7.8
+      },
+      "hardfacts": {
+        "span_precision": 0.4444,
+        "hard_fact_recall": 0.2318,
+        "all_span_recall": 0.0566,
+        "response_precision": 0.8174,
+        "response_recall": 0.1635,
+        "flags": 153,
+        "flags_true": 68,
+        "hard_gold": 509,
+        "responses": 750,
+        "flagged_responses": 115,
+        "us_per_response": 530.2
+      }
+    }
+  },
+  "fault_injection": {
+    "fabricate": {
+      "planted": 663,
+      "naive": 1.0,
+      "hardfacts": 0.9427
+    },
+    "swap": {
+      "planted": 557,
+      "naive": 0.2101,
+      "hardfacts": 0.3788
+    },
+    "clean_flag_rate": {
+      "naive": {
+        "responses": 175,
+        "rate": 0.1086
+      },
+      "hardfacts": {
+        "responses": 175,
+        "rate": 0.12
+      }
+    }
+  }
+}

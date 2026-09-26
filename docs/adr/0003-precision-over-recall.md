@@ -1,0 +1,3 @@
+# ADR-0003: When in doubt, a Claim is Supported
+
+When a Value could be read more than one way, or matched loosely, hardfacts resolves the doubt towards Supported. A pre-filter that cries wolf gets switched off within a week. One that flags rarely but is almost always right gets wired into CI and retry loops. So hardfacts will miss some fabrications on purpose, such as a bare `7` that happens to equal some other `7` in a Source. (A date vouches for a bare number only through its year, since days of the month are too common to count as support. That rule was set when the date Kind was built. This ADR's first draft predated it.) This is deliberate. Don't "fix" a missed flag by loosening a rule unless the benchmark shows precision holds.

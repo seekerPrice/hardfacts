@@ -1,0 +1,35 @@
+[project]
+name = "hardfacts"
+version = "0.1.0.dev0"
+description = "Deterministic provenance for the numbers, dates, money and IDs your LLM writes."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "Loo Tan Yu Heng (Lucas)", email = "lucaslootan@gmail.com" }]
+keywords = ["llm", "hallucination", "rag", "guardrails", "evaluation", "provenance"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Intended Audience :: Developers",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Typing :: Typed",
+]
+dependencies = []
+
+[project.scripts]
+hardfacts = "hardfacts.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "hypothesis>=6"]
+examples = ["pydantic-ai-slim>=1.0"]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.hatch.build.targets.sdist]
+# An allowlist: hatchling reads only the root .gitignore, so ts/node_modules (2,489 files) and
+# local caches leaked into the first sdist. tools/check_dist.py fails CI if anything else does.
+only-include = ["src/hardfacts", "tests", "README.md", "LICENSE", "CONTEXT.md", "docs/adr"]

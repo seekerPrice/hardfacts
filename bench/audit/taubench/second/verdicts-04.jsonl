@@ -1,0 +1,40 @@
+{"case": "sonnet-35-new-retail_598_8_218", "verdict": "invented", "evidence": "User said only 'I know I live in Seattle'; searched 98101: absent; tool results 'Error: user not found'", "derived_correct": "n/a"}
+{"case": "gpt-4o-airline_192_6_108", "verdict": "missed_support", "evidence": "'May 19th and 20th' day 20 from reservation flight HAT009 \"date\": \"2024-05-20\"", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-airline_74_14_521", "verdict": "derived", "evidence": "New business fares HAT072 282 + HAT278 443 = 725; paid 533 ('amount': 533); 725-533=192", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_103_26_314", "verdict": "derived", "evidence": "HAT084 economy 112 + HAT266 economy 130 = 242", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_863_20_766", "verdict": "derived", "evidence": "New laptop 2292.37 - original 2291.87 = 0.50", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_54_18_199", "verdict": "derived", "evidence": "HAT056 economy 155 + HAT138 economy 185 = 340 (FQ8APE flights)", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_275_20_523", "verdict": "derived", "evidence": "HAT069 economy 123 + HAT011 economy 177 = 300", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_10_34_399", "verdict": "derived", "evidence": "HAT069 basic_economy 51 + HAT276 basic_economy 55 = 106", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_219_52_140", "verdict": "missed_support", "evidence": "Tool result payment_history: \"amount\": 17.860000000000014 (also 532.58-514.72)", "derived_correct": "n/a"}
+{"case": "gpt-4o-airline_169_24_261", "verdict": "derived", "evidence": "HAT169 171 + HAT212 154 = 325 (updated reservation flight prices)", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_713_32_373", "verdict": "derived", "evidence": "Old luggage 495.87 - new 452.28 = 43.59", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_360_22_175", "verdict": "missed_support", "evidence": "Tool result: \"transaction_type\": \"refund\", \"amount\": 0.3499999999999943", "derived_correct": "n/a"}
+{"case": "gpt-4o-airline_123_14_236", "verdict": "derived", "evidence": "User: 'outgoing flight ... on the next day' / 'delay my return flight ... by one day'; return 2024-05-22 + 1 day = May 23, 2024", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_263_16_520", "verdict": "derived", "evidence": "Removed items 235.13 + 346.97 + 511.24 = 1093.34", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_58_24_377", "verdict": "derived", "evidence": "HAT134 business 210 + HAT045 business 370 = 580 (2024-05-28)", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_73_28_542", "verdict": "derived", "evidence": "Agent computed 282 (HAT072 business) - 177 = 105; arithmetic holds but 177 is the old HAT085 IAH-JFK leg price, not HAT072 economy (130); true outbound difference is 282-(177+146) or 282-130, not 105", "derived_correct": "no"}
+{"case": "gpt-4o-retail_86_26_382", "verdict": "derived", "evidence": "Fleece jacket 159.92 - 153.18 = 6.74", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_104_30_97", "verdict": "derived", "evidence": "Option HAT056 economy 155 + HAT138 economy 185 = 340; consistent with gift card 280 + calc result '60.0'", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_73_28_221", "verdict": "derived", "evidence": "User: 'move my return flight back by one day'; return 2024-05-22 + 1 = 2024-05-23", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_373_12_243", "verdict": "derived", "evidence": "User: 'move both flights by one day'; outbound date 2024-05-18 + 1 = May 19", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_713_24_315", "verdict": "derived", "evidence": "Old helmet 197.33 - new 196.73 = 0.60", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_360_30_735", "verdict": "derived", "evidence": "Fare HAT083 basic 87 + HAT276 basic 55 = 142; minus gift card 7359776 amount 39 = 103", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_123_14_134", "verdict": "derived", "evidence": "User: 'change my outgoing flight to a nonstop one on the next day'; 2024-05-18 + 1 = May 19, 2024", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_866_12_458", "verdict": "derived", "evidence": "Current earbuds 256.67 - blue option 242.92 = 13.75", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_158_24_481", "verdict": "derived", "evidence": "Certificates 500 + 250 + 250 = 1000", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_193_16_121", "verdict": "not_a_claim", "evidence": "'2' is the field label 'Address 2:' in the address block", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-retail_461_16_997", "verdict": "missed_support", "evidence": "Tool result: \"payment_method_id\": \"credit_card_9513926\"", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-airline_182_18_237", "verdict": "derived", "evidence": "HAT271 economy 174 x 2 passengers (Sophia Silva, Kevin Smith) = 348", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_217_18_120", "verdict": "not_a_claim", "evidence": "'2' is the field label 'Address 2:' in the address block", "derived_correct": "n/a"}
+{"case": "gpt-4o-airline_32_26_83", "verdict": "derived", "evidence": "HAT271 economy 174 x 2 passengers (user + Kevin Smith) = 348", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_883_20_693", "verdict": "derived", "evidence": "New makeup kit 253.98 - original 243.62 = 10.36", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_79_22_159", "verdict": "missed_support", "evidence": "Tool result: \"transaction_type\": \"refund\", \"amount\": 6.280000000000001", "derived_correct": "n/a"}
+{"case": "gpt-4o-airline_132_14_72", "verdict": "missed_support", "evidence": "User: 'I'd like to travel on May 26.'; policy current time 2024-05-15 gives year", "derived_correct": "n/a"}
+{"case": "gpt-4o-retail_267_30_786", "verdict": "derived", "evidence": "466.75 + 285.66 + 135.24 + 46.66 + 193.38 = 1127.69", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_110_14_463", "verdict": "derived", "evidence": "HAT041 basic 86 + HAT012 basic 77 = 163", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_136_30_474", "verdict": "missed_support", "evidence": "Tool result: \"payment_method_id\": ... \"amount\": 33.639999999999986 (gift_card_4332117)", "derived_correct": "n/a"}
+{"case": "gpt-4o-airline_123_12_402", "verdict": "derived", "evidence": "Return flight 2024-05-22 + 1 day per user 'delay my return flight ... by one day' = May 23, 2024", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_301_22_334", "verdict": "derived", "evidence": "New backpack (grey/medium/polyester) 212.79 - current 201.95 = 10.84", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_537_14_557", "verdict": "derived", "evidence": "Original perfume 322.52 - new 312.04 = 10.48", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_109_6_221", "verdict": "missed_support", "evidence": "User profile: \"certificate_2765295\": {\"amount\": 250}", "derived_correct": "n/a"}

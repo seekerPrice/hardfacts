@@ -1,0 +1,1 @@
+The verdict files here quote short excerpts from [FaithBench](https://github.com/vectara/FaithBench) (Vectara), which is licensed CC BY-NC-SA 4.0. Those excerpts are under that licence, not this repository's MIT licence, and are included for non-commercial evaluation and attribution only.

@@ -1,0 +1,30 @@
+{"case": "o4-mini_retail_83_29_425", "verdict": "derived", "evidence": "original 502.28 (order/payment) - item 6117189161 price 481.5 = 20.78", "derived_correct": "yes"}
+{"case": "gpt-4.1-mini_airline_109_12_444", "verdict": "derived", "evidence": "user: outgoing 'departs the next day'; reservation HAT085 date 2024-05-18 + 1 day = 2024-05-19", "derived_correct": "yes"}
+{"case": "gpt-4.1_airline_193_44_883", "verdict": "derived", "evidence": "NM1VX1: HAT300 business 280 - paid 100 = 180; HAT208 business 357 - paid 53 = 304; 180+304 = 484", "derived_correct": "yes"}
+{"case": "gpt-4.1-mini_airline_150_50_670", "verdict": "derived", "evidence": "707 - 327 = 380 where 707 = 1707 - 1000 and 1707 = 569*3; '569' absent from sources; searched fares give HAT023 364 + HAT204/HAT100 507 = 871/pax (2613 total); gift-card balance also ignores the 567 refund to gift_card_6136092", "derived_correct": "no"}
+{"case": "gpt-4.1-mini_telecom_299_72_135", "verdict": "derived", "evidence": "data_limit_gb 5.0 - data_used_gb 3.2 = 1.8", "derived_correct": "yes"}
+{"case": "gpt-4.1-mini_retail_171_31_136", "verdict": "derived", "evidence": "item 4238115171 price 91.78 x 2 = 183.56", "derived_correct": "yes"}
+{"case": "gpt-4.1-mini_retail_93_23_775", "verdict": "derived", "evidence": "8302289002 price 547.55 - current 3076708684 price 535.97 = 11.58", "derived_correct": "yes"}
+{"case": "gpt-4.1-mini_airline_197_34_547", "verdict": "derived", "evidence": "1836 - (1000 + 327) = 509; 1836 is a calculate result (S13) but listed fares HAT023 364 + HAT204 248 + HAT100 259 = 871 x 3 = 2613; gift cards also omit 567 refund to gift_card_6136092 (S19)", "derived_correct": "no"}
+{"case": "gpt-4.1-mini_airline_198_20_277", "verdict": "derived", "evidence": "612 x 3 = 1836 with 612 = 364 + 248; omits HAT100 business 259 (return HAT204+HAT100 = 507), correct 871 x 3 = 2613", "derived_correct": "no"}
+{"case": "claude-3-7-sonnet_airline_111_21_874", "verdict": "derived", "evidence": "same flights in business: HAT023 364 + HAT204 248 + HAT021 453 = 1065 x 3 = 3195", "derived_correct": "yes"}
+{"case": "o4-mini_retail_374_13_140", "verdict": "derived", "evidence": "T-Shirt 9523456873 variants dict has 12 entries (10 available, 2 unavailable)", "derived_correct": "yes"}
+{"case": "claude-3-7-sonnet_retail_427_25_134", "verdict": "derived", "evidence": "current jacket 9385662952 price 159.92 - 8733974883 price 153.18 = 6.74", "derived_correct": "yes"}
+{"case": "gpt-4.1-mini_telecom_346_47_227", "verdict": "invented", "evidence": "searched '4636', '*#': absent; dialer code not in policy/tools", "derived_correct": "n/a"}
+{"case": "o4-mini_retail_75_19_41", "verdict": "missed_support", "evidence": "item 2216662955 options: \"processor\": \"i5\", \"ram\": \"32GB\", \"storage\": \"256GB SSD\"", "derived_correct": "n/a"}
+{"case": "claude-3-7-sonnet_telecom_159_17_663", "verdict": "not_a_claim", "evidence": "phone menu option label '5G/4G/3G/2G Auto' (setting name), not a checkable value; policy names modes like \"4g_5g_preferred\"", "derived_correct": "n/a"}
+{"case": "claude-3-7-sonnet_airline_75_35_322", "verdict": "derived", "evidence": "HAT023 business 364 + (HAT204 248 + HAT100 259 = 507) = 871", "derived_correct": "yes"}
+{"case": "o4-mini_telecom_414_15_372", "verdict": "missed_support", "evidence": "policy: \"switch to a network mode that includes 3G, 4G, or 5G\"", "derived_correct": "n/a"}
+{"case": "o4-mini_airline_164_41_775", "verdict": "derived", "evidence": "2FBBAH HAT080 paid 537 - economy 107 = 430", "derived_correct": "yes"}
+{"case": "gpt-4.1_telecom_401_15_20", "verdict": "missed_support", "evidence": "line L1002 \"phone_number\": \"555-123-2002\", \"status\": \"Suspended\"", "derived_correct": "n/a"}
+{"case": "o4-mini_retail_46_23_459", "verdict": "derived", "evidence": "(154.17 - 137.94) + (46.51 - 45.13) = 16.23 + 1.38 = 17.61", "derived_correct": "yes"}
+{"case": "gpt-4.1-mini_telecom_25_8_348", "verdict": "invented", "evidence": "searched '2003', '555-123-2003': absent; only 555-123-2002 and line_ids L1001-L1003 stated", "derived_correct": "n/a"}
+{"case": "gpt-4.1-mini_telecom_324_87_39", "verdict": "missed_support", "evidence": "user (S36): MMSC URL is \"http://mms.carrier.com/mms/wapenc.\"", "derived_correct": "n/a"}
+{"case": "o4-mini_telecom_407_14_262", "verdict": "not_a_claim", "evidence": "phone menu option label '2G/3G/4G auto' (setting name), not a checkable value", "derived_correct": "n/a"}
+{"case": "o4-mini_telecom_455_23_1206", "verdict": "invented", "evidence": "searched '30', 'seconds' near boot/reboot: absent (only '10:30:00' timestamps)", "derived_correct": "n/a"}
+{"case": "gpt-4.1_retail_223_23_90", "verdict": "derived", "evidence": "T-Shirt 9523456873 has 12 variants but only 10 \"available\": true (3542102174, 5047954489 false); claim says 12 available", "derived_correct": "no"}
+{"case": "gpt-4.1_retail_408_15_42", "verdict": "missed_support", "evidence": "user (S7): \"I think the order number is 9502126\"; tool: Error: Order not found", "derived_correct": "n/a"}
+{"case": "claude-3-7-sonnet_telecom_52_38_696", "verdict": "not_a_claim", "evidence": "phone menu option label '5G/4G/3G/2G Auto' (setting name), not a checkable value", "derived_correct": "n/a"}
+{"case": "gpt-4.1_retail_58_23_273", "verdict": "derived", "evidence": "new lamp 1569765161 price 143.02 - current 8384507844 price 137.94 = 5.08", "derived_correct": "yes"}
+{"case": "claude-3-7-sonnet_telecom_387_34_599", "verdict": "invented", "evidence": "searched '1234' (only inside bill id B1234321), '0000', '1111', 'default PIN': absent", "derived_correct": "n/a"}
+{"case": "o4-mini_airline_81_21_265", "verdict": "derived", "evidence": "HAT263 economy 140 - paid basic 53 = 87", "derived_correct": "yes"}

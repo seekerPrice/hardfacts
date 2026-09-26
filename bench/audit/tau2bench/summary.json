@@ -1,0 +1,82 @@
+{
+  "checker": "76d7a30",
+  "flags": 5397,
+  "audited": 120,
+  "verdicts": {
+    "derived": 71,
+    "invented": 18,
+    "missed_support": 20,
+    "not_a_claim": 11
+  },
+  "verdicts_by_agent": {
+    "claude-3-7-sonnet/airline": {
+      "derived": 10
+    },
+    "claude-3-7-sonnet/retail": {
+      "derived": 10
+    },
+    "claude-3-7-sonnet/telecom": {
+      "not_a_claim": 2,
+      "invented": 7,
+      "derived": 1
+    },
+    "gpt-4.1/airline": {
+      "derived": 10
+    },
+    "gpt-4.1/retail": {
+      "derived": 8,
+      "missed_support": 2
+    },
+    "gpt-4.1/telecom": {
+      "missed_support": 4,
+      "not_a_claim": 5,
+      "invented": 1
+    },
+    "gpt-4.1-mini/airline": {
+      "derived": 8,
+      "invented": 1,
+      "missed_support": 1
+    },
+    "gpt-4.1-mini/retail": {
+      "derived": 9,
+      "invented": 1
+    },
+    "gpt-4.1-mini/telecom": {
+      "derived": 1,
+      "invented": 4,
+      "missed_support": 5
+    },
+    "o4-mini/airline": {
+      "derived": 7,
+      "not_a_claim": 1,
+      "missed_support": 2
+    },
+    "o4-mini/retail": {
+      "derived": 7,
+      "missed_support": 2,
+      "not_a_claim": 1
+    },
+    "o4-mini/telecom": {
+      "missed_support": 4,
+      "not_a_claim": 2,
+      "invented": 4
+    }
+  },
+  "precision_invented": 0.1264,
+  "precision_invented_or_derived": 0.8033,
+  "derived_arithmetic": {
+    "yes": 63,
+    "no": 7,
+    "unclear": 1
+  },
+  "second_auditor": {
+    "cases": 120,
+    "four_way_agreement": 0.9917,
+    "four_way_kappa": 0.9858,
+    "flag_correct_agreement": 1.0,
+    "flag_correct_kappa": 1.0,
+    "disagreements": [
+      "invented vs derived"
+    ]
+  }
+}

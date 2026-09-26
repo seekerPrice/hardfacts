@@ -1,0 +1,1039 @@
+{
+  "responses": 900,
+  "responses_with_unsupported": 101,
+  "unsupported_rate": 0.1122,
+  "responses_with_unexplained": 101,
+  "unsupported_with_derivation": 0,
+  "hard_facts": 2230,
+  "hard_facts_by_kind": {
+    "quantity": 1179,
+    "time": 975,
+    "money": 41,
+    "date": 24,
+    "percent": 11
+  },
+  "unsupported_by_kind": {
+    "time": 67,
+    "quantity": 41,
+    "money": 17,
+    "percent": 2
+  },
+  "examples": [
+    {
+      "id": "llama-2-13b-chat#5674",
+      "kind": "quantity",
+      "text": "4.5",
+      "before": " brunch spot located in the heart of Santa Barbara, California. With an average rating of ",
+      "after": " stars out of 5, this restaurant has received glowing review",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#5684",
+      "kind": "time",
+      "text": "7:00 pm",
+      "before": " categorized as a restaurant. The business is open from Monday to Sunday from 11:00 am to ",
+      "after": ". Customers can park their cars on the street or lot, but va",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#5692",
+      "kind": "time",
+      "text": "10:00 PM",
+      "before": "e restaurant has a rating of 4.0 stars and is open Monday through Sunday from 11:30 AM to ",
+      "after": ". Benchmark Eatery offers free WiFi, outdoor seating, takeou",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#5734",
+      "kind": "money",
+      "text": "$20",
+      "before": "-Fi and takes reservations. Prices are moderate, with most menu items ranging from $10 to ",
+      "after": ". Overall, Pizza Mizza appears to be a solid choice for pizz",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-70b-chat#5735",
+      "kind": "quantity",
+      "text": "30",
+      "before": "orted long wait times for their food, with one reviewer stating that their food took over ",
+      "after": " minutes to arrive. Additionally, some customers have noted ",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#5738",
+      "kind": "time",
+      "text": "7 pm",
+      "before": "The business operates from Monday to Saturday from 11 am to 9 pm and Sunday from 12 pm to ",
+      "after": ". They offer pizza, as well as other food items such as sala",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-7b-chat#5739",
+      "kind": "time",
+      "text": "10:00 PM",
+      "before": "terms of hours of operation, Taffy's Pizza is open Monday through Sunday from 11:00 AM to ",
+      "after": ", with varying closing times on weekends.\n\nOverall, Taffy's ",
+      "derivation": null
+    },
+    {
+      "id": "gpt-4-0613#6048",
+      "kind": "quantity",
+      "text": "9",
+      "before": "s of undercooked fish and burnt steaks. The establishment is open every day, from 4 PM to ",
+      "after": " or 10 PM.",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-7b-chat#6051",
+      "kind": "time",
+      "text": "11 am",
+      "before": "ars.\n\nHours: Holdren's Grill operates from 4 pm to 10 pm from Monday to Saturday and from ",
+      "after": " to 10 pm on Sunday.\n\nAttributes: The restaurant provides fr",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-7b-chat#6171",
+      "kind": "quantity",
+      "text": "4.5",
+      "before": "ornia, serving up delicious Mexican cuisine. With a rating of 4.0 stars and an average of ",
+      "after": "-star reviews, this restaurant is highly rated by its patron",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#6172",
+      "kind": "time",
+      "text": "10:00 PM",
+      "before": "Barbara, California. It has a rating of 4.0 stars out of 5.0 and is open from 11:00 AM to ",
+      "after": " from Monday to Sunday. The restaurant offers both indoor an",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#6254",
+      "kind": "time",
+      "text": "7 pm",
+      "before": "29 State St, Santa Barbara, CA. The business operates from Monday to Sunday, from 5 pm to ",
+      "after": ". The restaurant offers a variety of food options such as ba",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#6278",
+      "kind": "money",
+      "text": "$15.00",
+      "before": " are highly praised for their taste and affordability, with prices ranging from $11.80 to ",
+      "after": ". The restaurant also offers free base options for hot pots ",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-7b-chat#6279",
+      "kind": "money",
+      "text": "$10",
+      "before": "nd high-quality ingredients. The menu is priced moderately, with most dishes ranging from ",
+      "after": " to $15.\n\nAccording to customer reviews, the restaurant has ",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-7b-chat#6279",
+      "kind": "money",
+      "text": "$15",
+      "before": "-quality ingredients. The menu is priced moderately, with most dishes ranging from $10 to ",
+      "after": ".\n\nAccording to customer reviews, the restaurant has a cozy ",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#6410",
+      "kind": "time",
+      "text": "10:00 PM",
+      "before": "nt and fast food establishment. The restaurant is open seven days a week from 11:00 AM to ",
+      "after": " on weekdays, and until 11:00 PM on weekends.\n\nBlaze Pizza h",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#6410",
+      "kind": "time",
+      "text": "11:00 PM",
+      "before": "The restaurant is open seven days a week from 11:00 AM to 10:00 PM on weekdays, and until ",
+      "after": " on weekends.\n\nBlaze Pizza has several attributes, including",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#6412",
+      "kind": "time",
+      "text": "10pm",
+      "before": "y atmosphere with outdoor seating and free Wi-Fi. The hours of operation are from 11am to ",
+      "after": ", Monday through Sunday. The restaurant accepts reservations",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#6418",
+      "kind": "time",
+      "text": "16:00 pm",
+      "before": "ion are flexible, open from 8:00 am to 14:00 pm from Monday to Friday and from 8:00 am to ",
+      "after": " on Saturday and Sunday.\n\nThe cafe offers both indoor and ou",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#6634",
+      "kind": "quantity",
+      "text": "2.4",
+      "before": ", CA, offering donuts, sandwiches, coffee, and tea. The business has an average rating of ",
+      "after": " stars based on three reviews, with customers praising the f",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#6688",
+      "kind": "quantity",
+      "text": "30",
+      "before": " Coffee is a popular cafe located in the heart of Isla Vista, CA. With 4.5 stars and over ",
+      "after": " reviews, this cozy spot is known for its delicious coffee, ",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#6770",
+      "kind": "time",
+      "text": "2:00 pm",
+      "before": "htlife, pub, and gastropub. The hours of operation are Monday through Sunday, 11:30 am to ",
+      "after": ". \n\nThe business has several attributes that appeal to its c",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#6772",
+      "kind": "quantity",
+      "text": "30",
+      "before": "lar eatery located in the heart of Santa Barbara, CA. With a rating of 4.0 stars and over ",
+      "after": " reviews, this pub has established itself as a local favorit",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-70b-chat#6773",
+      "kind": "quantity",
+      "text": "70",
+      "before": "dishes and drinks in a cozy and welcoming atmosphere. With a rating of 4.0 stars and over ",
+      "after": " reviews, it's clear that locals and visitors alike enjoy vi",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#6776",
+      "kind": "time",
+      "text": "4:00 PM",
+      "before": "ertainment, and Wine Tasting Room. The restaurant is open from Monday through Sunday from ",
+      "after": " to 9:00 PM.\n\nThe restaurant has free Wi-Fi, outdoor seating",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#6776",
+      "kind": "time",
+      "text": "9:00 PM",
+      "before": " and Wine Tasting Room. The restaurant is open from Monday through Sunday from 4:00 PM to ",
+      "after": ".\n\nThe restaurant has free Wi-Fi, outdoor seating, and offer",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-7b-chat#6777",
+      "kind": "quantity",
+      "text": "4.5",
+      "before": "e these issues, Uncorked Wine Tasting and Kitchen has maintained a high overall rating of ",
+      "after": " stars and has been recommended by customers for its excelle",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#6778",
+      "kind": "time",
+      "text": "10:00 PM",
+      "before": "f operation vary throughout the week, but they are open seven days a week from 5:00 PM to ",
+      "after": ". They offer free WiFi and have outdoor seating available. A",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#6854",
+      "kind": "quantity",
+      "text": "4",
+      "before": " between 11:00 AM to 9:30 PM. The restaurant has an average rating of 3.0 stars, based on ",
+      "after": " reviews. \n\nIn terms of reviews, one customer had a positive",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#6904",
+      "kind": "quantity",
+      "text": "20",
+      "before": "des the Whisper cruise, which offers a unique and intimate experience for groups of up to ",
+      "after": " people. The company has a 4.5-star rating based on customer",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#6926",
+      "kind": "time",
+      "text": "11 am",
+      "before": "takeout. The restaurant accepts reservations and offers WiFi. The restaurant is open from ",
+      "after": " to 11 pm every day. According to customer reviews, the rest",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#6926",
+      "kind": "time",
+      "text": "11 pm",
+      "before": "The restaurant accepts reservations and offers WiFi. The restaurant is open from 11 am to ",
+      "after": " every day. According to customer reviews, the restaurant is",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#6932",
+      "kind": "time",
+      "text": "11:00 PM",
+      "before": "ican (New), and French. Le Cafe Stella operates from Tuesday to Saturday, from 5:00 PM to ",
+      "after": ". The restaurant provides parking facilities on the street a",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#6976",
+      "kind": "quantity",
+      "text": "3",
+      "before": ", salads, breakfast & brunch, and food. The restaurant has a rating of 2.5 stars based on ",
+      "after": " reviews, with one reviewer praising the staff's politeness ",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#6976",
+      "kind": "time",
+      "text": "5pm",
+      "before": "correct orders, cold food, and poor customer service.\n\nThe restaurant is open from 8am to ",
+      "after": ", Monday through Sunday, and offers outdoor seating, WiFi, t",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#6976",
+      "kind": "quantity",
+      "text": "4",
+      "before": ", WiFi, takeout, and reservations. The ambiance is casual and welcoming, with a rating of ",
+      "after": " out of 5 stars for atmosphere. The restaurant also offers v",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#6982",
+      "kind": "quantity",
+      "text": "4.4",
+      "before": "e is a popular breakfast and brunch spot located in Goleta, CA. With an average rating of ",
+      "after": " stars out of 5 based on 3 reviews, the restaurant offers a ",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#6982",
+      "kind": "quantity",
+      "text": "3",
+      "before": " brunch spot located in Goleta, CA. With an average rating of 4.4 stars out of 5 based on ",
+      "after": " reviews, the restaurant offers a cozy and intimate atmosphe",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#7010",
+      "kind": "time",
+      "text": "22:30",
+      "before": "ration vary depending on the day of the week, ranging from Monday to Sunday, from 0:00 to ",
+      "after": ". The business offers attributes such as parking, reservatio",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#7016",
+      "kind": "time",
+      "text": "10pm",
+      "before": "unch, seafood, and American food. They are open from 7am to 9:30pm on weekdays and 7am to ",
+      "after": " on weekends. They offer outdoor seating and takeout options",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7018",
+      "kind": "quantity",
+      "text": "4.3",
+      "before": "f cuisines including seafood, American, and breakfast & brunch. With an average rating of ",
+      "after": " out of 5 stars based on three reviews, the restaurant has e",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#7022",
+      "kind": "time",
+      "text": "11 pm",
+      "before": "an restaurant, bar, and eatery. Longboard's Grill is open seven days a week from 11 am to ",
+      "after": " on Monday through Sunday, respectively. The restaurant prov",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-70b-chat#7025",
+      "kind": "quantity",
+      "text": "30",
+      "before": "ill is a seafood restaurant located in Santa Barbara, CA, with a 3.0-star rating based on ",
+      "after": " reviews. The restaurant is known for its fresh and tasty oy",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-70b-chat#7055",
+      "kind": "quantity",
+      "text": "50",
+      "before": "ration are from 5:00 PM to 9:00 PM, Tuesday through Sunday. It has a seating capacity for ",
+      "after": " people and offers take-out services. The restaurant's ambia",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#7064",
+      "kind": "time",
+      "text": "10:30 pm",
+      "before": "ves Chinese and fast food options. The restaurant has been in operation since 10:00 am to ",
+      "after": " on Sunday and from 10:00 am to 10:30 pm every other day of ",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#7064",
+      "kind": "time",
+      "text": "10:30 pm",
+      "before": "estaurant has been in operation since 10:00 am to 10:30 pm on Sunday and from 10:00 am to ",
+      "after": " every other day of the week. They offer parking lots, but n",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7066",
+      "kind": "quantity",
+      "text": "3",
+      "before": "od restaurant located in Goleta, California, with a rating of 2.5 stars out of 5 based on ",
+      "after": " customer reviews. The restaurant has a casual ambiance and ",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-70b-chat#7067",
+      "kind": "quantity",
+      "text": "3",
+      "before": "Goleta, CA. According to the provided data, the restaurant has a 2.5-star rating based on ",
+      "after": " customer reviews. The restaurant's hours of operation are f",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7102",
+      "kind": "quantity",
+      "text": "100",
+      "before": "es, hotels, restaurants, and event planning services. With a rating of 4.5 stars and over ",
+      "after": " reviews, the business has received positive feedback from c",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7138",
+      "kind": "time",
+      "text": "6:00pm",
+      "before": "ea, sandwiches, salads, and entrees. They are open Monday through Saturday from 7:30am to ",
+      "after": " and offer free WiFi and outdoor seating. Customers praise t",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-7b-chat#7155",
+      "kind": "time",
+      "text": "8 pm",
+      "before": "ts and entertainment, and more. The wine shop is open Monday through Sunday from 12 pm to ",
+      "after": ", with extended hours on weekends. The business provides fre",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-7b-chat#7161",
+      "kind": "money",
+      "text": "$20",
+      "before": "e increased since the business moved to its new location, with some drinks costing around ",
+      "after": " each. A third customer expressed disappointment that the bu",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#7202",
+      "kind": "time",
+      "text": "9:00 pm",
+      "before": "ir main menu items. Their hours of operation are Monday through Saturday from 11:00 am to ",
+      "after": ". They have parking available on site and do not offer reser",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7234",
+      "kind": "quantity",
+      "text": "4.8",
+      "before": "riety of delicious deli sandwiches, food, desserts, and drinks. With an average rating of ",
+      "after": " stars based on three customer reviews, this cozy spot is a ",
+      "derivation": null
+    },
+    {
+      "id": "gpt-4-0613#7236",
+      "kind": "time",
+      "text": "10:30 PM",
+      "before": "akfast & brunch, desserts, and bars and nightlife. The restaurant is open from 7:00 AM to ",
+      "after": " on Mondays and Tuesdays, and from 5:00 PM to 9:30 PM from W",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-7b-chat#7239",
+      "kind": "time",
+      "text": "10:30 PM",
+      "before": "runch, American (Traditional), Desserts, and Food. The business hours are from 7:00 AM to ",
+      "after": " from Monday to Sunday, and the restaurant provides free WiF",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7240",
+      "kind": "time",
+      "text": "10:30pm",
+      "before": "tions. They have a rating of 4.0 stars based on customer reviews and are open from 7am to ",
+      "after": " Monday through Thursday and 7am to 11pm Friday and Saturday",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7240",
+      "kind": "time",
+      "text": "11pm",
+      "before": "d on customer reviews and are open from 7am to 10:30pm Monday through Thursday and 7am to ",
+      "after": " Friday and Saturday. The restaurant has outdoor seating and",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7258",
+      "kind": "time",
+      "text": "10pm",
+      "before": " pizza, salads, chicken wings, and more. They are open Monday through Sunday from 11am to ",
+      "after": ", with a brief break on Tuesdays. The restaurant has indoor ",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7264",
+      "kind": "quantity",
+      "text": "3",
+      "before": "aurant located in Santa Barbara, California, with a rating of 3.5 stars out of 5 based on ",
+      "after": " customer reviews. The restaurant has been open since 1988 a",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7264",
+      "kind": "quantity",
+      "text": "1988",
+      "before": "ing of 3.5 stars out of 5 based on 3 customer reviews. The restaurant has been open since ",
+      "after": " and offers outdoor seating, takeout, and reservations. The ",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7282",
+      "kind": "quantity",
+      "text": "100",
+      "before": "s, breweries, food, beer, wine, and spirits. With an average rating of 4.5 stars and over ",
+      "after": " reviews, this venue has established itself as a go-to desti",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7294",
+      "kind": "money",
+      "text": "$10",
+      "before": "ions, including appetizers, soups, salads, chorus, and desserts, with prices ranging from ",
+      "after": " to $30. The restaurant also serves brunch on weekends and h",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7294",
+      "kind": "money",
+      "text": "$30",
+      "before": "ncluding appetizers, soups, salads, chorus, and desserts, with prices ranging from $10 to ",
+      "after": ". The restaurant also serves brunch on weekends and has a sp",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7300",
+      "kind": "quantity",
+      "text": "3",
+      "before": "ditional, gluten-free, and breakfast and brunch. They have a rating of 3.5 stars based on ",
+      "after": " reviews. The restaurant has a casual atmosphere and provide",
+      "derivation": null
+    },
+    {
+      "id": "gpt-3.5-turbo-0613#7315",
+      "kind": "time",
+      "text": "5:0",
+      "before": "e bars & smoothies, breakfast & brunch, Brazilian cuisine, and salads. They are open from ",
+      "after": "-20:30 on Mondays, Thursdays, and Fridays, from 10:0-21:0 on",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7324",
+      "kind": "quantity",
+      "text": "100",
+      "before": "fering gelato, food, and vegetarian options. With an average rating of 3.5 stars and over ",
+      "after": " reviews, the restaurant has received positive feedback for ",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#7448",
+      "kind": "time",
+      "text": "9 PM",
+      "before": " brunch, delis and food trucks. The business is open Tuesday through Sunday, from 4 PM to ",
+      "after": " on weekdays and 8 AM to 9 PM on Sundays. Their attributes i",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#7448",
+      "kind": "time",
+      "text": "9 PM",
+      "before": "s. The business is open Tuesday through Sunday, from 4 PM to 9 PM on weekdays and 8 AM to ",
+      "after": " on Sundays. Their attributes indicate that they do not have",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#7508",
+      "kind": "time",
+      "text": "9 pm",
+      "before": "ata, Sushi GoGo has outdoor seating available and is open seven days a week from 11 am to ",
+      "after": ". They do not take reservations and do not offer WiFi or val",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7786",
+      "kind": "quantity",
+      "text": "3",
+      "before": " Juice Bars & Smoothies, Vegan, Salad, and more. They have a rating of 4.5 stars based on ",
+      "after": " reviews, with reviewers praising the freshness and inventiv",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#7786",
+      "kind": "time",
+      "text": "10pm",
+      "before": "e. Music and ambiance are not specified. The business is open seven days a week from 11am-",
+      "after": ", with parking available in a lot and street parking.",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#8054",
+      "kind": "quantity",
+      "text": "1997",
+      "before": "ara, California, that serves Ethiopian and French cuisine. It has been in operation since ",
+      "after": " and offers outdoor seating and Wi-Fi. According to reviews,",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-70b-chat#8387",
+      "kind": "money",
+      "text": "$10",
+      "before": " and attentive, and the menu options are reasonably priced, with most dishes ranging from ",
+      "after": " to $30. The restaurant has received positive reviews for it",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-70b-chat#8387",
+      "kind": "money",
+      "text": "$30",
+      "before": "tentive, and the menu options are reasonably priced, with most dishes ranging from $10 to ",
+      "after": ". The restaurant has received positive reviews for its food ",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#8420",
+      "kind": "time",
+      "text": "11 pm",
+      "before": "ed in Santa Barbara, California. The business operates from Monday to Sunday from 7 am to ",
+      "after": ". Las Aves Cafe has outdoor seating, WiFi, takeout, and rese",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#8464",
+      "kind": "money",
+      "text": "$10",
+      "before": "s can enjoy a wide selection of dishes at reasonable prices, with most meals ranging from ",
+      "after": " to $20.\n\nAccording to customer reviews, the food at Ming Dy",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#8464",
+      "kind": "money",
+      "text": "$20",
+      "before": "njoy a wide selection of dishes at reasonable prices, with most meals ranging from $10 to ",
+      "after": ".\n\nAccording to customer reviews, the food at Ming Dynasty R",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#8474",
+      "kind": "time",
+      "text": "10:30 PM",
+      "before": " from Monday to Sunday, with hours ranging from 11:30 AM to 9:30 PM on weekdays and until ",
+      "after": " on weekends. The restaurant has attributes such as reservat",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#8560",
+      "kind": "time",
+      "text": "6:30pm",
+      "before": "fast options. According to their hours, they are open Monday through Saturday from 6am to ",
+      "after": ", with a break from 12pm to 1pm. They have outdoor seating a",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#8560",
+      "kind": "time",
+      "text": "12pm",
+      "before": " their hours, they are open Monday through Saturday from 6am to 6:30pm, with a break from ",
+      "after": " to 1pm. They have outdoor seating and offer takeout, but do",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#8560",
+      "kind": "time",
+      "text": "1pm",
+      "before": "ours, they are open Monday through Saturday from 6am to 6:30pm, with a break from 12pm to ",
+      "after": ". They have outdoor seating and offer takeout, but do not ha",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#8662",
+      "kind": "time",
+      "text": "10pm",
+      "before": "nd other Greek-inspired dishes, and the restaurant is open seven days a week from 11am to ",
+      "after": ". Reviewers praise the freshness and flavor of the food, par",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#8728",
+      "kind": "quantity",
+      "text": "30",
+      "before": "y staff, clean atmosphere, and great music selection. With a rating of 4.0 stars and over ",
+      "after": " reviews, Tiburon Tavern is a top choice for locals and visi",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#8734",
+      "kind": "quantity",
+      "text": "4.4",
+      "before": "a popular sandwich shop located in downtown Goleta, California. With an average rating of ",
+      "after": " stars out of 5 based on three reviews, this casual eatery o",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-70b-chat#8735",
+      "kind": "quantity",
+      "text": "4.5",
+      "before": "iendly and hardworking staff, as well as the joyous atmosphere. With an average rating of ",
+      "after": " stars, Three Pickles is a local favorite and a great spot t",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#8768",
+      "kind": "time",
+      "text": "2:00 PM",
+      "before": " planning, and nightlife. The business operates between Monday and Sunday from 8:00 AM to ",
+      "after": " and offers free WiFi to its customers. Customers can find s",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#8770",
+      "kind": "time",
+      "text": "2:00 PM",
+      "before": " seating, and a validated parking garage. They are open seven days a week from 8:00 AM to ",
+      "after": " and offer restaurant reservations and takeout. Their music ",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#8908",
+      "kind": "quantity",
+      "text": "3",
+      "before": " in Santa Barbara, California. The restaurant has a rating of 3.5 stars out of 5 based on ",
+      "after": " reviews. The restaurant offers various amenities such as ou",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#9068",
+      "kind": "time",
+      "text": "10:30 PM",
+      "before": ", nightlife, and restaurants. The business is open Monday through Sunday from 12:00 PM to ",
+      "after": ", except for Fridays and Saturdays when it stays open until ",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#9074",
+      "kind": "time",
+      "text": "9 pm",
+      "before": " Restaurants, Bakeries, and Food. The bakery operates from Monday to Sunday, from 6 pm to ",
+      "after": ". They offer exquisite bakery goods for parties, holidays, e",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-70b-chat#9077",
+      "kind": "time",
+      "text": "9:00 PM",
+      "before": "a Barbara, CA. According to their hours, they are open seven days a week, from 6:00 AM to ",
+      "after": ", with extended hours on Fridays and Saturdays. The bakery o",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#9082",
+      "kind": "time",
+      "text": "9:00 PM",
+      "before": " of 4.0 stars based on customer reviews and is open Monday through Sunday from 5:00 PM to ",
+      "after": ". The menu features a variety of dishes, including appetizer",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#9158",
+      "kind": "quantity",
+      "text": "40",
+      "before": "t and the business is good for groups. The business has four stars on Google reviews with ",
+      "after": " reviews. Of these reviews, 70% are five stars, while 20% ar",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#9158",
+      "kind": "percent",
+      "text": "70%",
+      "before": " groups. The business has four stars on Google reviews with 40 reviews. Of these reviews, ",
+      "after": " are five stars, while 20% are one star. One reviewer found ",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#9158",
+      "kind": "percent",
+      "text": "20%",
+      "before": "four stars on Google reviews with 40 reviews. Of these reviews, 70% are five stars, while ",
+      "after": " are one star. One reviewer found the wings to be dry, while",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#9160",
+      "kind": "time",
+      "text": "2:30 AM",
+      "before": "wiches, and nightlife. Their hours of operation are Monday through Sunday from 4:00 PM to ",
+      "after": ". They have a rating of 4.0 stars and offer free WiFi, outdo",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#9526",
+      "kind": "quantity",
+      "text": "3",
+      "before": "cialty coffee drinks, food, and desserts. The business has a rating of 4.5 stars based on ",
+      "after": " reviews, with customers praising the unique concept, friend",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#9556",
+      "kind": "time",
+      "text": "1am",
+      "before": "d outdoor seating, and has a parking lot but no validated parking. It is open from 9am to ",
+      "after": " every day, except on Tuesdays when it is closed.\n\nOverall, ",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-70b-chat#9731",
+      "kind": "money",
+      "text": "$15",
+      "before": "arge on their bill.\n\nThe restaurant's prices are moderate, with most entrees ranging from ",
+      "after": " to $30. They offer a prix fixe menu for special occasions, ",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-70b-chat#9731",
+      "kind": "money",
+      "text": "$30",
+      "before": " their bill.\n\nThe restaurant's prices are moderate, with most entrees ranging from $15 to ",
+      "after": ". They offer a prix fixe menu for special occasions, which i",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#9842",
+      "kind": "time",
+      "text": "11:00 PM",
+      "before": " business operates from Monday to Sunday, with hours of operation ranging from 5:30 PM to ",
+      "after": ". It is categorized under Restaurants, Soup, Japanese, and S",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#9874",
+      "kind": "time",
+      "text": "8:00 PM",
+      "before": "s has a rating of 3.0 stars out of 5.0 and is open Monday through Sunday from 10:00 AM to ",
+      "after": ". The restaurant has both indoor and outdoor seating and off",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-7b-chat#9879",
+      "kind": "time",
+      "text": "10 PM",
+      "before": "ular among locals and visitors alike, particularly for its late hours of operation (until ",
+      "after": " from Monday to Saturday). The establishment is known for it",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#9880",
+      "kind": "time",
+      "text": "10pm",
+      "before": "of ethnic food and specialty dishes. The restaurant is open seven days a week from 7am to ",
+      "after": ", with a large menu that includes vegetarian and vegan optio",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#9920",
+      "kind": "time",
+      "text": "9:30 pm",
+      "before": " planning, and photo booth rentals. Their hours are Monday through Sunday from 9:00 am to ",
+      "after": ".\nThe business has free WiFi and is highly recommended by th",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#9920",
+      "kind": "quantity",
+      "text": "10",
+      "before": ", accommodating, and for creating a memorable night. Another customer hired Flamezz for a ",
+      "after": "-year business event and noted that the dance floor never st",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#10072",
+      "kind": "money",
+      "text": "$15",
+      "before": "or outdoor seating. Its menu includes sushi, sashimi, and rolls, with prices ranging from ",
+      "after": " to $25 per item.\n\nAccording to customer reviews, the qualit",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#10112",
+      "kind": "time",
+      "text": "5pm",
+      "before": "ndwiches, soups, and salads. The hours of operation are Monday through Friday from 9am to ",
+      "after": ", with Saturday hours from 9am to 5pm. Metropolulos Fine Foo",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#10112",
+      "kind": "time",
+      "text": "5pm",
+      "before": "s of operation are Monday through Friday from 9am to 5pm, with Saturday hours from 9am to ",
+      "after": ". Metropolulos Fine Foods does not offer online reservations",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#10336",
+      "kind": "quantity",
+      "text": "3",
+      "before": " in Santa Barbara, California. The restaurant has a rating of 3.5 stars out of 5 based on ",
+      "after": " reviews. The business offers indoor and outdoor seating, fr",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#10336",
+      "kind": "time",
+      "text": "2pm",
+      "before": "utdoor seating, free WiFi, takeout, and reservations. The restaurant is open from 10am to ",
+      "after": " on Monday, Tuesday, Wednesday, Thursday, and Sunday, and fr",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#10354",
+      "kind": "quantity",
+      "text": "3",
+      "before": "ar restaurant located in Goleta, California, with a rating of 3.5 out of 5 stars based on ",
+      "after": " reviews. The restaurant offers American (Traditional) cuisi",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#10354",
+      "kind": "time",
+      "text": "6pm",
+      "before": "d pieces of bone in their pork dish. The restaurant is open seven days a week from 7am to ",
+      "after": ", and reservations are not accepted. WiFi is available, and ",
+      "derivation": null
+    },
+    {
+      "id": "gpt-4-0613#10362",
+      "kind": "time",
+      "text": "10:30pm",
+      "before": ", The Good Bar is a nightlife hotspot, famous for its cocktails. Operating from 7:00am to ",
+      "after": " all week, it offers amenities such as free WiFi, outdoor se",
+      "derivation": null
+    },
+    {
+      "id": "gpt-3.5-turbo-0613#10363",
+      "kind": "time",
+      "text": "10:30 PM",
+      "before": " CA. It falls under the categories of Bars and Nightlife. The bar is open from 7:00 AM to ",
+      "after": " every day of the week. The establishment offers free WiFi a",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#10364",
+      "kind": "time",
+      "text": "7:00 PM",
+      "before": "ide the Kimpton Hotel in Goleta, California. The business operates seven days a week from ",
+      "after": " to 10:30 PM. The bar is decorated in a casual, classy style",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#10364",
+      "kind": "time",
+      "text": "10:30 PM",
+      "before": "pton Hotel in Goleta, California. The business operates seven days a week from 7:00 PM to ",
+      "after": ". The bar is decorated in a casual, classy style and feature",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-7b-chat#10461",
+      "kind": "time",
+      "text": "5pm",
+      "before": " hours of operation, open Monday through Saturday from 9am to 6pm, and Sunday from 9am to ",
+      "after": ". The business offers free Wi-Fi and allows takeout orders, ",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-7b-chat#10545",
+      "kind": "quantity",
+      "text": "50",
+      "before": "d events, including stand-up comedy, improv, and more. The venue has a capacity of around ",
+      "after": " people and is known for its intimate setting. While parking",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#10546",
+      "kind": "quantity",
+      "text": "75",
+      "before": "e for events and parties. The club has a cozy and intimate atmosphere, with a capacity of ",
+      "after": " people, making it an ideal setting for both small and large",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#11104",
+      "kind": "money",
+      "text": "$15",
+      "before": " seven days a week with extended hours on weekends. Customers can expect to pay around $5-",
+      "after": " per entree. Overall, 805 Deli is a great option for those l",
+      "derivation": null
+    },
+    {
+      "id": "mistral-7B-instruct#11192",
+      "kind": "time",
+      "text": "7:00 PM",
+      "before": "of Restaurants and Mexican. The restaurant operates from Monday to Sunday from 7:00 AM to ",
+      "after": ". It has lot parking available, but does not have a garage o",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#11194",
+      "kind": "time",
+      "text": "7:00 pm",
+      "before": " ambiance.\n\nThe restaurant's hours of operation are Monday through Sunday from 7:00 am to ",
+      "after": ", with lunch and dinner specials available. La Hacienda offe",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#11446",
+      "kind": "money",
+      "text": "$15",
+      "before": "timate atmosphere. The prices are moderate to high, with an average entree price range of ",
+      "after": "-$30.\n\nOverall, Ca' Dario seems to be a mixed bag, with some",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-13b-chat#11446",
+      "kind": "money",
+      "text": "$30",
+      "before": "te atmosphere. The prices are moderate to high, with an average entree price range of $15-",
+      "after": ".\n\nOverall, Ca' Dario seems to be a mixed bag, with some cus",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-70b-chat#11453",
+      "kind": "quantity",
+      "text": "3",
+      "before": "mio-Goleta is a Mexican restaurant located in Goleta, CA, with a 3.5-star rating based on ",
+      "after": " reviews. The restaurant offers both indoor and outdoor seat",
+      "derivation": null
+    }
+  ]
+}

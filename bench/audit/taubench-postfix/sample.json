@@ -1,0 +1,12 @@
+{
+  "commit": "545f1a3",
+  "flags": 3442,
+  "flags_by_agent": {
+    "gpt-4o-retail": 142,
+    "gpt-4o-airline": 174,
+    "sonnet-35-new-retail": 1443,
+    "sonnet-35-new-airline": 1683
+  },
+  "sampled": 80,
+  "seed": 1
+}

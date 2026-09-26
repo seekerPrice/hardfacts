@@ -1,0 +1,12 @@
+{
+  "commit": "bd9d22f-pinned",
+  "flags": 4417,
+  "flags_by_agent": {
+    "gpt-4o-retail": 288,
+    "gpt-4o-airline": 206,
+    "sonnet-35-new-retail": 1822,
+    "sonnet-35-new-airline": 2101
+  },
+  "sampled": 160,
+  "seed": 0
+}

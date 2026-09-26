@@ -1,0 +1,14 @@
+{
+  "dataset": "FaithBench",
+  "commit": "e93d226",
+  "audited": 85,
+  "verdicts": {
+    "derived": 17,
+    "missed_support": 64,
+    "invented": 4
+  },
+  "gold_precision_not_in_source": 0.4444,
+  "audited_precision_strict": 0.4706,
+  "audited_precision_with_derived": 0.5817,
+  "note": "Single auditor per case. 60+ of the checker errors are one bug: tokenised dates ('July 22 , 1947'), fixed afterwards in tests/test_tokenised_text.py."
+}

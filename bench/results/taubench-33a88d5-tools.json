@@ -1,0 +1,230 @@
+{
+  "dataset": "tau-bench historical trajectories @ 59a200c",
+  "commit": "33a88d5",
+  "by_agent": {
+    "gpt-4o-retail": {
+      "runs": 460,
+      "turns": 3557,
+      "turns_with_claims": 1777,
+      "turns_flagged": 218,
+      "naive_flags": 767,
+      "naive_turns_flagged": 494,
+      "planted": 1764,
+      "caught": 1741,
+      "naive_caught": 1764,
+      "claims": {
+        "quantity": 2728,
+        "identifier": 1975,
+        "money": 1581,
+        "percent": 21,
+        "email": 14,
+        "time": 2,
+        "url": 1
+      },
+      "flags": {
+        "money": 228,
+        "quantity": 14,
+        "identifier": 2
+      },
+      "share_turns_flagged": 0.0613,
+      "naive_share_turns_flagged": 0.1389,
+      "fabrications_caught": 0.987,
+      "naive_fabrications_caught": 1.0,
+      "by_reward": {
+        "success": {
+          "runs": 278,
+          "turns": 1997,
+          "turns_flagged": 0.0666,
+          "naive_turns_flagged": 0.1492
+        },
+        "failure": {
+          "runs": 182,
+          "turns": 1560,
+          "turns_flagged": 0.0545,
+          "naive_turns_flagged": 0.1256
+        }
+      }
+    },
+    "gpt-4o-airline": {
+      "runs": 200,
+      "turns": 1380,
+      "turns_with_claims": 708,
+      "turns_flagged": 116,
+      "naive_flags": 291,
+      "naive_turns_flagged": 184,
+      "planted": 645,
+      "caught": 644,
+      "naive_caught": 645,
+      "claims": {
+        "identifier": 1120,
+        "money": 795,
+        "quantity": 670,
+        "time": 644,
+        "date": 632
+      },
+      "flags": {
+        "money": 108,
+        "date": 63,
+        "quantity": 34,
+        "identifier": 1
+      },
+      "share_turns_flagged": 0.0841,
+      "naive_share_turns_flagged": 0.1333,
+      "fabrications_caught": 0.9984,
+      "naive_fabrications_caught": 1.0,
+      "by_reward": {
+        "success": {
+          "runs": 84,
+          "turns": 512,
+          "turns_flagged": 0.0547,
+          "naive_turns_flagged": 0.0703
+        },
+        "failure": {
+          "runs": 116,
+          "turns": 868,
+          "turns_flagged": 0.1014,
+          "naive_turns_flagged": 0.1705
+        }
+      }
+    },
+    "sonnet-35-new-retail": {
+      "runs": 920,
+      "turns": 12586,
+      "turns_with_claims": 10681,
+      "turns_flagged": 1279,
+      "naive_flags": 4032,
+      "naive_turns_flagged": 2591,
+      "planted": 10506,
+      "caught": 10369,
+      "naive_caught": 10506,
+      "claims": {
+        "identifier": 16191,
+        "quantity": 10311,
+        "money": 7427,
+        "email": 558,
+        "percent": 97,
+        "date": 4,
+        "phone": 1
+      },
+      "flags": {
+        "money": 1623,
+        "quantity": 103,
+        "identifier": 47,
+        "percent": 2,
+        "phone": 1
+      },
+      "share_turns_flagged": 0.1016,
+      "naive_share_turns_flagged": 0.2059,
+      "fabrications_caught": 0.987,
+      "naive_fabrications_caught": 1.0,
+      "by_reward": {
+        "success": {
+          "runs": 637,
+          "turns": 8493,
+          "turns_flagged": 0.1026,
+          "naive_turns_flagged": 0.2076
+        },
+        "failure": {
+          "runs": 283,
+          "turns": 4093,
+          "turns_flagged": 0.0997,
+          "naive_turns_flagged": 0.2023
+        }
+      }
+    },
+    "sonnet-35-new-airline": {
+      "runs": 400,
+      "turns": 4656,
+      "turns_with_claims": 4127,
+      "turns_flagged": 967,
+      "naive_flags": 1920,
+      "naive_turns_flagged": 931,
+      "planted": 3770,
+      "caught": 3752,
+      "naive_caught": 3770,
+      "claims": {
+        "identifier": 6737,
+        "date": 4526,
+        "money": 4062,
+        "quantity": 3371,
+        "time": 1593,
+        "percent": 3,
+        "email": 3
+      },
+      "flags": {
+        "money": 1136,
+        "date": 510,
+        "quantity": 373,
+        "identifier": 76,
+        "time": 1
+      },
+      "share_turns_flagged": 0.2077,
+      "naive_share_turns_flagged": 0.2,
+      "fabrications_caught": 0.9952,
+      "naive_fabrications_caught": 1.0,
+      "by_reward": {
+        "success": {
+          "runs": 184,
+          "turns": 1727,
+          "turns_flagged": 0.1355,
+          "naive_turns_flagged": 0.1442
+        },
+        "failure": {
+          "runs": 216,
+          "turns": 2929,
+          "turns_flagged": 0.2503,
+          "naive_turns_flagged": 0.2328
+        }
+      }
+    },
+    "ALL": {
+      "runs": 1980,
+      "turns": 22179,
+      "turns_with_claims": 17293,
+      "turns_flagged": 2580,
+      "naive_flags": 7010,
+      "naive_turns_flagged": 4200,
+      "planted": 16685,
+      "caught": 16506,
+      "naive_caught": 16685,
+      "claims": {
+        "identifier": 26023,
+        "quantity": 17080,
+        "money": 13865,
+        "date": 5162,
+        "time": 2239,
+        "email": 575,
+        "percent": 121,
+        "url": 1,
+        "phone": 1
+      },
+      "flags": {
+        "money": 3095,
+        "date": 573,
+        "quantity": 524,
+        "identifier": 126,
+        "percent": 2,
+        "phone": 1,
+        "time": 1
+      },
+      "share_turns_flagged": 0.1163,
+      "naive_share_turns_flagged": 0.1894,
+      "fabrications_caught": 0.9893,
+      "naive_fabrications_caught": 1.0,
+      "by_reward": {
+        "success": {
+          "runs": 1183,
+          "turns": 12729,
+          "turns_flagged": 0.0995,
+          "naive_turns_flagged": 0.1843
+        },
+        "failure": {
+          "runs": 797,
+          "turns": 9450,
+          "turns_flagged": 0.139,
+          "naive_turns_flagged": 0.1962
+        }
+      }
+    }
+  }
+}

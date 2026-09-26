@@ -1,0 +1,40 @@
+{"case": "sonnet-35-new-retail_666_24_196", "verdict": "derived", "evidence": "186.06 + 202.13 + 339.85 (two skateboards + smart watch, order #W7553978) = 728.04", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_156_20_278", "verdict": "derived", "evidence": "original payment 2787 - new economy total 216 (112 + 104) = 2571", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_195_14_317", "verdict": "derived", "evidence": "54.84 (blue T-shirt) - 46.85 (red XXL cotton crew neck) = 7.99", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_661_16_347", "verdict": "derived", "evidence": "159.92 (black L full-zip) - 153.18 (red L half-zip, 8733974883) = 6.74", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_156_20_117", "verdict": "derived", "evidence": "reservation M05KNL dates 2024-05-23 + 1 day ('the day after') = 2024-05-24; not stated literally", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_138_24_394", "verdict": "derived", "evidence": "197.33 (S red low) - 196.73 (M red high, 8573379326) = 0.60", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_152_30_159", "verdict": "derived", "evidence": "466.75 + 288.82 + 135.24 + 46.85 + 193.38 = 1131.04 (= 1166.98 - 14.75 - 14.77 - 6.42)", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_74_14_693", "verdict": "derived", "evidence": "(282 + 443) - (177 + 146 + 180) = 725 - 503 = 222", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_787_16_649", "verdict": "derived", "evidence": "302.67 (blue speaker 3254583681) - 298.91 (cheapest available green 9440686670) = 3.76", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_121_40_358", "verdict": "derived", "evidence": "150.01 (7453605304) - 137.94 (8384507844) = 12.07", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_211_20_181", "verdict": "derived", "evidence": "2459.74 (9844888101) - 2291.87 (3478699712) = 167.87", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_207_10_282", "verdict": "derived", "evidence": "reservation date 2024-05-23 + 1 day (user: 'day after my original booking') = May 24, 2024", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_366_26_429", "verdict": "derived", "evidence": "policy: certificate '$50 times the number of passengers'; M61CQM (HAT039) has 3 passengers: 50 x 3 = 150", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_183_18_516", "verdict": "invented", "evidence": "searched '1.5', 'hour', scheduled times: sources have only reservation records (no departure/arrival times for EWR-CLT/CLT-EWR); absent", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-retail_340_26_235", "verdict": "derived", "evidence": "1018.68 (current tablet 6501071631) - 903.95 (2106335193) = 114.73", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_7_14_451", "verdict": "derived", "evidence": "HAT110 economy 105 + HAT172 economy 102 = 207", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_147_10_350", "verdict": "missed_support", "evidence": "payment_id 'gift_card_1591784' in reservation S5IK51 and user profile; last four digits = 1784", "derived_correct": "n/a"}
+{"case": "sonnet-35-new-airline_357_10_404", "verdict": "derived", "evidence": "reservation M05KNL date 2024-05-23 + 1 day ('day after my original booking') = 2024-05-24", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_2_10_18", "verdict": "derived", "evidence": "count of T-Shirt variants in product details = 12, but only 10 have \"available\": true; agent says '12 ... available'", "derived_correct": "no"}
+{"case": "gpt-4o-airline_103_24_597", "verdict": "derived", "evidence": "HAT229 economy 109 + HAT266 economy 130 = 239", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_786_22_357", "verdict": "derived", "evidence": "2520.52 (2216662955) - 2459.74 (9844888101) = 60.78", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_505_16_648", "verdict": "derived", "evidence": "652.61 (robotic 6259501109) - 642.72 (bagless 7958300294) = 9.89", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_73_22_275", "verdict": "derived", "evidence": "HAT278 business 443 - original economy 180 = 263", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_2_18_295", "verdict": "derived", "evidence": "2FBBAH new prices 107 + 141 + 108 + 109 = 465", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_71_26_51", "verdict": "derived", "evidence": "212.79 (grey medium polyester 5917587651) - 201.95 (2492465580) = 10.84", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_156_12_61", "verdict": "derived", "evidence": "reservation M05KNL date 2024-05-23 + 1 day ('for the day after') = 2024-05-24", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_373_18_714", "verdict": "derived", "evidence": "(282 - (177 + 146)) + (443 - 180) = -41 + 263 = 222", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_73_12_472", "verdict": "missed_support", "evidence": "payment method id 'gift_card_1646646' (amount 200) in user profile; last four digits = 6646", "derived_correct": "n/a"}
+{"case": "gpt-4o-airline_7_12_258", "verdict": "derived", "evidence": "reservation M05KNL date 2024-05-23 + 1 day ('a day later') = May 24, 2024", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_46_24_603", "verdict": "derived", "evidence": "Seattle route basic economy HAT204 72 + HAT100 74 = 146 per person x 3 passengers = 438", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_110_14_463", "verdict": "derived", "evidence": "HAT041 basic economy 86 + HAT012 basic economy 77 = 163", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_380_36_327", "verdict": "derived", "evidence": "2621.77 (5052031638) - 2508.06 (1684786391) = 113.71", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_10_34_157", "verdict": "missed_support", "evidence": "payment method id 'gift_card_7359776' (amount 39) in user profile; last four digits = 9776", "derived_correct": "n/a"}
+{"case": "gpt-4o-retail_110_30_296", "verdict": "derived", "evidence": "1018.68 (6501071631) - 903.95 (2106335193) = 114.73", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_109_30_570", "verdict": "derived", "evidence": "per person business 364 + 248 + 259 = 871; 871 - 500 - 198 - 129 = 44", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_426_30_310", "verdict": "derived", "evidence": "2468.70 (#W3289292) + 943.83 (#W9722559) = 3412.53", "derived_correct": "yes"}
+{"case": "sonnet-35-new-retail_671_18_825", "verdict": "derived", "evidence": "(2459.74 - 2291.87) - (2520.52 - 2459.74) = 167.87 - 60.78 = 107.09", "derived_correct": "yes"}
+{"case": "sonnet-35-new-airline_208_20_480", "verdict": "derived", "evidence": "HAT023 business 364 x 3 passengers = 1092", "derived_correct": "yes"}
+{"case": "gpt-4o-airline_7_14_760", "verdict": "derived", "evidence": "HAT227 economy 112 + HAT139 economy 104 = 216", "derived_correct": "yes"}
+{"case": "gpt-4o-retail_347_10_21", "verdict": "derived", "evidence": "count of T-Shirt variants in product details = 12, but only 10 have \"available\": true; agent says '12 T-shirt options available'", "derived_correct": "no"}

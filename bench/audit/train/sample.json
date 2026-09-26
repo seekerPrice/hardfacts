@@ -1,0 +1,13 @@
+{
+  "split": "train",
+  "commit": "269aad0",
+  "flags": 2102,
+  "flags_on_gold": 1430,
+  "unmatched_by_task": {
+    "QA": 347,
+    "Summary": 189,
+    "Data2txt": 136
+  },
+  "sampled": 120,
+  "seed": 0
+}

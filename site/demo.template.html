@@ -1,0 +1,282 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hardfacts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,800&display=swap">
+<style>
+  :root {
+    --paper: #f4f5f1;
+    --sheet: #fbfbf8;
+    --ink: #18212c;
+    --muted: #5a6470;
+    --rule: #d6dad2;
+    --proof: #c2331d;
+    --proof-wash: #fbe4df;
+    --ok: #17705f;
+    --ok-wash: #dcefe9;
+    --marker: #ffe8a3;
+    --display: "Literata", "Iowan Old Style", Georgia, serif;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #11151b; --sheet: #171c23; --ink: #e6e9ed; --muted: #97a1ad; --rule: #2a313b;
+      --proof: #ff7a63; --proof-wash: #3a1f1b; --ok: #58c9b3; --ok-wash: #16312c; --marker: #5a4a14;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #11151b; --sheet: #171c23; --ink: #e6e9ed; --muted: #97a1ad; --rule: #2a313b;
+    --proof: #ff7a63; --proof-wash: #3a1f1b; --ok: #58c9b3; --ok-wash: #16312c; --marker: #5a4a14;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--paper); color: var(--ink); font: 16px/1.6 var(--sans); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 64px; }
+  h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.02; }
+  h2 { font-size: 1.7rem; font-weight: 600; margin-bottom: 14px; }
+  h3 { font-size: 1.12rem; font-weight: 600; }
+  p { margin: 0; max-width: 66ch; }
+  a { color: inherit; text-decoration-color: var(--proof); text-underline-offset: 3px; }
+  .eyebrow { font: 500 0.75rem/1 var(--sans); letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); }
+  code, .mono { font-family: var(--mono); font-size: 0.92em; }
+
+  header.top { display: grid; gap: 14px; margin-bottom: 28px; }
+  header.top .lede { font: 400 1.18rem/1.55 var(--display); max-width: 60ch; }
+  .credit { font-size: 0.85rem; color: var(--muted); }
+
+  /* ---------------------------------------------------------------- demo */
+  .demo { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 18px; display: grid; gap: 16px; }
+  .presets { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .presets button { font: 500 0.85rem var(--sans); color: var(--ink); background: transparent; border: 1px solid var(--rule); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+  .presets button[aria-pressed="true"] { background: var(--ink); color: var(--sheet); border-color: var(--ink); }
+  .presets button:focus-visible, textarea:focus-visible, .claim:focus-visible { outline: 2px solid var(--proof); outline-offset: 2px; }
+  .panes { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; }
+  label { display: grid; gap: 6px; }
+  textarea { width: 100%; min-height: 150px; resize: vertical; font: 0.88rem/1.5 var(--mono); color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-radius: 4px; padding: 10px; }
+  #sources { min-height: 150px; }
+  .hint { font-size: 0.8rem; color: var(--muted); }
+
+  .proof { font: 400 1.08rem/1.9 var(--display); background: var(--paper); border-left: 3px solid var(--ink); padding: 14px 16px; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .claim { border-radius: 2px; padding: 0 1px; cursor: help; }
+  .claim.ok { background: var(--ok-wash); box-shadow: inset 0 -2px 0 var(--ok); }
+  .claim.bad { background: var(--proof-wash); box-shadow: inset 0 -2px 0 var(--proof); text-decoration: line-through; text-decoration-color: var(--proof); text-decoration-thickness: 2px; }
+  .claim.bad::after { content: "?"; font: 700 0.7rem var(--sans); color: var(--sheet); background: var(--proof); border-radius: 50%; display: inline-grid; place-items: center; width: 1.05em; height: 1.05em; margin-left: 2px; vertical-align: super; text-decoration: none; }
+  .verdict { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: baseline; font-size: 0.95rem; }
+  .verdict strong { font-family: var(--display); font-size: 1.25rem; }
+  .verdict .bad { color: var(--proof); }
+  .verdict .ok { color: var(--ok); }
+  .timing { color: var(--muted); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+
+  .ledger-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+  th { text-align: left; font: 500 0.72rem var(--sans); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--ink); padding: 6px 10px 6px 0; }
+  td { border-bottom: 1px solid var(--rule); padding: 8px 10px 8px 0; vertical-align: top; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .pill { display: inline-block; font: 600 0.72rem var(--sans); letter-spacing: 0.05em; text-transform: uppercase; border-radius: 3px; padding: 2px 7px; }
+  .pill.ok { color: var(--ok); background: var(--ok-wash); }
+  .pill.bad { color: var(--proof); background: var(--proof-wash); }
+  .ev { color: var(--muted); font-size: 0.85rem; }
+  .ev mark { background: var(--marker); color: var(--ink); padding: 0 1px; }
+
+  /* ------------------------------------------------------------- sections */
+  section { margin-top: 56px; }
+  .results { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0; border-top: 1px solid var(--ink); }
+  .stat { padding: 16px 16px 16px 0; border-bottom: 1px solid var(--rule); }
+  .stat b { display: block; font: 800 2.1rem/1.1 var(--display); font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 0.9rem; color: var(--muted); }
+  .stat .vs { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
+  .argue { display: grid; gap: 18px; counter-reset: none; }
+  .argue > div { display: grid; grid-template-columns: 180px 1fr; gap: 18px; padding-top: 14px; border-top: 1px solid var(--rule); }
+  .argue h3 { font-size: 1.02rem; }
+  .against { background: var(--sheet); border: 1px solid var(--rule); border-left: 3px solid var(--proof); padding: 16px 18px; border-radius: 4px; display: grid; gap: 8px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  ul.clean { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; max-width: 66ch; }
+  .steps { margin: 0; padding-left: 1.3em; display: grid; gap: 10px; max-width: 70ch; }
+  .files { font: 0.85rem/1.7 var(--mono); background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 14px 16px; overflow-x: auto; white-space: pre; }
+  footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
+
+  @media (max-width: 760px) {
+    .panes, .cols { grid-template-columns: 1fr; }
+    .argue > div { grid-template-columns: 1fr; gap: 6px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .claim { transition: background-color .15s ease; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">An open-source library · Python + TypeScript · EN · BM · 中文</span>
+    <h1>hardfacts</h1>
+    <p class="lede">Every number, date, amount, phone number and ID in an LLM's answer, checked against what the model was actually given. Values with no source get struck out. It's deterministic, takes about a millisecond and makes no model calls.</p>
+    <p class="credit">Built with Claude Code in one autonomous session, 26 September 2026. The demo below runs the real library in your browser.</p>
+  </header>
+
+  <div class="demo" id="demo">
+    <div class="presets" role="group" aria-label="Examples">
+      <span class="eyebrow" style="margin-right:4px">Try</span>
+    </div>
+    <div class="panes">
+      <label for="output"><span class="eyebrow">LLM output</span>
+        <textarea id="output" spellcheck="false"></textarea>
+      </label>
+      <label for="sources"><span class="eyebrow">What the model was given</span>
+        <textarea id="sources" spellcheck="false"></textarea>
+        <span class="hint">Separate sources with a line of <code>---</code>. JSON is parsed like a tool result.</span>
+      </label>
+    </div>
+    <div class="verdict" id="verdict" aria-live="polite"></div>
+    <div class="proof" id="proof"></div>
+    <div class="ledger-wrap">
+      <table>
+        <thead><tr><th>Kind</th><th>Claim</th><th>Read as</th><th>Verdict</th><th>Evidence in the sources</th></tr></thead>
+        <tbody id="ledger"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <section>
+    <span class="eyebrow">Measured, with the protocol written down first</span>
+    <h2>Measured where it could fail, including where it did</h2>
+    <div class="results">
+      <div class="stat"><b>0.758</b><span>of flags hit a human-labelled hallucination (RAGTruth test, scored once per release)</span><div class="vs">naive digit check: 0.221</div></div>
+      <div class="stat"><b>86%</b><span>of those flags point at a hallucination once the missed ones are audited</span><div class="vs">97.2% counting derived values</div></div>
+      <div class="stat"><b>98.2%</b><span>of planted fabrications caught on held-out support agents (τ²-bench, pre-registered)</span><div class="vs">τ-bench: 98.9% · RAGTruth: 96.4%</div></div>
+      <div class="stat"><b>19.7%</b><span>of held-out flags were the checker's own mistakes. It predicted ≤ 10% and failed.</span><div class="vs">causes fixed and labelled post-fix</div></div>
+      <div class="stat"><b>90%</b><span>of support-bot flags are the agent's own arithmetic, and about 1 in 10 of those sums is wrong</span><div class="vs">so each flag shows its working</div></div>
+      <div class="stat"><b>0.18 ms</b><span>per response in TypeScript; a few ms in Python</span><div class="vs">the two ports agree on 140,000+ real and fuzzed cases</div></div>
+    </div>
+    <p class="hint" style="margin-top:10px">
+      <strong>RAGTruth</strong> has 17,790 human-labelled responses. Rules were tuned on train only, and two blind LLM auditors reviewed every disputed test flag (κ 0.96).
+      <strong>FaithBench</strong>, never tuned on, showed the same 96% fabrication recall; its first score exposed a tokenisation bug, and the README reports that score as it came out.
+      <strong>τ-bench</strong> is real GPT-4o and Claude runs as retail and airline agents, pre-registered, with 240 flags blind-audited.
+    </p>
+  </section>
+
+  <section class="cols">
+    <div>
+      <span class="eyebrow">Honest limits</span>
+      <h2>What it can't do</h2>
+      <ul class="clean">
+        <li><b>Binding.</b> The right value on the wrong subject passes. It catches 22% of source values moved to the wrong place, almost all through a Kind mismatch.</li>
+        <li><b>Correct arithmetic.</b> A computed total is still flagged, because no source states it. It shows the working ("$6.32 = $101.12 − $94.80") but can't tell right operands from wrong ones.</li>
+        <li><b>Prose claims</b> aren't hard facts. Use it in front of an LLM judge, not instead of one.</li>
+        <li><b>The BM and 中文 rules</b> have not yet had a full native-speaker review.</li>
+      </ul>
+    </div>
+    <div>
+      <span class="eyebrow">Get it</span>
+      <h2>Install</h2>
+      <ol class="steps">
+        <li><code>pip install "git+https://github.com/seekerPrice/hardfacts"</code></li>
+        <li>PyPI and npm packages come when the repository reaches 100 stars.</li>
+        <li>Read <code>docs/writeup.md</code> and the ADRs, then run <code>tools/verify.sh</code>.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">github.com/seekerPrice/hardfacts</span>
+    <h2>What's in the repository</h2>
+    <div class="files">src/hardfacts/          the Python library (reference implementation)
+ts/                     the TypeScript port, a browser build and the Vercel AI SDK example
+tests/                  behaviour tests at the public seam, including property-based invariants
+bench/                  RAGTruth, FaithBench, τ-bench and τ²-bench harnesses, fault injection, blind audits, differentials
+integrations/           an MCP server, and a Claude Code Stop hook
+examples/               retry loop, Pydantic AI validator, cost model, sample client reports
+docs/adr/               seven decisions, with the numbers behind them
+docs/reviews/           the bug audit, five hostile review rounds, the τ-bench record and pre-registrations
+tools/verify.sh         every gate in one command</div>
+  </section>
+
+  <footer>hardfacts v0.2 · MIT · built with Claude Code (Opus 5.5) · every number from a committed file</footer>
+</div>
+
+<script>
+/*HARDFACTS_BUNDLE*/
+</script>
+<script>
+(() => {
+  const PRESETS = /*PRESETS*/;
+  const $ = (id) => document.getElementById(id);
+  const out = $("output"), src = $("sources");
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+  function parseSources(text) {
+    return text.split(/\n-{3,}\n/).map((chunk) => chunk.trim()).filter(Boolean).map((chunk) => {
+      try { return JSON.parse(chunk); } catch { return chunk; }
+    });
+  }
+
+  function valueText(v) {
+    if (Array.isArray(v)) return v.map((x) => x ?? "any").join(" · ");
+    return String(v);
+  }
+
+  function evidenceText(report, e) {
+    const text = report.sources[e.source];
+    const a = Math.max(0, e.span[0] - 28), b = Math.min(text.length, e.span[1] + 28);
+    return `source ${e.source + 1}: ${a ? "…" : ""}${esc(text.slice(a, e.span[0]))}<mark>${esc(e.text)}</mark>${esc(text.slice(e.span[1], b))}${b < text.length ? "…" : ""}`;
+  }
+
+  function run() {
+    const t0 = performance.now();
+    const report = hardfacts.check(out.value, parseSources(src.value));
+    const ms = performance.now() - t0;
+    const bad = report.unsupported.length, total = report.claims.length;
+    $("verdict").innerHTML = total === 0
+      ? `<strong>No hard facts found.</strong>`
+      : bad
+        ? `<strong class="bad">${bad} of ${total} hard facts have no source.</strong><span>Struck out below. These would reach the customer.</span>`
+        : `<strong class="ok">All ${total} hard facts have a source.</strong><span>Safe to send.</span>`;
+    $("verdict").insertAdjacentHTML("beforeend", `<span class="timing">checked in ${ms.toFixed(2)} ms, in your browser</span>`);
+
+    let html = "", at = 0;
+    for (const c of report.claims) {
+      html += esc(out.value.slice(at, c.span[0]));
+      const title = c.supported ? `${c.kind}: supported by source ${c.evidence[0].source + 1}`
+        : c.derivation ? `${c.kind}: no source contains this value; computed as ${c.derivation.expression}` : `${c.kind}: no source contains this value`;
+      html += `<span class="claim ${c.supported ? "ok" : "bad"}" tabindex="0" title="${esc(title)}">${esc(c.text)}</span>`;
+      at = c.span[1];
+    }
+    $("proof").innerHTML = html + esc(out.value.slice(at));
+
+    $("ledger").innerHTML = report.claims.map((c) => `<tr>
+      <td class="mono">${c.kind}</td>
+      <td>${esc(c.text)}</td>
+      <td class="mono">${esc(valueText(c.value))}</td>
+      <td>${c.supported ? '<span class="pill ok">supported</span>' : '<span class="pill bad">no source</span>'}</td>
+      <td class="ev">${c.supported ? c.evidence.slice(0, 2).map((e) => evidenceText(report, e)).join("<br>")
+        : c.derivation ? `computed as <b>${esc(c.derivation.expression)}</b> from values this reply states: check they are the right ones to combine`
+        : "nothing in the sources has this value, and it isn't arithmetic on the reply's own values"}</td>
+    </tr>`).join("");
+  }
+
+  const bar = document.querySelector(".presets");
+  const buttons = PRESETS.map((p, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = p.label;
+    b.setAttribute("aria-pressed", String(i === 0));
+    b.addEventListener("click", () => {
+      buttons.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      out.value = p.output;
+      src.value = p.sources;
+      run();
+    });
+    bar.appendChild(b);
+    return b;
+  });
+  hardfacts.check("warm up 9:00 on 2026-10-03 for $5", ["compile the patterns once"]);  // first call compiles every regex
+  out.value = PRESETS[0].output;
+  src.value = PRESETS[0].sources;
+  out.addEventListener("input", run);
+  src.addEventListener("input", run);
+  run();
+})();
+</script>

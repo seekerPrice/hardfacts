@@ -1,0 +1,43 @@
+{
+  "name": "hardfacts",
+  "version": "0.1.0-dev.0",
+  "description": "Deterministic provenance for the numbers, dates, money and IDs your LLM writes.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Loo Tan Yu Heng (Lucas) <lucaslootan@gmail.com>",
+  "keywords": [
+    "llm",
+    "hallucination",
+    "rag",
+    "guardrails",
+    "evaluation",
+    "provenance"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "hardfacts": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test \"test/**/*.test.ts\"",
+    "bundle": "npm run build && node scripts/bundle-browser.mjs > dist/hardfacts.browser.js"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "ai": "^7.0.116",
+    "typescript": "^5.9.0"
+  }
+}

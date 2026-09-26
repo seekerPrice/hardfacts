@@ -1,0 +1,16 @@
+{
+  "base": "78413c9",
+  "head": "8270819",
+  "flags": 281,
+  "flags_on_gold": 213,
+  "unmatched": 68,
+  "unmatched_without_a_verdict": 0,
+  "verdicts": {
+    "derived": 31,
+    "invented": 29,
+    "missed_support": 8
+  },
+  "gold_precision": 0.758,
+  "audited_precision_strict": 0.8612,
+  "audited_precision_with_derived": 0.9715
+}

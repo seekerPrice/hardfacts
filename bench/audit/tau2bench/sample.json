@@ -1,0 +1,20 @@
+{
+  "commit": "76d7a30",
+  "flags": 5397,
+  "flags_by_agent": {
+    "claude-3-7-sonnet/airline": 784,
+    "claude-3-7-sonnet/retail": 829,
+    "claude-3-7-sonnet/telecom": 727,
+    "gpt-4.1/airline": 195,
+    "gpt-4.1/retail": 158,
+    "gpt-4.1/telecom": 176,
+    "gpt-4.1-mini/airline": 356,
+    "gpt-4.1-mini/retail": 127,
+    "gpt-4.1-mini/telecom": 35,
+    "o4-mini/airline": 781,
+    "o4-mini/retail": 996,
+    "o4-mini/telecom": 233
+  },
+  "sampled": 120,
+  "seed": 0
+}

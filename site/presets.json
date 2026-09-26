@@ -1,0 +1,38 @@
+[
+  {
+    "id": "support",
+    "label": "Support bot",
+    "output": "Hi Aisyah! Your order ORD-2024-0012 shipped with Pos Laju yesterday. Tracking number: EN123456780MY. It should arrive on 2 October, and the RM 12.90 shipping fee has been refunded. Questions? Call us on 03-7890 1234.",
+    "sources": "{\"order_id\": \"ORD-2024-0012\", \"carrier\": \"Pos Laju\", \"tracking\": \"EN123456789MY\", \"eta\": \"2026-10-03\", \"shipping_fee\": 12.90, \"refund\": \"shipping_fee\"}\n---\nCustomer care: 03-7890 1234 (Mon–Fri, 9am–6pm)"
+  },
+  {
+    "id": "exchange",
+    "label": "Refund maths",
+    "output": "I can exchange your kettle for the ceramic 2L model. It's $101.12 and yours was $94.80, so you'll pay $6.32 more, charged to your gift card ending 2692.",
+    "sources": "{\"current_item\": {\"item_id\": \"7292993796\", \"price\": 94.8, \"capacity\": \"1.5L\"}, \"new_item\": {\"item_id\": \"3761330360\", \"price\": 101.12, \"material\": \"ceramic\", \"capacity\": \"2L\"}, \"payment_method_id\": \"gift_card_7250692\"}"
+  },
+  {
+    "id": "manglish",
+    "label": "Manglish",
+    "output": "Boss, refund RM1.2k untuk order ORD-2024-0012 akan masuk dalam 7 hari bekerja ya. Kalau ada masalah, email support@kedai.my. Terima kasih!",
+    "sources": "{\"order_id\": \"ORD-2024-0012\", \"refund\": 1200, \"currency\": \"MYR\", \"refund_days\": 5}\n---\nContact: support@kedai.my"
+  },
+  {
+    "id": "zh",
+    "label": "中文",
+    "output": "您好！订单ORD-2024-0012的退款1200元将在3个工作日内到账，预计2026年10月3日前完成。",
+    "sources": "{\"order_id\": \"ORD-2024-0012\", \"refund\": 1200, \"refund_days\": 5, \"deadline\": \"2026-10-03\"}"
+  },
+  {
+    "id": "hours",
+    "label": "Opening hours",
+    "output": "Apna Indian Kitchen is open Tuesday to Sunday from 4:30 PM to 10 PM and holds a 4.5-star rating. Reviewers loved the butter chicken, and one visit on January 16, 2022 was rated 5 stars.",
+    "sources": "{\"name\": \"Apna Indian Kitchen\", \"hours\": {\"Tuesday\": \"16:30-21:0\", \"Sunday\": \"16:30-21:0\"}, \"business_stars\": 4.5, \"review_info\": [{\"review_stars\": 5.0, \"review_date\": \"2022-01-16 14:45:22\"}]}"
+  },
+  {
+    "id": "news",
+    "label": "News summary",
+    "output": "Here is a summary in 64 words: Anne Frank died of typhus at the age of 15. New research suggests she died before February 7, 2022, at least a month earlier than the long-accepted date of March 31, 1945. The Bergen-Belsen camp was liberated two weeks later, and seventy years on, researchers examined 1,200 archive records.",
+    "sources": "Seventy years ago, Anne Frank died of typhus in a Nazi concentration camp at the age of 15. Just two weeks after her supposed death on March 31, 1945, the Bergen-Belsen concentration camp where she had been imprisoned was liberated. New research shows that Anne and her older sister, Margot, died at least a month earlier than previously thought; witnesses said both had symptoms before February 7."
+  }
+]

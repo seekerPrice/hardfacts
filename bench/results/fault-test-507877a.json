@@ -1,0 +1,64 @@
+{
+  "split": "test",
+  "commit": "507877a",
+  "recall": {
+    "fabricate": {
+      "naive": {
+        "date": 1.0,
+        "money": 1.0,
+        "number": 1.0,
+        "percent": 1.0,
+        "phone": 1.0,
+        "time": 1.0,
+        "year": 1.0,
+        "ALL": 1.0
+      },
+      "hardfacts": {
+        "date": 1.0,
+        "money": 1.0,
+        "number": 0.9492,
+        "percent": 1.0,
+        "phone": 1.0,
+        "time": 0.9891,
+        "year": 1.0,
+        "ALL": 0.9641
+      }
+    },
+    "swap": {
+      "naive": {
+        "date": 0.0,
+        "money": 0.0,
+        "number": 0.0,
+        "percent": 0.0,
+        "phone": 0.0,
+        "time": 0.0,
+        "year": 0.0,
+        "ALL": 0.0
+      },
+      "hardfacts": {
+        "date": 0.6154,
+        "money": 0.2632,
+        "number": 0.1,
+        "percent": 0.2381,
+        "phone": 0.6,
+        "time": 0.8506,
+        "year": 0.1096,
+        "ALL": 0.2159
+      }
+    }
+  },
+  "clean_flag_rate": {
+    "naive": {
+      "QA": 0.1259,
+      "Summary": 0.1437,
+      "Data2txt": 0.4798,
+      "ALL": 0.1986
+    },
+    "hardfacts": {
+      "QA": 0.0112,
+      "Summary": 0.0216,
+      "Data2txt": 0.0156,
+      "ALL": 0.0162
+    }
+  }
+}
