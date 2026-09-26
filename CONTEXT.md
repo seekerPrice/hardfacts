@@ -33,6 +33,10 @@ The exact characters a Hard fact was written with.
 **Specificity**:
 How much of a Value is pinned down. `February 7` is less specific than `February 7, 1945`. A Claim may be less specific than its Evidence, but never more.
 
+**Name**:
+A token mixing letters and digits that names something rather than stating a value: `COVID-19`, `CD8`, `H1N1`, `Schedule 13G`. It is a Claim only when a Source contains a name of the same **shape** (digit runs as `#`: `COVID-12` is shaped like `COVID-19`), and it is Supported only by the same name.
+_Avoid_: identifier (an identifier is itself the value, such as an order ID; a name is checked only against its siblings)
+
 **Exempt span**:
 Text that looks like a Hard fact but asserts nothing about the world, such as a list marker (`4.`) or a statement about the Output itself (`summary in 88 words`).
 

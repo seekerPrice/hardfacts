@@ -10,7 +10,7 @@ from decimal import Decimal
 from typing import Any, Collection, Iterable, Iterator
 
 from ._derive import explain
-from ._extract import Fact, extract
+from ._extract import Fact, extract, name_shape, names
 from ._kinds import KINDS
 from ._match import claim_keys, evidence_keys, supports
 from ._model import Claim, Evidence, Report
@@ -156,7 +156,8 @@ def check(output: str, sources: Iterable[Any], *, kinds: Collection[str] | None 
         for key in evidence_keys(e):
             index[key].append(position)
     claims = []
-    for fact in extract(output, claims=True):
+    facts = extract(output, claims=True)
+    for fact in facts:
         if kinds is not None and fact.kind not in kinds:
             continue
         found: list[Evidence] = []
@@ -167,4 +168,28 @@ def check(output: str, sources: Iterable[Any], *, kinds: Collection[str] | None 
                     break
         found = tuple(found)
         claims.append(Claim(fact.kind, fact.text, (fact.start, fact.end), fact.value, bool(found), found))
+    if kinds is None or "name" in kinds:
+        claims += _name_claims(output, rendered, [(f.start, f.end) for f in facts])
+        claims.sort(key=lambda c: c.span[0])
     return Report(explain(tuple(claims)), rendered)
+
+
+def _name_claims(output: str, rendered: tuple[str, ...], taken: list[tuple[int, int]]) -> list[Claim]:
+    """Names in the Output that a same-shaped name in the Sources makes checkable (ADR-0008)."""
+    by_value: dict[str, list[Evidence]] = defaultdict(list)
+    for i, text in enumerate(rendered):
+        for start, end, surface, value in names(text):
+            by_value[value].append(Evidence(i, (start, end), surface))
+    if not by_value:
+        return []
+    shapes = {name_shape(v) for v in by_value}
+    found = []
+    t = 0  # taken spans are in order and don't overlap; so are names: one forward walk
+    for start, end, surface, value in names(output):
+        while t < len(taken) and taken[t][1] <= start:
+            t += 1
+        if name_shape(value) not in shapes or (t < len(taken) and taken[t][0] < end):
+            continue
+        evidence = tuple(by_value.get(value, ())[:EVIDENCE_PER_CLAIM])
+        found.append(Claim("name", surface, (start, end), value, bool(evidence), evidence))
+    return found

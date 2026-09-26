@@ -11,5 +11,6 @@ KIND_NAMES = {
     "email": "email address",
     "url": "link",
     "identifier": "ID or code",
+    "name": "name with a number",
 }
 KINDS = frozenset(KIND_NAMES)

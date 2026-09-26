@@ -6,7 +6,7 @@
  */
 
 import { add, compare, type Dec, dec, mul, sub } from "./decimal.ts";
-import { codePointsBefore, DOLLAR_FAMILY, extract, type Fact, type Value, YEN_FAMILY } from "./extract.ts";
+import { codePointsBefore, DOLLAR_FAMILY, extract, type Fact, nameShape, names, type Value, YEN_FAMILY } from "./extract.ts";
 import { compile } from "./regex.ts";
 
 export type { Value } from "./extract.ts";
@@ -22,6 +22,7 @@ export const KIND_NAMES: Record<string, string> = {
   email: "email address",
   url: "link",
   identifier: "ID or code",
+  name: "name with a number",
 };
 export const KINDS: ReadonlySet<string> = new Set(Object.keys(KIND_NAMES));
 
@@ -541,7 +542,8 @@ export function check(output: string, sources: unknown[], options: CheckOptions 
     }
   });
   const claims: Claim[] = [];
-  for (const f of extract(output, true)) {
+  const facts = extract(output, true);
+  for (const f of facts) {
     if (kinds && !kinds.has(f.kind)) continue;
     const lists = claimKeys(f).map((k) => index.get(k)).filter((l): l is number[] => l !== undefined);
     const candidates = lists.length === 1 ? lists[0] : [...new Set(lists.flat())].sort((x, y) => x - y);
@@ -553,11 +555,38 @@ export function check(output: string, sources: unknown[], options: CheckOptions 
     }
     claims.push({ kind: f.kind, text: f.text, span: [f.start, f.end], value: f.value, supported: found.length > 0, evidence: found, derivation: null });
   }
+  if (!kinds || kinds.has("name")) {
+    claims.push(...nameClaims(output, rendered, facts.map((f) => [f.start, f.end] as [number, number])));
+    claims.sort((x, y) => x.span[0] - y.span[0]);
+  }
   const search = new Search(claims);
   for (const c of claims) if (!c.supported && ARITHMETIC_KINDS.has(c.kind)) c.derivation = search.derive(c);
   const unsupported = claims.filter((c) => !c.supported);
   const unexplained = unsupported.filter((c) => c.derivation === null);
   return { claims, sources: rendered, unsupported, unexplained, ok: unsupported.length === 0 };
+}
+
+/** Names in the Output that a same-shaped name in the Sources makes checkable (ADR-0008). */
+function nameClaims(output: string, rendered: string[], taken: [number, number][]): Claim[] {
+  const byValue = new Map<string, Evidence[]>();
+  rendered.forEach((text, i) => {
+    for (const [start, end, surface, v] of names(text)) {
+      const list = byValue.get(v) ?? [];
+      list.push({ source: i, span: [start, end], text: surface });
+      byValue.set(v, list);
+    }
+  });
+  if (!byValue.size) return [];
+  const shapes = new Set([...byValue.keys()].map(nameShape));
+  const found: Claim[] = [];
+  let t = 0; // taken spans are in order and don't overlap; so are names: one forward walk
+  for (const [start, end, surface, value] of names(output)) {
+    while (t < taken.length && taken[t][1] <= start) t++;
+    if (!shapes.has(nameShape(value)) || (t < taken.length && taken[t][0] < end)) continue;
+    const evidence = (byValue.get(value) ?? []).slice(0, EVIDENCE_PER_CLAIM);
+    found.push({ kind: "name", text: surface, span: [start, end], value, supported: evidence.length > 0, evidence, derivation: null });
+  }
+  return found;
 }
 
 /** A correction instruction for the model that wrote the Output, or "" if nothing is Unsupported. */

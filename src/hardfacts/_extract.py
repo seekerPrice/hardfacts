@@ -1089,6 +1089,33 @@ _ONE_FOR_ONE = {
 """Characters read as their ASCII twin. Every mapping is one character for one, so offsets hold."""
 
 
+_NAME = _compile(r"(?<![\w.-])(?=[\w-]*[A-Za-z])(?=[\w-]*\d)[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*(?![\w-]|\.\d)")
+"""A token mixing letters and digits: COVID-19, CD8, IL-4, H1N1, 13G, 4WD (ADR-0008)."""
+_CURRENCY_CODE = _compile(r"(?:rm|rmb|usd|us|sgd|eur|gbp|jpy|cny|inr|idr|thb|php|vnd|aud|cad|hkd|nzd|rp|rs)\d", re.I)
+"""An amount written against its currency code ("RMB105") is money, not a name."""
+
+
+def names(text: str) -> list[tuple[int, int, str, str]]:
+    """Every name in ``text`` as (start, end, surface, Value), scanned as extract() scans (ADR-0008)."""
+    scan = _mask_escapes(text)
+    return [(m.start(), m.end(), text[m.start():m.end()], name_value(m.group())) for m in _NAME.finditer(scan)
+            if not _CURRENCY_CODE.match(m.group())]
+
+
+_NAME_HYPHEN = _compile(r"(?<=[a-z])-(?=[0-9])|(?<=[0-9])-(?=[a-z])")
+
+
+def name_value(token: str) -> str:
+    """A name's Value: lower case, without a hyphen between a letter and a digit ("COVID-19" and
+    "covid19" are one name; "X1-2" and "X12" are not)."""
+    return _NAME_HYPHEN.sub("", token.lower())
+
+
+def name_shape(value: str) -> str:
+    """A name's shape: its Value with every run of digits as "#" ("covid#", "h#n#")."""
+    return re.sub(r"[0-9]+", "#", value)
+
+
 _MIDDLE_DOT_DECIMAL = _compile(r"(?<=[0-9])·(?=[0-9])")
 
 

@@ -92,6 +92,7 @@ Integration examples, all runnable offline:
 | phone | `(510) 889-8690` · `510-889-8690` · `+1 510 889 8690` | a support line that doesn't exist |
 | email, url | case- and `www.`-insensitive; a domain is supported by a deeper link or an address at it | an invented download link |
 | identifier | `ORD-2024-0012` · `ord20240012` · booking codes like `XEHM8B` · "card ending in 1784", `**** 4242` | an invented tracking number, order ID or SKU; "ending in 2692" when the card is `gift_card_7250692` |
+| name | `COVID-19` · `covid19`, checked only against same-shaped names in the sources ([ADR-0008](docs/adr/0008-names-are-checked-against-their-siblings.md)) | "COVID-12" or "H2N1" when the source says COVID-19 or H1N1; "Schedule 16G" for 13G |
 
 Partial values follow one rule: a claim may be *less* specific than its evidence, never more. So `February 7` is supported by `7 Feb 1945`, but `February 7, 2022` is not.
 

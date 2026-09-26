@@ -1092,6 +1092,31 @@ const ONE_FOR_ONE_RE = new RegExp(`[${[...ONE_FOR_ONE.keys()].map((cp) => `\\u${
  * Normalise the text recognisers scan, keeping every offset: blank escape sequences written
  * as text, turn Unicode spaces into spaces and full-width or other-script digits into ASCII.
  */
+/** A token mixing letters and digits: COVID-19, CD8, IL-4, H1N1, 13G, 4WD (ADR-0008). */
+const NAME = compile(String.raw`(?<![\w.-])(?=[\w-]*[A-Za-z])(?=[\w-]*\d)[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*(?![\w-]|\.\d)`);
+/** An amount written against its currency code ("RMB105") is money, not a name. */
+const CURRENCY_CODE = compile(String.raw`(?:rm|rmb|usd|us|sgd|eur|gbp|jpy|cny|inr|idr|thb|php|vnd|aud|cad|hkd|nzd|rp|rs)\d`, { ignoreCase: true });
+
+/** Every name in `text` as [start, end, surface, Value], scanned as extract() scans (ADR-0008). */
+export function names(text: string): [number, number, string, string][] {
+  const scan = maskEscapes(text);
+  return NAME.all(scan).filter((m) => CURRENCY_CODE.at(m[0], 0) === null)
+    .map((m) => { const [a, b] = span(m); return [a, b, text.slice(a, b), nameValue(m[0])]; });
+}
+
+/**
+ * A name's Value: lower case, without a hyphen between a letter and a digit ("COVID-19" and
+ * "covid19" are one name; "X1-2" and "X12" are not).
+ */
+export function nameValue(token: string): string {
+  return token.toLowerCase().replace(/(?<=[a-z])-(?=[0-9])|(?<=[0-9])-(?=[a-z])/g, "");
+}
+
+/** A name's shape: its Value with every run of digits as "#" ("covid#", "h#n#"). */
+export function nameShape(value: string): string {
+  return value.replace(/[0-9]+/g, "#");
+}
+
 function maskEscapes(text: string): string {
   let scan = text.replace(ONE_FOR_ONE_RE, (ch) => ONE_FOR_ONE.get(ch.charCodeAt(0))!);
   if (scan.includes("\\")) scan = scan.replace(ESCAPE, (m) => " ".repeat(m.length));

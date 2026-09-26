@@ -86,3 +86,7 @@ The audit's main finding was fixed test-first in both ports: bracketed citation 
 | planted fabrications caught | 89.2% | 88.0% (plants into "[10]" now land in an exempt marker) |
 
 FinQA and TAT-QA are unchanged. Because the citation problem was found on this data, the post-fix precision is a bug-fix measurement, not a second held-out result.
+
+### Post-fix 2: names (ADR-0008)
+
+Fabrications planted into names (`COVID-19` → `COVID-12`) were the biggest recall gap, so names are now checked against same-shaped names in the documents ([ADR-0008](../adr/0008-names-are-checked-against-their-siblings.md), measured first in `bench/name_experiment.py`). On the other ten datasets, fabrications caught rose from 88.0% to **95.4%**. Precision is 49.6%, recall 9.4%, and 2.7% of adherent responses are flagged. At equal flag counts the figures are hardfacts 51.2% and RAGAS 39.3%. A hostile review of the first version found a quadratic slowdown and a hyphen-merging false "Supported" (`X1-2` matching `X12`), and both were fixed before this run.

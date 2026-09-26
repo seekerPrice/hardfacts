@@ -19,7 +19,7 @@ These are measured gaps, not wishes. Each one says where the evidence is. A fix 
 
 - **Space-grouped thousands** (`90 973`) and typo'd dates (`March 18. 2021`), found in the RAGBench audit.
 - **Units.** Matching ignores units, so "20cm" supports "20 minutes". Requiring unit agreement was measured and made things worse ([ADR-0006](docs/adr/0006-values-not-context.md)). A narrower rule might not.
-- **Digits inside names.** `COVID-19` → `COVID-12` and `CD8` → `CD6` aren't checked, because short letter-and-digit mixes are read as names. That is the rule that keeps `B12` and `COVID-19` from flooding the flags. On RAGBench, 40–65% of fabrications planted into names were caught, against 96–100% for values. An opt-in check for names the sources never mention could close this.
+- **Names no source mentions.** Since [ADR-0008](docs/adr/0008-names-are-checked-against-their-siblings.md), a name is checked when the sources name something of the same shape (`COVID-12` against `COVID-19`), which lifted RAGBench name recall from 46% to 96%. A name whose shape no source contains still passes, so an invented model number with no sibling isn't caught.
 
 ## Languages
 
