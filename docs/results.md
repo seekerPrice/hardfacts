@@ -25,14 +25,14 @@ The naive baseline's higher recall comes from flagging almost every number: it r
 | FaithBench | flags | span precision (vs any annotation) | planted fabrications caught | clean summaries flagged |
 |---|---:|---:|---:|---:|
 | naive baseline | 210 | 0.295 | 100% | 10.9% |
-| hardfacts, as scored (`e93d226`) | 153 | 0.444 | 95.6% | **12.0%** |
-| hardfacts after the fix below (`f6b84f4`, no longer out-of-sample) | 89 | 0.652 | 95.6% | 5.1% |
+| hardfacts, as scored (`e93d226`, re-run on the pinned harness) | 153 | 0.444 | 95.6% | **12.0%** |
+| hardfacts after the fix below (`f6b84f4`, pinned harness, no longer out-of-sample) | 89 | 0.652 | 95.6% | 5.1% |
 
 Recall on planted fabrications generalised. Precision didn't, at first. Auditing all 85 unmatched flags found 64 checker errors, nearly all one bug: FaithBench sources are word-tokenised (`July 22 , 1947`, with a space before the comma), so the year didn't attach and correct dates were flagged. The fix is general and checked against RAGTruth train, where nothing moved. Because it was found on FaithBench, the post-fix row is a bug-fix measurement, not a second out-of-sample result. The audit also found 4 inventions the annotators missed, including rugby scores the source never states. FaithBench's labelled hallucinations are mostly prose-level, so hard-fact recall there is low (0.21), which is the expected ceiling for a value-level check. [Results](../bench/results/) · [audit](../bench/audit/faithbench/)
 
 ### A third dataset, from the use case it's built for: support agents (τ-bench)
 
-[τ-bench](https://github.com/sierra-research/tau-bench) (Sierra, MIT) publishes real runs of GPT-4o and Claude 3.5 Sonnet as retail and airline support agents: 22,179 replies, each checked against the tool definitions, policy, user turns and JSON tool results the agent had seen. There are no hallucination labels, so two blind auditors classified samples of the flags. The run was pre-registered and recorded before any flag was read. [Full record](reviews/2026-09-26-taubench.md).
+[τ-bench](https://github.com/sierra-research/tau-bench) (Sierra, MIT) publishes real runs of GPT-4o and Claude 3.5 Sonnet as retail and airline support agents: 22,179 replies, each checked against the tool definitions, policy, user turns and JSON tool results the agent had seen. There are no hallucination labels, so two blind auditors classified samples of the flags. The run was recorded before any flag was read (the later τ²-bench and RAGBench runs were fully pre-registered). [Full record](reviews/2026-09-26-taubench.md).
 
 | τ-bench | flags | replies flagged | planted fabrications caught |
 |---|---:|---:|---:|

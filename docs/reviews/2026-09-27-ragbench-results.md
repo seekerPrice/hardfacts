@@ -55,7 +55,7 @@ The data also shows the other side. Fabrications planted in those same answers a
   | into a value | **99.8%** of 4,642 | **96.4%** of 1,979 |
   | into a name | 65.4% of 78 | 40.4% of 292 |
 
-  This split was done after scoring, so the pre-registered number stays 96.0%. It is still a real gap: "COVID-12" or a wrong gene name goes uncaught, and biomedical RAG is full of such names.
+  This split was done after scoring, so the pre-registered number stays 96.0%. It was a real gap: "COVID-12" or a wrong gene name went uncaught, and biomedical RAG is full of such names. Since fixed by ADR-0008 (name plants caught: 46% → 96%).
 - **Only 30% of the flags on the ten datasets fall in a sentence GPT-4 marked unsupported**, while 40% of flagged responses are non-adherent. So a blind double audit ([files](../../bench/audit/ragbench/)) took 60 flags, seeded, one per response, from the 219 adherent responses in the ten datasets that hardfacts flagged. The two auditors agreed on 59 of 60 (κ 0.97).
 
   | verdict | flags |
@@ -67,7 +67,7 @@ The data also shows the other side. Fabrications planted in those same answers a
 
   **65% of these flags were checker errors**, unlike RAGTruth, where auditing the same gap found mostly real inventions. **24 of the 30 "not a claim" verdicts are citation markers**: `…killed [10]`, `[1, 2, 3, 4, 5]`, `[1-6]`. RAGTruth's responses cite as "passage 2" and τ-bench's don't cite at all, so bracketed markers were never seen before. The rest are a list number, a name ("Millennium Development Goal 4", "sVEGFR-1") and bibliography years.
 
-  The missed supports are formats hardfacts doesn't read yet: a Lancet-style decimal (`37·8°C`), space-grouped thousands (`90 973`), a typo'd date (`March 18. 2021`), versions written `V9.1/V9.5`, and a residue in `Asp76Asn`.
+  The missed supports are formats hardfacts doesn't read yet: a Lancet-style decimal (`37·8°C`, since fixed), space-grouped thousands (`90 973`), a typo'd date (`March 18. 2021`), versions written `V9.1/V9.5`, and a residue in `Asp76Asn`.
 
   The 16 inventions are the other side: numbers the GPT-4 annotator passed as supported, and the reason 40% response precision coexists with 30% sentence overlap.
 

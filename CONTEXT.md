@@ -17,8 +17,8 @@ _Avoid_: context, document, reference
 ### Facts
 
 **Hard fact**:
-A span of text whose meaning is a single checkable value: a quantity, percent, money amount, date, time, phone number, email address, URL or identifier.
-_Avoid_: entity (too broad; names and places are not hard facts), number (too narrow)
+A span of text whose meaning is a single checkable value: a quantity, percent, money amount, temperature, date, time, phone number, email address, URL, identifier, or a Name with a number in it.
+_Avoid_: entity (too broad; places and plain names are not hard facts), number (too narrow)
 
 **Kind**:
 The category of a Hard fact, which decides how its Value is read and compared.

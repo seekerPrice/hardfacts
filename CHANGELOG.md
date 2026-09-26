@@ -4,6 +4,10 @@ The repository is public on GitHub. Nothing is on PyPI or npm yet (see ROADMAP.m
 
 ## Unreleased
 
+- **Hostile reviews, rounds 8–10:**
+  - round 8, of the citation rule: 1 high (an answer written as a bracketed list, "the scores were [7, 8, 9]", went unchecked)
+  - round 9, of names: 1 high (quadratic time on 20,000 names) and 3 low (hyphens merging digit runs, full-width digits)
+  - round 10, of the Malaysian-text fixes: 1 high (an invented `十块五毛五` passed as 10.5) and 2 lower (fractions after "on", a counter read as money)
 - **Round 11, a whole-library adversarial review** (not a diff review), fixed test-first in both ports:
   - **A bare JSON amount is in the currency its Source names.** `{"amount": 50, "currency": "MYR"}` no longer supports "USD 50", "€50" or "$50". A Source naming no currency, or a compatible one, still does.
   - Chinese shorthand: `一万五` is 15,000 and `一百五` is 150. They were read as 10,005 and 105.
@@ -58,9 +62,6 @@ Support-bot readiness, from testing on real support agents (τ-bench), a held-ou
   - round 5: 12 findings (6 high)
   - round 6: 12 findings (6 high, one of them a crash)
   - round 7, of the τ² fixes: 5 findings (2 high, e.g. "3/16 inch" in a Source vouching for "March 16")
-  - round 8, of the citation rule: 1 high (an answer written as a bracketed list, "the scores were [7, 8, 9]", went unchecked)
-  - round 9, of names: 1 high (quadratic time on 20,000 names) and 3 low (hyphens merging digit runs, full-width digits)
-  - round 10, of the Malaysian-text fixes: 1 high (an invented `十块五毛五` passed as 10.5) and 2 lower (fractions after "on", a counter read as money)
 - **Indexed matching.** Evidence is looked up by keys derived from the matching rules, and checked against brute force in CI. 50 KB of dates: 36 s → 0.34 s.
 - **τ²-bench**, pre-registered as a held-out test of the τ-bench-era rules ([results](docs/reviews/2026-09-26-tau2bench-results.md)). It covers 4 newer agents and a new telecom domain.
   - 98.2% of planted fabrications were caught (prediction ≥ 97%: pass).
@@ -68,7 +69,6 @@ Support-bot readiness, from testing on real support agents (τ-bench), a held-ou
   - The causes are fixed, post-fix: slash-joined lists ("5G/4G/3G", "100Mbps/20Mbps"), URLs in curly quotes, "line ending in 2002", "ending in …1863", unambiguous month/day dates after a date word ("on 5/19"), and "May 27 and 28, 2024". 25 of the 31 audited errors now clear, and every audited invention is still flagged.
 
   `tools/verify.sh` runs every gate.
-- **Round-2 regressions fixed.** The hostile review of the deep-check fixes found 16, including `$0.125` read as 125, dotted US phones, a count stealing a date, and "2 malam" read as 8 PM.
 - **Port parity.**
   - Python renders JSON Sources the JavaScript way: integer-like keys first, whole floats without `.0`.
   - The conformance fixture is compared strictly and includes `feedback()` text.

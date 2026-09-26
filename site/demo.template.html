@@ -114,7 +114,7 @@
     <span class="eyebrow">An open-source library · Python + TypeScript · EN · BM · 中文</span>
     <h1>hardfacts</h1>
     <p class="lede">Every number, date, amount, phone number and ID in an LLM's answer, checked against what the model was actually given. Values with no source get struck out. It's deterministic, takes milliseconds and makes no model calls.</p>
-    <p class="credit">Built with Claude Code in one autonomous session, 26 September 2026. The demo below runs the real library in your browser.</p>
+    <p class="credit">Built with Claude Code in one autonomous session, 26–27 September 2026. The demo below runs the real library in your browser.</p>
   </header>
 
   <div class="demo" id="demo">
@@ -148,13 +148,13 @@
       <div class="stat"><b>41%</b><span>of flagged RAG answers were unfaithful, at the same flag count as the others (RAGBench, its 10 non-numeric datasets of 12, pre-registered)</span><div class="vs">RAGAS 39% · GPT-3.5 judge 27% · TruLens 15%</div></div>
       <div class="stat"><b>98.2%</b><span>of planted fabrications caught on held-out support agents (τ²-bench, pre-registered)</span><div class="vs">τ-bench: 98.9% · RAGTruth: 96.4%</div></div>
       <div class="stat"><b>19.7%</b><span>of held-out flags were the checker's own mistakes. It predicted ≤ 10% and failed.</span><div class="vs">causes fixed and labelled post-fix</div></div>
-      <div class="stat"><b>59–92%</b><span>of support-bot flags are the agent's own arithmetic (held-out τ²-bench 59%, τ-bench after fixes 92%), and about 1 in 10 of those sums is wrong</span><div class="vs">so each flag shows its working</div></div>
+      <div class="stat"><b>68–92%</b><span>of support-bot flags are the agent's own arithmetic (held-out τ²-bench 68%, flag-weighted; τ-bench after fixes 92%), and about 1 in 10 of those sums is wrong</span><div class="vs">so each flag shows its working</div></div>
       <div class="stat"><b>~0.2 ms</b><span>per response in TypeScript; about 2 ms in Python</span><div class="vs">the two ports agree on 140,000+ real and fuzzed cases</div></div>
     </div>
     <p class="hint" style="margin-top:10px">
       <strong>RAGTruth</strong> has 17,790 human-labelled responses. Rules were tuned on train only, and two blind LLM auditors reviewed every disputed test flag (κ 0.96).
       <strong>FaithBench</strong>, never tuned on, showed nearly the same fabrication recall (95.6%, against 96.4% on RAGTruth), with a single auditor per disputed flag; its first score exposed a tokenisation bug, and the README reports that score as it came out.
-      <strong>τ-bench</strong> is real GPT-4o and Claude runs as retail and airline agents, pre-registered, with 240 flags blind-audited.
+      <strong>τ-bench</strong> is real GPT-4o and Claude runs as retail and airline agents, recorded before any flag was read, with 240 flags blind-audited.
     </p>
   </section>
 
@@ -190,7 +190,7 @@ bench/                  RAGTruth, FaithBench, τ-bench and τ²-bench harnesses,
 integrations/           an MCP server, and a Claude Code Stop hook
 examples/               retry loop, Pydantic AI validator, cost model, sample client reports
 docs/adr/               eight decisions, with the numbers behind them
-docs/reviews/           the bug audit, eight hostile review rounds, the benchmark records and pre-registrations
+docs/reviews/           the bug audit and review rounds 2–6 (7–14 are in CHANGELOG.md), the benchmark records and pre-registrations
 tools/verify.sh         every gate in one command</div>
   </section>
 

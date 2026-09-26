@@ -1,6 +1,6 @@
 [project]
 name = "hardfacts"
-version = "0.1.0.dev0"
+version = "0.2.0.dev0"
 description = "Deterministic provenance for the numbers, dates, money and IDs your LLM writes."
 readme = "README.md"
 requires-python = ">=3.10"

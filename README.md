@@ -123,7 +123,7 @@ The known gaps, with their numbers, are in [ROADMAP.md](ROADMAP.md), and how to 
 | RAGTruth, planted one-digit fabrications | caught / clean responses falsely flagged | **96.4% / 1.6%** | 100% / 19.9% |
 | τ²-bench, 4 support agents, **pre-registered held-out run** | planted fabrications caught | **98.2%** | 100% |
 | same | flags that were the checker's own mistakes | **19.7%**: predicted ≤ 10%, so this prediction failed | n/a |
-| RAGBench, its 10 non-numeric datasets of 12 (GPT-4 labels), **pre-registered** | share of flagged responses that are unfaithful, at the same flag count | **41.0%** (post-fix 50.2%) | RAGAS 39.0% · GPT-3.5 judge 27.1% · TruLens 14.8% |
+| RAGBench, its 10 non-numeric datasets of 12 (GPT-4 labels), **pre-registered** | share of flagged responses that are unfaithful, at the same flag count | **41.0%** (post-fix 51.2%, against RAGAS 39.3% at that count) | RAGAS 39.0% · GPT-3.5 judge 27.1% · TruLens 14.8% |
 | RAGBench, FinQA + TAT-QA (table arithmetic) | correct answers flagged | **61.8%**: predicted ≤ 40%, a failure | n/a |
 
 The failed predictions and their causes are written up in [τ²-bench](docs/reviews/2026-09-26-tau2bench-results.md) and [RAGBench](docs/reviews/2026-09-27-ragbench-results.md). On RAGBench, RAGAS is still more precise on 6 of the 10 datasets taken one at a time, and hardfacts catches only about 1 in 9 unfaithful responses (1 in 10 after the fixes), because most are wrong in prose. The fixes are labelled post-fix, not out-of-sample. Full tables, including FaithBench and τ-bench, are in [docs/results.md](docs/results.md).
@@ -156,7 +156,7 @@ uv run python bench/taubench_differential.py      # TypeScript = Python on real 
 
 ## Design record
 
-Decisions and the numbers behind them live in [`docs/adr/`](docs/adr/): why the core is deterministic ([0002](docs/adr/0002-deterministic-zero-dependency-core.md)), why doubt resolves to supported ([0003](docs/adr/0003-precision-over-recall.md)), the train/test protocol ([0004](docs/adr/0004-benchmark-protocol.md)), why conversions are flagged ([0005](docs/adr/0005-derived-values-are-unsupported.md)), three matching strategies that were measured and rejected ([0006](docs/adr/0006-values-not-context.md)), and why Derivations draw only on the reply's own values ([0007](docs/adr/0007-derivations-come-from-the-output.md)). The long-form write-up is [`docs/writeup.md`](docs/writeup.md).
+Decisions and the numbers behind them live in [`docs/adr/`](docs/adr/): why the core is deterministic ([0002](docs/adr/0002-deterministic-zero-dependency-core.md)), why doubt resolves to supported ([0003](docs/adr/0003-precision-over-recall.md)), the train/test protocol ([0004](docs/adr/0004-benchmark-protocol.md)), why conversions are flagged ([0005](docs/adr/0005-derived-values-are-unsupported.md)), three matching strategies that were measured and rejected ([0006](docs/adr/0006-values-not-context.md)), why Derivations draw only on the reply's own values ([0007](docs/adr/0007-derivations-come-from-the-output.md)), and why names are checked only against same-shaped names ([0008](docs/adr/0008-names-are-checked-against-their-siblings.md)). [0001](docs/adr/0001-build-hardfacts.md) records why the project exists. The long-form write-up is [`docs/writeup.md`](docs/writeup.md).
 
 ## License and credits
 

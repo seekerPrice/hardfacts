@@ -124,7 +124,7 @@ I recorded the run before reading a single flag. Then two blind auditors classif
   - numbers buried in IDs like `credit_card_7574394`
   - dates the user typed without a year
 
-After those fixes, a second audit of the fixed checker found 90% arithmetic, 5% invention and 5% errors. The errors were "ending in 1784" references, since fixed.
+After those fixes, a second audit of 80 flags from the fixed checker found 74 arithmetic (92.5%), 3 inventions and 3 errors. The errors were "ending in 1784" references, since fixed.
 
 The arithmetic mattered. Across both audits, 16 of 189 computed values were wrong: a fare difference taken against one leg of a two-leg trip, "12 options available" when only 10 were, a $35.94 refund stated as $235.94. Flagging all of it as "no source" is correct (ADR-0005), but it makes the reviewer redo the agent's search. So every unsupported number now carries a **Derivation**, the arithmetic that produces it from values the reply itself states: `$6.32 = $101.12 − $94.80`.
 
@@ -169,7 +169,7 @@ Four features were prototyped as experiments before any code went in:
 
 Every batch of fixes got its own hostile review, and most reviews found something. The fixes for the τ²-bench errors let "3/16 inch" in a source vouch for "March 16". The Malaysian-text fixes let an invented `十块五毛五` pass as 10.5. The first whole-library review found the worst hole left: tool JSON writes amounts as bare numbers, so `{"amount": 50, "currency": "MYR"}` supported "USD 50".
 
-The fix for that hole went through three more rounds:
+The fix for that hole ran into four more problems over three more rounds:
 1. It first read any currency code anywhere in a source, so "USD accepted" in a note flagged a correct RM 50.
 2. It made one input take 277 seconds.
 3. It stopped working when the JSON arrived as a string, which is how tool messages usually arrive.
@@ -196,8 +196,8 @@ The library ships in Python and TypeScript. Python is the reference. The TypeScr
 - a fuzz differential
 - the τ-bench differential above
 
-All four are 100% identical. That run also surfaced a V8 regex bug: a case-insensitive modifier group, `(?i:bn|mn|…|b|t)`, silently stops matching an upper-case `B` after `\d+`, so `$2.1B` lost its "billion". The port now folds case into the pattern itself instead of trusting the engine.
+All four show identical Claims, Values and verdicts (span units and a few Unicode differences are listed in docs/port-parity.md). That run also surfaced a V8 regex bug: a case-insensitive modifier group, `(?i:bn|mn|…|b|t)`, silently stops matching an upper-case `B` after `\d+`, so `$2.1B` lost its "billion". The port now folds case into the pattern itself instead of trusting the engine.
 
 ---
 
-*Code, benchmarks, audits and design records: this repository. Built and measured in one day. Every number above comes from a committed script and can be regenerated.*
+*Code, benchmarks, audits and design records: this repository. Built and measured over 26–27 September 2026. Every number above comes from a committed script and can be regenerated.*

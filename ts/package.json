@@ -1,6 +1,6 @@
 {
   "name": "hardfacts",
-  "version": "0.1.0-dev.0",
+  "version": "0.2.0-dev.0",
   "description": "Deterministic provenance for the numbers, dates, money and IDs your LLM writes.",
   "type": "module",
   "license": "MIT",
