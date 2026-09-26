@@ -39,7 +39,7 @@ function group(m: RegExpExecArray, g: number): string | undefined {
 
 // --------------------------------------------------------------------------- numbers
 
-const NUM = String.raw`(?<![\d\[,.])\d{1,3}\.\d{3},\d{1,2}(?!\d|[.,]\d)|\d{1,3}(?:\.\d{3}){2,}(?:,\d{1,2})?(?!\d|\.\d)|\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+`;
+const NUM = String.raw`(?<![\d,.])\d{1,3}\.\d{3},\d{1,2}(?!\d|[.,]\d|\])|\d{1,3}(?:\.\d{3}){2,}(?:,\d{1,2})?(?!\d|\.\d)|\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+`;
 export const MAGNITUDE_WORDS: Record<string, number> = {
   thousand: 1e3, lakh: 1e5, lakhs: 1e5, million: 1e6, crore: 1e7, crores: 1e7, billion: 1e9, trillion: 1e12,
 };

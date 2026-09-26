@@ -496,7 +496,7 @@ const ANCHOR_YEARS = 2;
 function withYears(evidence: (readonly [number, Fact])[], rendered: string[]): (readonly [number, Fact])[] {
   const anchors = [...new Set(evidence.flatMap(([i, e]) =>
     e.kind === "date" && ANCHOR.search(codePointsBefore(rendered[i], e.start, 40)) !== null
-      ? (e.value as string[]).filter((r) => r[0] !== "X").map((r) => r.slice(0, 7)) : []))].sort();
+      ? (e.value as string[]).filter((r) => r[0] !== "X").map((r) => r.slice(0, 10)) : []))].sort();
   if (!anchors.length || new Set(anchors.map((a) => a.slice(0, 4))).size > ANCHOR_YEARS) return evidence;
   return evidence.map(([i, e]) => {
     const readings = e.value as string[];
@@ -507,20 +507,37 @@ function withYears(evidence: (readonly [number, Fact])[], rendered: string[]): (
 }
 
 /**
- * The anchor's year, and the next or previous one when that puts the date within six months of
- * the anchor: on 2025-12-30, "Jan 2" reads as 2 January 2026 as well as 2025 (an order history's
- * "Mar 5" is past; an ETA's "Jan 2" is next year; doubt keeps both). Never a 29 February that isn't.
+ * The anchor's year, and the next or previous one when that puts the date within half a year
+ * (183 days) of the anchor: on 2025-12-30, "Jan 2" reads as 2 January 2026 as well as 2025 (an
+ * order history's "Mar 5" is past; an ETA's "Jan 2" is next year; doubt keeps both). Never a date
+ * that doesn't exist: "Feb 29" in 2027 reads as 2028, the nearest leap year.
  */
 function lentYears(reading: string, anchor: string): string[] {
   const year = Number(anchor.slice(0, 4));
-  const years = [year];
-  if (anchor[5] !== "X" && reading[5] !== "X") {
-    const months = Number(reading.slice(5, 7)) - Number(anchor.slice(5, 7));
-    if (months < -6) years.push(year + 1);
-    else if (months > 6) years.push(year - 1);
+  const candidates = [year];
+  if (anchor[5] !== "X" && reading[5] !== "X" && reading[8] !== "X") {
+    const [month, day] = [Number(reading.slice(5, 7)), Number(reading.slice(8, 10))];
+    const centre = ordinal(year, Number(anchor.slice(5, 7)), anchor[8] !== "X" ? Number(anchor.slice(8, 10)) : 15)!;
+    for (const y of [year - 1, year + 1]) {
+      const o = ordinal(y, month, day);
+      if (o !== null && Math.abs(o - centre) <= 183) candidates.push(y);
+    }
   }
-  const leap = (y: number) => y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0);
-  return years.filter((y) => reading.slice(5, 10) !== "02-29" || leap(y)).map((y) => String(y).padStart(4, "0") + reading.slice(4));
+  let valid = candidates.filter((y) => reading[8] === "X" || ordinal(y, Number(reading.slice(5, 7)), Number(reading.slice(8, 10))) !== null);
+  if (!valid.length && reading.slice(5, 10) === "02-29") { // "Feb 29" means a leap year: the nearest one
+    const leaps = [];
+    for (let y = year - 3; y < year + 5; y++) if (ordinal(y, 2, 29) !== null) leaps.push(y);
+    leaps.sort((a, b) => Math.abs(a - year) - Math.abs(b - year) || a - b);
+    valid = [leaps[0]];
+  }
+  return valid.map((y) => String(y).padStart(4, "0") + reading.slice(4));
+}
+
+/** Days since the epoch, or null for a date that doesn't exist. */
+function ordinal(year: number, month: number, day: number): number | null {
+  const d = new Date(Date.UTC(year, month - 1, day));
+  if (year < 100) d.setUTCFullYear(year);
+  return d.getUTCFullYear() === year && d.getUTCMonth() === month - 1 && d.getUTCDate() === day ? d.getTime() / 86400000 : null;
 }
 
 /**
@@ -551,11 +568,17 @@ export function check(output: string, sources: unknown[], options: CheckOptions 
   const rendered = sources.map(render);
   const evidence = withYears(rendered.flatMap((text, i) => extract(text).map((f) => [i, f] as const)), rendered);
   const index = new Map<string, number[]>();
+  const moneyIndex = new Map<string, number[]>(); // money Evidence names its own currency
   evidence.forEach(([, e], position) => {
     for (const key of evidenceKeys(e)) {
       const list = index.get(key);
       if (list) list.push(position);
       else index.set(key, [position]);
+      if (e.kind === "money") {
+        const money = moneyIndex.get(key);
+        if (money) money.push(position);
+        else moneyIndex.set(key, [position]);
+      }
     }
   });
   const named = sources.map(currenciesNamed);
@@ -564,17 +587,30 @@ export function check(output: string, sources: unknown[], options: CheckOptions 
   const facts = extract(output, true);
   for (const f of facts) {
     if (kinds && !kinds.has(f.kind)) continue;
-    const lists = claimKeys(f).map((k) => index.get(k)).filter((l): l is number[] => l !== undefined);
-    const candidates = lists.length === 1 ? lists[0] : [...new Set(lists.flat())].sort((x, y) => x - y);
+    const keys = claimKeys(f);
+    const candidates = merged(keys.map((k) => index.get(k)).filter((l): l is number[] => l !== undefined));
     const found: Evidence[] = [];
-    for (let k = 0; k < candidates.length;) {
+    let money: number[] | null = null;
+    for (let k = 0; k < candidates.length && found.length < EVIDENCE_PER_CLAIM;) {
       const p = candidates[k];
       const i = evidence[p][0];
-      if (otherCurrency(f, i, named)) { k = lowerBound(candidates, ends[i], k); continue; } // skip the rest of that Source
+      if (otherCurrency(f, i, named)) {
+        // a bare number there is in another currency; its money Evidence still speaks for itself.
+        // Take those, then skip the rest of that Source in one step.
+        money ??= merged(keys.map((key) => moneyIndex.get(key)).filter((l): l is number[] => l !== undefined));
+        const stop = lowerBound(candidates, ends[i], k);
+        for (let q = lowerBound(money, p, 0); q < money.length && money[q] < ends[i]; q++) {
+          const e = evidence[money[q]][1];
+          if (!supports(e, f)) continue;
+          found.push({ source: i, span: [e.start, e.end], text: e.text });
+          if (found.length === EVIDENCE_PER_CLAIM) break;
+        }
+        k = stop;
+        continue;
+      }
       k++;
       if (!supports(evidence[p][1], f)) continue;
-      found.push({ source: evidence[p][0], span: [evidence[p][1].start, evidence[p][1].end], text: evidence[p][1].text });
-      if (found.length === EVIDENCE_PER_CLAIM) break;
+      found.push({ source: i, span: [evidence[p][1].start, evidence[p][1].end], text: evidence[p][1].text });
     }
     claims.push({ kind: f.kind, text: f.text, span: [f.start, f.end], value: f.value, supported: found.length > 0, evidence: found, derivation: null });
   }
@@ -589,24 +625,49 @@ export function check(output: string, sources: unknown[], options: CheckOptions 
   return { claims, sources: rendered, unsupported, unexplained, ok: unsupported.length === 0 };
 }
 
-const CURRENCY_KEY = /curr|^ccy$/i;
 const KNOWN = new Set([...CODES, "CNY", ...Object.values(PREFIX_CURRENCIES), ...Object.values(SUFFIX_CURRENCIES)]);
+/** The whitespace both ports strip from a currency value. */
+const SPACE = /^[ \t\n\r\f\v]+|[ \t\n\r\f\v]+$/g;
+const KEY_WORD = /[A-Z]?[a-z]+|[A-Z]+(?![a-z])|[0-9]+/g;
+
+/** "currency", "currency_code", "currencyCode", "ccy_code", "cur"; not "recurring" or "current". */
+function isCurrencyKey(key: string): boolean {
+  return (key.match(KEY_WORD) ?? []).some((w) => ["currency", "ccy", "cur", "curr"].includes(w.toLowerCase()));
+}
+
+/** A JSON object or array written as a string, or undefined. */
+function parseJson(text: string): unknown {
+  const t = text.replace(SPACE, "");
+  if (!t || !"{[".includes(t[0])) return undefined;
+  try {
+    return JSON.parse(t);
+  } catch {
+    return undefined;
+  }
+}
 
 /**
  * The currencies a JSON Source names in a currency key ("currency", "currency_code", "ccy"…):
- * {"amount": 50, "currency": "myr"} names MYR. Free text and other amounts name nothing, so a
- * note like "USD accepted" is no reason to doubt an amount (ADR-0003).
+ * {"amount": 50, "currency": "myr"} names MYR, also when the JSON arrives as a string, as tool
+ * messages do. Free text and other amounts name nothing, so a note like "USD accepted" is no
+ * reason to doubt an amount (ADR-0003).
  */
 function currenciesNamed(source: unknown): Set<string> {
   const found = new Set<string>();
   const stack: unknown[] = [source];
   while (stack.length) {
     const node = stack.pop();
-    if (Array.isArray(node)) stack.push(...node);
-    else if (node !== null && typeof node === "object") {
+    if (typeof node === "string") {
+      const parsed = parseJson(node);
+      if (parsed !== undefined) stack.push(parsed);
+    } else if (Array.isArray(node)) {
+      for (const x of node) stack.push(x);
+    } else if (node !== null && typeof node === "object") {
       for (const [key, value] of Object.entries(node)) {
-        if (typeof value === "string" && CURRENCY_KEY.test(key) && KNOWN.has(currency(value.trim()))) found.add(currency(value.trim()));
-        else if (value !== null && typeof value === "object") stack.push(value);
+        if (typeof value === "string" && isCurrencyKey(key)) {
+          const code = currency(value.replace(SPACE, ""));
+          if (KNOWN.has(code)) found.add(code); // "Malaysian Ringgit" is no code: doubt, not another currency
+        } else stack.push(value);
       }
     }
   }
@@ -618,6 +679,11 @@ function sourceEnds(evidence: readonly (readonly [number, Fact])[], count: numbe
   const ends = new Array<number>(count).fill(0);
   evidence.forEach(([i], position) => { ends[i] = position + 1; });
   return ends;
+}
+
+/** Every position in the sorted lists, once, ascending. */
+function merged(lists: number[][]): number[] {
+  return lists.length === 1 ? lists[0] : [...new Set(lists.flat())].sort((x, y) => x - y);
 }
 
 /** The first index in sorted `list`, at or after `from`, whose value is at least `value`. */

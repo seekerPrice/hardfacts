@@ -93,3 +93,31 @@ def test_european_numbers_need_a_clean_left_edge():
     assert not check("It weighs 1,500.12 kg.", ['{"w":[1.500,12]}']).ok
     assert check("12 items", ['{"w":[0.125,12]}']).ok
     assert check("Total 1.500,00 EUR.", [{"total": 1500}]).ok
+
+
+# Round 13 of hostile review.
+def test_money_evidence_states_its_own_currency_whatever_the_currency_key_says():
+    assert check("The fee is RM12.", [{"currency": "USD", "remark": "local fee RM12"}]).ok
+    assert check("It is RM 50.", [{"items": [{"amount": 100, "currency": "USD"}], "note": "Total RM 50"}]).ok
+
+
+def test_a_json_string_source_names_its_currency_too():
+    assert not check("It costs USD 50.", ['{"amount": 50, "currency": "MYR"}']).ok
+    assert not check("It costs USD 50.", [{"order": '{"amount": 50, "currency": "MYR"}'}]).ok
+    assert check("It costs RM 50.", ['{"amount": 50, "currency": "MYR"}']).ok
+
+
+def test_a_european_amount_after_a_bracket_is_still_read():
+    assert check("It costs EUR 1,500.", ["Preise [1.500,00 EUR]"]).ok
+    assert not check("It costs EUR 1.5.", ["Preise [1.500,00 EUR]"]).ok
+
+
+def test_currency_keys_are_matched_by_word():
+    assert check("It costs USD 50.", [{"amount": 50, "recurring": "yen"}]).ok
+    assert not check("It costs MYR 50.", [{"amount": 50, "ccy_code": "USD"}]).ok
+    assert not check("It costs MYR 50.", [{"amount": 50, "currencyCode": "USD"}]).ok
+
+
+def test_the_six_month_window_counts_days():
+    assert check("It arrives 1 June 2026.", ["Today is 31 December 2025. ETA Jun 1."]).ok
+    assert check("It arrives 29 February 2028.", ["Today is 15 August 2027. ETA Feb 29."]).ok

@@ -13,6 +13,12 @@ The repository is public on GitHub. Nothing is on PyPI or npm yet (see ROADMAP.m
     - The currency rule first read any code anywhere in a Source (`"note": "USD accepted"` flagged a correct "RM 50"). It now reads only currency-named keys.
     - It had also made a 60 KB answer take 277 s. A blocked Source is now skipped in one step.
     - Nearest-year had replaced the anchor year and could make 29 February 2025. It now adds a reading and never makes an invalid date.
+  - **Round 13, a review of round 12:**
+    - Money Evidence names its own currency, so "RM12" in a Source whose currency key says USD still supports "RM12".
+    - A JSON Source passed as a string, as tool messages usually are, now names its currency. It had switched the check off.
+    - Currency keys are matched by word, so `ccy_code` counts and "recurring" doesn't.
+    - The half-year window counts days, and "Feb 29" reads as the nearest leap year.
+    - The TypeScript walk no longer overflows the stack on a large array.
   - Time zones, invented country codes, last-digit references matching phone numbers, and weekdays are recorded in ROADMAP.md.
 - **Names with digits** (new Kind `name`, [ADR-0008](docs/adr/0008-names-are-checked-against-their-siblings.md)). `COVID-12` is flagged when a source says `COVID-19`, and `H2N1` when it says `H1N1`. A name is checked only against same-shaped names in the sources, so a name no source mentions still passes. On RAGBench, fabrications planted into names are caught 96% of the time, up from 46%, and 1 of 10,125 correct responses is newly flagged.
 - **Middle-dot decimals** (`37·8°C`) are read as decimals.

@@ -7,6 +7,7 @@ from collections import defaultdict
 import re
 from dataclasses import replace
 from collections.abc import Mapping
+from datetime import date
 from decimal import Decimal
 from typing import Any, Collection, Iterable, Iterator
 
@@ -114,7 +115,7 @@ def _with_years(evidence: list[tuple[int, Fact]], rendered: tuple[str, ...]) -> 
     """A date a Source states without a year ("May 23rd", as a user types it) also reads with the
     conversation's year: the year of a date introduced as the current time, today or now. Never
     any year a Source happens to mention (a record's created_at, an unrelated event)."""
-    anchors = sorted({r[:7] for i, e in evidence if e.kind == "date" and _ANCHOR.search(rendered[i][max(0, e.start - 40):e.start])
+    anchors = sorted({r[:10] for i, e in evidence if e.kind == "date" and _ANCHOR.search(rendered[i][max(0, e.start - 40):e.start])
                       for r in e.value if r[0] != "X"})
     if not anchors or len({a[:4] for a in anchors}) > _ANCHOR_YEARS:
         return evidence
@@ -124,19 +125,30 @@ def _with_years(evidence: list[tuple[int, Fact]], rendered: tuple[str, ...]) -> 
 
 
 def _lent_years(reading: str, anchor: str) -> list[str]:
-    """The anchor's year, and the next or previous one when that puts the date within six months of
-    the anchor: on 2025-12-30, "Jan 2" reads as 2 January 2026 as well as 2025 (an order history's
-    "Mar 5" is past; an ETA's "Jan 2" is next year; doubt keeps both). Never a 29 February that isn't."""
+    """The anchor's year, and the next or previous one when that puts the date within half a year
+    (183 days) of the anchor: on 2025-12-30, "Jan 2" reads as 2 January 2026 as well as 2025 (an
+    order history's "Mar 5" is past; an ETA's "Jan 2" is next year; doubt keeps both). Never a date
+    that doesn't exist: "Feb 29" in 2027 reads as 2028, the nearest leap year."""
     year = int(anchor[:4])
-    years = [year]
-    if anchor[5] != "X" and reading[5] != "X":
-        months = int(reading[5:7]) - int(anchor[5:7])
-        if months < -6:
-            years.append(year + 1)
-        elif months > 6:
-            years.append(year - 1)
-    leap = lambda y: y % 4 == 0 and (y % 100 != 0 or y % 400 == 0)  # noqa: E731
-    return [f"{y:04d}{reading[4:]}" for y in years if reading[5:10] != "02-29" or leap(y)]
+    candidates = [year]
+    if anchor[5] != "X" and reading[5] != "X" and reading[8] != "X":
+        month, day = int(reading[5:7]), int(reading[8:10])
+        a_month, a_day = int(anchor[5:7]), int(anchor[8:10]) if anchor[8] != "X" else 15
+        centre = _ordinal(year, a_month, a_day)
+        candidates += [y for y in (year - 1, year + 1)
+                       if _ordinal(y, month, day) is not None and abs(_ordinal(y, month, day) - centre) <= 183]
+    valid = [y for y in candidates if reading[8] == "X" or _ordinal(y, int(reading[5:7]), int(reading[8:10])) is not None]
+    if not valid and reading[5:10] == "02-29":  # "Feb 29" means a leap year: the nearest one
+        valid = [min((y for y in range(year - 3, year + 5) if _ordinal(y, 2, 29) is not None), key=lambda y: (abs(y - year), y))]
+    return [f"{y:04d}{reading[4:]}" for y in valid]
+
+
+def _ordinal(year: int, month: int, day: int) -> int | None:
+    """Days since 1 January of year 1, or None for a date that doesn't exist."""
+    try:
+        return date(year, month, day).toordinal()
+    except ValueError:
+        return None
 
 
 EVIDENCE_PER_CLAIM = 10
@@ -171,9 +183,12 @@ def check(output: str, sources: Iterable[Any], *, kinds: Collection[str] | None 
     rendered = tuple(_render(s) for s in sources)
     evidence = _with_years([(i, fact) for i, text in enumerate(rendered) for fact in extract(text)], rendered)
     index: dict[tuple, list[int]] = defaultdict(list)
+    money_index: dict[tuple, list[int]] = defaultdict(list)  # money Evidence names its own currency
     for position, (_, e) in enumerate(evidence):
         for key in evidence_keys(e):
             index[key].append(position)
+            if e.kind == "money":
+                money_index[key].append(position)
     named = [_currencies_named(s) for s in sources]
     ends = _source_ends(evidence, len(rendered))
     claims = []
@@ -182,19 +197,29 @@ def check(output: str, sources: Iterable[Any], *, kinds: Collection[str] | None 
         if kinds is not None and fact.kind not in kinds:
             continue
         found: list[Evidence] = []
-        candidates = list(_in_order([index[key] for key in claim_keys(fact) if key in index]))
+        keys = claim_keys(fact)
+        candidates = list(_in_order([index[key] for key in keys if key in index]))
+        money = None
         k = 0
-        while k < len(candidates):
+        while k < len(candidates) and len(found) < EVIDENCE_PER_CLAIM:
             p = candidates[k]
             i = evidence[p][0]
-            if _other_currency(fact, i, named):  # skip the rest of that Source in one step
-                k = bisect_left(candidates, ends[i], k)
+            if _other_currency(fact, i, named):
+                # a bare number there is in another currency; its money Evidence still speaks for itself.
+                # Take those, then skip the rest of that Source in one step.
+                if money is None:
+                    money = list(_in_order([money_index[key] for key in keys if key in money_index]))
+                stop = bisect_left(candidates, ends[i], k)
+                for q in money[bisect_left(money, p):bisect_left(money, ends[i])]:
+                    if supports(evidence[q][1], fact):
+                        found.append(Evidence(i, (evidence[q][1].start, evidence[q][1].end), evidence[q][1].text))
+                        if len(found) == EVIDENCE_PER_CLAIM:
+                            break
+                k = stop
                 continue
             k += 1
             if supports(evidence[p][1], fact):
                 found.append(Evidence(i, (evidence[p][1].start, evidence[p][1].end), evidence[p][1].text))
-                if len(found) == EVIDENCE_PER_CLAIM:
-                    break
         found = tuple(found)
         claims.append(Claim(fact.kind, fact.text, (fact.start, fact.end), fact.value, bool(found), found))
     if kinds is None or "name" in kinds:
@@ -205,24 +230,57 @@ def check(output: str, sources: Iterable[Any], *, kinds: Collection[str] | None 
 
 def _currencies_named(source: Any) -> frozenset[str]:
     """The currencies a JSON Source names in a currency key ("currency", "currency_code", "ccy"…):
-    {"amount": 50, "currency": "myr"} names MYR. Free text and other amounts name nothing, so a
-    note like "USD accepted" is no reason to doubt an amount (ADR-0003)."""
+    {"amount": 50, "currency": "myr"} names MYR, also when the JSON arrives as a string, as tool
+    messages do. Free text and other amounts name nothing, so a note like "USD accepted" is no
+    reason to doubt an amount (ADR-0003)."""
     found: set[str] = set()
     stack = [source]
     while stack:
         node = stack.pop()
-        if isinstance(node, Mapping):
+        if isinstance(node, str):
+            parsed = _parse_json(node)
+            if parsed is not None:
+                stack.append(parsed)
+        elif isinstance(node, Mapping):
             for key, value in node.items():
-                if isinstance(value, str) and _CURRENCY_KEY.search(str(key)) and _currency(value.strip()) in _KNOWN:
-                    found.add(_currency(value.strip()))  # "Malaysian Ringgit" is no code: doubt, not another currency
-                elif isinstance(value, (Mapping, list, tuple)):
+                if isinstance(value, str) and _is_currency_key(str(key)):
+                    code = _currency(value.strip(_SPACE))
+                    if code in _KNOWN:  # "Malaysian Ringgit" is no code: doubt, not another currency
+                        found.add(code)
+                else:
                     stack.append(value)
         elif isinstance(node, (list, tuple)):
             stack.extend(node)
     return frozenset(found)
 
 
-_CURRENCY_KEY = re.compile(r"curr|^ccy$", re.I)
+_SPACE = " \t\n\r\f\v"
+"""The whitespace both ports strip from a currency value."""
+
+
+def _parse_json(text: str) -> Any:
+    """A JSON object or array written as a string, or None."""
+    t = text.strip(_SPACE)
+    if not t or t[0] not in "{[":
+        return None
+    try:
+        return json.loads(t, parse_constant=_no_constant)  # NaN and Infinity aren't JSON (JSON.parse agrees)
+    except ValueError:
+        return None
+
+
+def _no_constant(name: str) -> Any:
+    raise ValueError(name)
+
+
+_KEY_WORD = re.compile(r"[A-Z]?[a-z]+|[A-Z]+(?![a-z])|[0-9]+")
+
+
+def _is_currency_key(key: str) -> bool:
+    """"currency", "currency_code", "currencyCode", "ccy_code", "cur"; not "recurring" or "current"."""
+    return any(w.lower() in ("currency", "ccy", "cur", "curr") for w in _KEY_WORD.findall(key))
+
+
 _KNOWN = {*_CODES, "CNY", *_PREFIX_CURRENCIES.values(), *_SUFFIX_CURRENCIES.values()}
 
 
