@@ -139,11 +139,17 @@ _SELF_REFERENCE = _compile(
 """The Output pointing at its own structure or the prompt's: "repeat steps 6 and 7", "(Passage 2)"."""
 
 
+_CITATION = _compile(
+    r"\[(?:\^|(?:doc(?:ument)?|source|ref)\s*)?\d{1,2}(?:\s*[,–-]\s*(?:\^)?\d{1,2})*\]", re.I)
+"""A citation marker: "[10]", "[1, 2, 5]", "[1-6]", "[^2]", "[Doc 3]". Numbers of up to two digits only,
+so "[101, 102]" and "[2024]" are still values."""
+
+
 EXEMPT = "exempt"
 """Marks an Exempt span while recognisers run. It claims its characters, then is dropped: never a Claim."""
 _EXEMPTIONS = [  # (pattern, group whose span is exempt)
     (_SELF_REFERENCE, 1), (_RATING_SCALE, 1), (_HTML_ENTITY, 0), (_EVERY_DAY, 0), (_LIST_MARKER, 0),
-    (_OUTPUT_LENGTH, 1), (_N_WORD, 0),
+    (_OUTPUT_LENGTH, 1), (_N_WORD, 0), (_CITATION, 0),
 ]
 
 

@@ -1,0 +1,22 @@
+{
+  "audited": 60,
+  "verdicts": {
+    "invented": 16,
+    "not_a_claim": 30,
+    "missed_support": 9,
+    "derived": 5
+  },
+  "correct_flags": 0.35,
+  "invented": 0.2667,
+  "checker_errors": 0.65,
+  "second_auditor": {
+    "cases": 60,
+    "four_way_agreement": 0.9833,
+    "four_way_kappa": 0.9745,
+    "flag_correct_agreement": 0.9833,
+    "flag_correct_kappa": 0.9638,
+    "disagreements": [
+      "not_a_claim vs invented"
+    ]
+  }
+}

@@ -105,9 +105,17 @@ const SELF_REFERENCE = compile(
     String.raw`(\d{1,3}(?:\s*(?:,|and|or|&|-|–|to)\s*\d{1,3})*)\b`,
   { ignoreCase: true },
 );
+/**
+ * A citation marker: "[10]", "[1, 2, 5]", "[1-6]", "[^2]", "[Doc 3]". Numbers of up to two digits only,
+ * so "[101, 102]" and "[2024]" are still values.
+ */
+const CITATION = compile(
+  String.raw`\[(?:\^|(?:doc(?:ument)?|source|ref)\s*)?\d{1,2}(?:\s*[,–-]\s*(?:\^)?\d{1,2})*\]`,
+  { ignoreCase: true },
+);
 const EXEMPTIONS: [Pattern, number][] = [
   [SELF_REFERENCE, 1], [RATING_SCALE, 1], [HTML_ENTITY, 0], [EVERY_DAY, 0], [LIST_MARKER, 0],
-  [OUTPUT_LENGTH, 1], [N_WORD, 0],
+  [OUTPUT_LENGTH, 1], [N_WORD, 0], [CITATION, 0],
 ];
 
 function* exempt(text: string): Generator<Fact> {

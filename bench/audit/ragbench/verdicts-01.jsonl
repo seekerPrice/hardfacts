@@ -1,0 +1,30 @@
+{"case": "covidqa_1494", "verdict": "invented", "evidence": "Docs only give 'Denmark 1.1%'; no 95% or credible interval mentioned"}
+{"case": "hagrid_hagrid_476_1", "verdict": "not_a_claim", "evidence": "'1' is a citation marker [1, 2, 4]"}
+{"case": "pubmedqa_pubmedqa_51841", "verdict": "missed_support", "evidence": "'fever ≥ 37·8°C and cough' (middle-dot decimal)"}
+{"case": "hagrid_hagrid_3400_1", "verdict": "not_a_claim", "evidence": "'10' is citation marker [10]"}
+{"case": "hagrid_hagrid_1046_0", "verdict": "not_a_claim", "evidence": "'5' is citation marker [1, 2, 3, 4, 5]"}
+{"case": "covidqa_543", "verdict": "not_a_claim", "evidence": "Response only restates the question date while saying no info; docs have no Feb 10 2020"}
+{"case": "hagrid_hagrid_151_0", "verdict": "not_a_claim", "evidence": "'7' is citation marker [2, 3, 5, 6, 7]"}
+{"case": "techqa_techqa_DEV_Q210", "verdict": "invented", "evidence": "No 'ADML' or '3000E' anywhere in sources"}
+{"case": "pubmedqa_pubmedqa_12822", "verdict": "derived", "evidence": "3152 DS fetuses, 1709 (54%) identified -> 1443/3152=45.8% missed", "derived_correct": "yes"}
+{"case": "pubmedqa_pubmedqa_41037", "verdict": "invented", "evidence": "Docs say 'Softcast' only; no '3M'"}
+{"case": "techqa_techqa_DEV_Q084", "verdict": "invented", "evidence": "No 'KCI1138E' or '1138' in sources"}
+{"case": "pubmedqa_pubmedqa_15329", "verdict": "missed_support", "evidence": "'the Asp76Asn (D76N) variant'"}
+{"case": "hagrid_hagrid_3539_0", "verdict": "not_a_claim", "evidence": "'3' is citation marker [2, 3, 5, 6]"}
+{"case": "msmarco_9179", "verdict": "invented", "evidence": "Docs: '$2,000 per terabyte' (~$2/GB); $3.182 not stated or computable"}
+{"case": "hagrid_hagrid_2085_0", "verdict": "missed_support", "evidence": "'26 September 1889'"}
+{"case": "hagrid_hagrid_1929_0", "verdict": "not_a_claim", "evidence": "'2' is citation marker [1, 2]"}
+{"case": "hagrid_hagrid_3020_0", "verdict": "invented", "evidence": "Doc: 'the 55th overall, and the second under head coach Mike McCoy'; no year 2014 stated"}
+{"case": "hotpotqa_5a88a8f4554299206df2b320", "verdict": "invented", "evidence": "No '50' or 'miles' or Washington distance in docs"}
+{"case": "pubmedqa_pubmedqa_53291", "verdict": "missed_support", "evidence": "'non-metastatic T4N0 nasopharyngeal cancer patients' (=T4N0M0)"}
+{"case": "hagrid_hagrid_2542_0", "verdict": "not_a_claim", "evidence": "'4' is citation marker [1, 2, 3, 4]"}
+{"case": "hagrid_hagrid_3391_0", "verdict": "not_a_claim", "evidence": "'2' is citation marker [2, 4, 5]"}
+{"case": "hagrid_hagrid_3532_0", "verdict": "invented", "evidence": "Docs mention Arkane's 'Prey' but no 2017 anywhere"}
+{"case": "pubmedqa_pubmedqa_39725", "verdict": "derived", "evidence": "'no adverse effects occurred in 92.5%' -> 7.5% with effects (7.0% minor + 34/7269 moderate/major)", "derived_correct": "yes"}
+{"case": "hagrid_hagrid_2858_1", "verdict": "not_a_claim", "evidence": "'5' is citation marker [1, 2, 5]"}
+{"case": "techqa_techqa_DEV_Q239", "verdict": "invented", "evidence": "No '8.2' or RFT 8.2 version in sources"}
+{"case": "hagrid_hagrid_4112_0", "verdict": "derived", "evidence": "'12 June 1929 – February or March 1945' -> age 15", "derived_correct": "yes"}
+{"case": "hagrid_hagrid_3107_0", "verdict": "not_a_claim", "evidence": "'5' is citation marker [1, 5] (also 'October 5' in doc)"}
+{"case": "pubmedqa_pubmedqa_57002", "verdict": "not_a_claim", "evidence": "'4' is part of name 'Millennium Development Goal 4'"}
+{"case": "expertqa_expertqa_55", "verdict": "not_a_claim", "evidence": "'12' is citation marker [12]"}
+{"case": "cuad_BOLIVARMININGCORP_05_23_2003-EX-2.1-VISP WEB SITE BUILDING AND HOSTING AGREEMENT__Expiration Date", "verdict": "derived", "evidence": "'made on this 12th day of May 2003' + 'term of five years' -> May 12, 2008", "derived_correct": "yes"}

@@ -1,0 +1,30 @@
+{"case": "covidqa_1494", "verdict": "invented", "evidence": "no \"95\" or \"credible\" in sources"}
+{"case": "hagrid_hagrid_476_1", "verdict": "not_a_claim", "evidence": "citation marker [n] in response"}
+{"case": "pubmedqa_pubmedqa_51841", "verdict": "missed_support", "evidence": "\"fever ≥ 37·8°C and cough\""}
+{"case": "hagrid_hagrid_3400_1", "verdict": "not_a_claim", "evidence": "citation marker [n] in response"}
+{"case": "hagrid_hagrid_1046_0", "verdict": "not_a_claim", "evidence": "citation marker [n] in response"}
+{"case": "covidqa_543", "verdict": "invented", "evidence": "no Feb 10 2020 in any form; only \"10/3/2020\""}
+{"case": "hagrid_hagrid_151_0", "verdict": "not_a_claim", "evidence": "citation marker [n] in response"}
+{"case": "techqa_techqa_DEV_Q210", "verdict": "invented", "evidence": "no ADML/3000 in sources"}
+{"case": "pubmedqa_pubmedqa_12822", "verdict": "derived", "evidence": "3152 total, \"only 1709 (54%)\" identified -> 1443 missed = 45.8%", "derived_correct": "yes"}
+{"case": "pubmedqa_pubmedqa_41037", "verdict": "invented", "evidence": "sources say \"Softcast\" only, no 3M"}
+{"case": "techqa_techqa_DEV_Q084", "verdict": "invented", "evidence": "no KCI1138E in sources"}
+{"case": "pubmedqa_pubmedqa_15329", "verdict": "missed_support", "evidence": "\"the Asp76Asn (D76N) variant\""}
+{"case": "hagrid_hagrid_3539_0", "verdict": "not_a_claim", "evidence": "citation marker [n] in response"}
+{"case": "msmarco_9179", "verdict": "invented", "evidence": "sources: \"$2,000 per terabyte\"; 3.182 not computable"}
+{"case": "hagrid_hagrid_2085_0", "verdict": "missed_support", "evidence": "\"26 September 1889\""}
+{"case": "hagrid_hagrid_1929_0", "verdict": "not_a_claim", "evidence": "citation marker [n] in response"}
+{"case": "hagrid_hagrid_3020_0", "verdict": "invented", "evidence": "\"second under head coach Mike McCoy\"; no year 2014 stated"}
+{"case": "hotpotqa_5a88a8f4554299206df2b320", "verdict": "invented", "evidence": "no miles/50 in sources"}
+{"case": "pubmedqa_pubmedqa_53291", "verdict": "missed_support", "evidence": "\"non-metastatic T4N0 nasopharyngeal cancer\" (M0 = non-metastatic)"}
+{"case": "hagrid_hagrid_2542_0", "verdict": "not_a_claim", "evidence": "citation marker [n] in response"}
+{"case": "hagrid_hagrid_3391_0", "verdict": "not_a_claim", "evidence": "citation marker [n] in response"}
+{"case": "hagrid_hagrid_3532_0", "verdict": "invented", "evidence": "sources mention Arkane's Prey but no 2017"}
+{"case": "pubmedqa_pubmedqa_39725", "verdict": "derived", "evidence": "\"no adverse effects occurred in 92.5%\" -> 100-92.5=7.5", "derived_correct": "yes"}
+{"case": "hagrid_hagrid_2858_1", "verdict": "not_a_claim", "evidence": "citation marker [n] in response"}
+{"case": "techqa_techqa_DEV_Q239", "verdict": "invented", "evidence": "no 8.2 in sources"}
+{"case": "hagrid_hagrid_4112_0", "verdict": "derived", "evidence": "\"12 June 1929 – February or March 1945\" -> age 15", "derived_correct": "yes"}
+{"case": "hagrid_hagrid_3107_0", "verdict": "not_a_claim", "evidence": "first occurrence is citation [1, 5]"}
+{"case": "pubmedqa_pubmedqa_57002", "verdict": "not_a_claim", "evidence": "part of name \"MDG-4\""}
+{"case": "expertqa_expertqa_55", "verdict": "not_a_claim", "evidence": "citation marker [n] in response"}
+{"case": "cuad_BOLIVARMININGCORP_05_23_2003-EX-2.1-VISP WEB SITE BUILDING AND HOSTING AGREEMENT__Expiration Date", "verdict": "derived", "evidence": "\"12th day of May 2003\" + \"term of five years\"", "derived_correct": "yes"}
