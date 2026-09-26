@@ -73,6 +73,8 @@ hardfacts report transcripts.jsonl --html audit.html --fail-over 0.05   # a whol
 Integration examples, all runnable offline:
 - [Python verify-and-retry](examples/verify_and_retry.py)
 - [Pydantic AI `output_validator` that raises `ModelRetry`](examples/pydantic_ai_output_validator.py)
+- [OpenAI Agents SDK output guardrail](examples/openai_agents_guardrail.py): tools record their results in the run context, and the guardrail trips on an answer that states a value none of them contain (`--offline` runs without a key)
+- [LangChain `create_agent` middleware](examples/langchain_middleware.py): checks each final answer, sends the feedback back to the model once, then hands off (runs offline with a fake model)
 - [Vercel AI SDK v7 verify-and-retry](ts/examples/ai-sdk-verify-and-retry.ts)
 - [Free pre-filter → sampled LLM judge, with cost maths](examples/prefilter_router.py)
 - [MCP server](integrations/mcp/): `check_hard_facts` as a tool any agent (Claude Code, Claude Desktop, Cursor) can call on its own draft
