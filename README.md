@@ -2,7 +2,7 @@
 
 [![ci](https://github.com/seekerPrice/hardfacts/actions/workflows/ci.yml/badge.svg)](https://github.com/seekerPrice/hardfacts/actions/workflows/ci.yml) · **[Try it in your browser](https://seekerprice.github.io/hardfacts/)** · MIT · Python + TypeScript
 
-**Your LLM just invented a tracking number. hardfacts catches it: deterministically, in about a millisecond, with no model calls.**
+**Your LLM just invented a tracking number. hardfacts catches it: deterministically, in milliseconds, with no model calls.**
 
 hardfacts pulls every *hard fact* out of an LLM's output (numbers, money, percentages, dates, times, phone numbers, emails, URLs, order and tracking IDs) and checks each one against the sources the model was given. It reports the values no source contains, and for every value that is supported it points at the evidence. Python and TypeScript, zero runtime dependencies, English + Bahasa Melayu + 中文.
 
