@@ -30,3 +30,19 @@ def test_bracketed_values_that_are_not_citations_are_still_claims():
 
 def test_a_list_in_a_source_is_still_evidence():
     assert check("There are 3 slots left.", ['{"slots": [1, 2, 3]}']).ok
+
+
+# Round 8 of hostile review: a bracketed value is a value, not a citation.
+def test_a_bracketed_list_stated_as_the_answer_is_still_checked():
+    assert not check("The scores were [7, 8, 9].", ["Scores: 7, 8 and 3."]).ok
+    assert not check("The point is at coordinates [3, 4].", ["3, 5"]).ok
+    assert not check("It takes [10-20] minutes.", ["10-15 minutes"]).ok
+    assert not check("Aged [18–25] only.", ["Aged 18-30"]).ok
+    assert not check('Response: {"qty": [2, 3]}', ["qty 2"]).ok
+    assert not check("Seat [12] is yours.", ["Seat 14."]).ok
+    assert not check("The answer is [42].", ["41"]).ok
+    assert ("quantity", "1") in _claims("Normalize to [0, 1] first.")
+
+
+def test_a_citation_list_has_at_most_six_entries():
+    assert _claims("Olympic sports [1, 2, 3, 4, 5, 6, 7].") != []

@@ -73,16 +73,16 @@ The data also shows the other side. Fabrications planted in those same answers a
 
 ## Post-fix (not out-of-sample)
 
-The audit's main finding was fixed test-first in both ports: bracketed citation markers are no longer claims. The fix changes 0 of ~40,000 RAGTruth and τ-bench outputs. Re-scored at the fixed checker ([results](../../bench/results/)):
+The audit's main finding was fixed test-first in both ports: bracketed citation markers are no longer claims. A hostile review of the first version found it exempted any bracketed list ("the scores were [7, 8, 9]" passed against "7, 8 and 3"). The fix was narrowed so a bare marker counts only where it closes a clause and no value-introducing word leads into it. Neither version changes any of the ~40,000 RAGTruth and τ-bench outputs. Re-scored at the fixed checker ([results](../../bench/results/)):
 
 | other ten datasets | held-out | post-fix |
 |---|---:|---:|
-| responses flagged | 366 | 253 |
-| response precision | 40.2% | **49.4%** |
+| responses flagged | 366 | 256 |
+| response precision | 40.2% | **48.8%** |
 | adherent responses flagged | 4.6% | **2.7%** |
-| flags in a GPT-4-unsupported sentence | 30.0% | 38.8% |
+| flags in a GPT-4-unsupported sentence | 30.0% | 38.3% |
 | recall of non-adherent responses | 10.8% | 9.2% |
-| hardfacts vs RAGAS at equal flag counts | 41.0% vs 39.0% | **50.8% vs 39.0%** |
+| hardfacts vs RAGAS at equal flag counts | 41.0% vs 39.0% | **50.2% vs 39.0%** |
 | planted fabrications caught | 89.2% | 88.0% (plants into "[10]" now land in an exempt marker) |
 
 FinQA and TAT-QA are unchanged. Because the citation problem was found on this data, the post-fix precision is a bug-fix measurement, not a second held-out result.

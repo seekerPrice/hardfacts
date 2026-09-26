@@ -4,7 +4,7 @@ Nothing has been published yet. The versions below are milestones in the reposit
 
 ## Unreleased
 
-- **Citation markers** (`[10]`, `[1, 2, 5]`, `[1-6]`, `[^2]`, `[Doc 3]`) are no longer claims. They were 24 of the 30 checker errors a blind audit found on RAGBench.
+- **Citation markers** (`[10]`, `[1, 2, 5]`, `[1-6]`, `[^2]`, `[Doc 3]`) are no longer claims. They were 24 of the 30 checker errors a blind audit found on RAGBench. A marker counts only where it closes a clause, so a bracketed list stated as the answer ("the scores were [7, 8, 9]") is still checked. That regression was found by a hostile review of the first version.
 - **RAGBench**, pre-registered ([results](docs/reviews/2026-09-27-ragbench-results.md)): 11,802 responses over 12 RAG datasets, compared with RAGAS, TruLens and a GPT-3.5 judge on the same responses. 4 of 6 predictions pass. **Table-arithmetic QA (FinQA, TAT-QA) fails**: 61.8% of correct answers are flagged, because ratios and percentage changes aren't Derivations. A stricter ratio search was measured and not built (`bench/ratio_experiment.py`).
 - **Integrations:** an OpenAI Agents SDK output guardrail and a LangChain `create_agent` middleware (verify, retry once, hand off).
 

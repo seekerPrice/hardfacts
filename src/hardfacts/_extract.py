@@ -140,16 +140,37 @@ _SELF_REFERENCE = _compile(
 
 
 _CITATION = _compile(
-    r"\[(?:\^|(?:doc(?:ument)?|source|ref)\s*)?\d{1,2}(?:\s*[,–-]\s*(?:\^)?\d{1,2})*\]", re.I)
-"""A citation marker: "[10]", "[1, 2, 5]", "[1-6]", "[^2]", "[Doc 3]". Numbers of up to two digits only,
-so "[101, 102]" and "[2024]" are still values."""
+    r"\[(\^|(?:doc(?:ument)?|source|ref)\s*)?\d{1,2}(?:\s*[,–-]\s*\^?\d{1,2}){0,5}\]", re.I)
+"""A citation marker's shape: "[10]", "[1, 2, 5]", "[1-6]", "[^2]", "[Doc 3]", with at most six entries
+of up to two digits each, so "[101, 102]" and "[2024]" are always values."""
+_CLOSES_A_CLAUSE = _compile(r"\s*(?:$|[.,;:!?)\[\n]|\s[A-Z])")
+_INTRODUCES_A_VALUE = {
+    "is", "are", "was", "were", "be", "been", "equals", "equal", "at", "to", "of", "in", "from", "between",
+    "about", "around", "approximately", "only", "aged", "age", "ages", "seat", "seats", "answer", "coordinates",
+    "values", "scores", "numbers", "ids", "list", "array", "vector", "range", "interval", "set", "takes", "take",
+}
+
+
+def _citations(text: str, words: Words) -> Iterator[Fact]:
+    """Citation markers close a clause: "were killed [10].", "the dominant language [2, 3, 5, 6] It".
+
+    A bracket that a value-introducing word leads into ("the scores were [7, 8, 9]", "seat [12] is") or
+    that sits in code or a list (":", "=", "{") is a value. "[^2]" and "[Doc 3]" are always citations."""
+    for m in _CITATION.finditer(text):
+        if not m.group(1):
+            before = text[max(0, m.start() - 40):m.start()].rstrip(" \t\n\r\f\v")
+            last = re.search(r"([A-Za-z]+)$", before)
+            if (not before or before[-1] in ":={(,[" or (last and last.group(1).lower() in _INTRODUCES_A_VALUE)
+                    or not _CLOSES_A_CLAUSE.match(text, m.end())):
+                continue
+        yield Fact(EXEMPT, m.start(), m.end(), m.group(), None)
 
 
 EXEMPT = "exempt"
 """Marks an Exempt span while recognisers run. It claims its characters, then is dropped: never a Claim."""
 _EXEMPTIONS = [  # (pattern, group whose span is exempt)
     (_SELF_REFERENCE, 1), (_RATING_SCALE, 1), (_HTML_ENTITY, 0), (_EVERY_DAY, 0), (_LIST_MARKER, 0),
-    (_OUTPUT_LENGTH, 1), (_N_WORD, 0), (_CITATION, 0),
+    (_OUTPUT_LENGTH, 1), (_N_WORD, 0),
 ]
 
 
@@ -158,6 +179,7 @@ def _exempt(text: str, words: Words) -> Iterator[Fact]:
     for pattern, group in _EXEMPTIONS:
         for m in pattern.finditer(text):
             yield Fact(EXEMPT, m.start(group), m.end(group), m.group(group), None)
+    yield from _citations(text, words)
 
 
 # ------------------------------------------------------------ contacts and identifiers

@@ -106,16 +106,42 @@ const SELF_REFERENCE = compile(
   { ignoreCase: true },
 );
 /**
- * A citation marker: "[10]", "[1, 2, 5]", "[1-6]", "[^2]", "[Doc 3]". Numbers of up to two digits only,
- * so "[101, 102]" and "[2024]" are still values.
+ * A citation marker's shape: "[10]", "[1, 2, 5]", "[1-6]", "[^2]", "[Doc 3]", with at most six entries
+ * of up to two digits each, so "[101, 102]" and "[2024]" are always values.
  */
 const CITATION = compile(
-  String.raw`\[(?:\^|(?:doc(?:ument)?|source|ref)\s*)?\d{1,2}(?:\s*[,–-]\s*(?:\^)?\d{1,2})*\]`,
+  String.raw`\[(\^|(?:doc(?:ument)?|source|ref)\s*)?\d{1,2}(?:\s*[,–-]\s*\^?\d{1,2}){0,5}\]`,
   { ignoreCase: true },
 );
+const CLOSES_A_CLAUSE = compile(String.raw`\s*(?:$|[.,;:!?)\[\n]|\s[A-Z])`);
+const INTRODUCES_A_VALUE = new Set([
+  "is", "are", "was", "were", "be", "been", "equals", "equal", "at", "to", "of", "in", "from", "between",
+  "about", "around", "approximately", "only", "aged", "age", "ages", "seat", "seats", "answer", "coordinates",
+  "values", "scores", "numbers", "ids", "list", "array", "vector", "range", "interval", "set", "takes", "take",
+]);
+
+/**
+ * Citation markers close a clause: "were killed [10].", "the dominant language [2, 3, 5, 6] It".
+ * A bracket that a value-introducing word leads into ("the scores were [7, 8, 9]", "seat [12] is") or
+ * that sits in code or a list (":", "=", "{") is a value. "[^2]" and "[Doc 3]" are always citations.
+ */
+function* citations(text: string): Generator<Fact> {
+  for (const m of CITATION.all(text)) {
+    const [a, b] = span(m);
+    if (!m[1]) {
+      const before = codePointsBefore(text, a, 40).replace(/[ \t\n\r\f\v]+$/, "");
+      const last = /([A-Za-z]+)$/.exec(before);
+      if (!before || ":={(,[".includes(before[before.length - 1])
+        || (last && INTRODUCES_A_VALUE.has(last[1].toLowerCase()))
+        || CLOSES_A_CLAUSE.at(text, b) === null) continue;
+    }
+    yield fact(EXEMPT, a, b, m[0], null as unknown as string);
+  }
+}
+
 const EXEMPTIONS: [Pattern, number][] = [
   [SELF_REFERENCE, 1], [RATING_SCALE, 1], [HTML_ENTITY, 0], [EVERY_DAY, 0], [LIST_MARKER, 0],
-  [OUTPUT_LENGTH, 1], [N_WORD, 0], [CITATION, 0],
+  [OUTPUT_LENGTH, 1], [N_WORD, 0],
 ];
 
 function* exempt(text: string): Generator<Fact> {
@@ -125,6 +151,7 @@ function* exempt(text: string): Generator<Fact> {
       yield fact(EXEMPT, a, b, text.slice(a, b), null as unknown as string);
     }
   }
+  yield* citations(text);
 }
 
 // ------------------------------------------------------------ contacts and identifiers
