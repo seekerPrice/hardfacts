@@ -52,6 +52,8 @@ Fixing them cut the share of turns the hook would stop from 36% to **16%**, with
 - URLs Claude brought from a web search or its own knowledge
 - values from more than 8 MB back in a very long session
 
+Re-measured on 27 September with `survey.py`, over a different random 60 sessions with subagent transcripts excluded (1,199 turns, the current rules, counts only): the hook would warn on **17.4%** of turns, mostly IDs (129) and URLs (76). Run it on your own: `uv run python integrations/claude-code/survey.py ~/.claude/projects --sessions 60`.
+
 **That's why warn is the default.** A block on one turn in six is too often for coding sessions. For work that states amounts, dates or contact details to other people, narrow the Kinds (`HARDFACTS_HOOK_KINDS=money,percent,date,phone,email`) and block.
 
 On the session that built hardfacts, one long turn had 134 hard facts across all Kinds. The hook flagged 5, and all 5 were values Claude had **rounded or unit-converted** from real tool output (`0.0131 s` as `0.013 s`, `13486872` as `13.5M`). A "rounded from" explanation was measured and rejected (ADR-0007): it explains too few flags on the benchmarks to justify the coincidences it adds.
