@@ -37,7 +37,7 @@ Recogniser = Callable[[str, Words], Iterator[Fact]]
 
 # --------------------------------------------------------------------------- numbers
 
-NUM = r"\d{1,3}\.\d{3},\d{1,2}(?![\d.,])|\d{1,3}(?:\.\d{3}){2,}(?:,\d{1,2})?(?!\d|\.\d)|\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+"
+NUM = r"(?<![\d\[,.])\d{1,3}\.\d{3},\d{1,2}(?!\d|[.,]\d)|\d{1,3}(?:\.\d{3}){2,}(?:,\d{1,2})?(?!\d|\.\d)|\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+"
 """A number: European 1.500,00, dot-thousands with 2+ groups (1.500.000), comma-thousands (1,500,000), plain, or .5."""
 MAGNITUDE_WORDS = {"thousand": 10**3, "lakh": 10**5, "lakhs": 10**5, "million": 10**6, "crore": 10**7,
                    "crores": 10**7, "billion": 10**9, "trillion": 10**12}

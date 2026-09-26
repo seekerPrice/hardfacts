@@ -39,7 +39,7 @@ function group(m: RegExpExecArray, g: number): string | undefined {
 
 // --------------------------------------------------------------------------- numbers
 
-const NUM = String.raw`\d{1,3}\.\d{3},\d{1,2}(?![\d.,])|\d{1,3}(?:\.\d{3}){2,}(?:,\d{1,2})?(?!\d|\.\d)|\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+`;
+const NUM = String.raw`(?<![\d\[,.])\d{1,3}\.\d{3},\d{1,2}(?!\d|[.,]\d)|\d{1,3}(?:\.\d{3}){2,}(?:,\d{1,2})?(?!\d|\.\d)|\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+`;
 export const MAGNITUDE_WORDS: Record<string, number> = {
   thousand: 1e3, lakh: 1e5, lakhs: 1e5, million: 1e6, crore: 1e7, crores: 1e7, billion: 1e9, trillion: 1e12,
 };
@@ -626,13 +626,13 @@ function isAppleMac(text: string, month: string, end: number): boolean {
 
 // ----------------------------------------------------------------------------- money
 
-const PREFIX_CURRENCIES: Record<string, string> = {
+export const PREFIX_CURRENCIES: Record<string, string> = {
   "US$": "USD", "S$": "SGD", "A$": "AUD", "C$": "CAD", "HK$": "HKD", "NZ$": "NZD", "$": "$",
   "€": "EUR", "£": "GBP", "¥": "¥", "₹": "INR", "₱": "PHP", "₫": "VND", "฿": "THB",
   RM: "MYR", Rp: "IDR", "Rs.": "INR", Rs: "INR",
 };
 export const CODES = ["USD", "SGD", "MYR", "EUR", "GBP", "JPY", "CNY", "RMB", "INR", "IDR", "THB", "PHP", "VND", "AUD", "CAD", "HKD", "NZD"];
-const SUFFIX_CURRENCIES: Record<string, string> = {
+export const SUFFIX_CURRENCIES: Record<string, string> = {
   dollar: "$", dollars: "$", ringgit: "MYR", euro: "EUR", euros: "EUR", yen: "JPY",
   yuan: "CNY", rupee: "INR", rupees: "INR", baht: "THB", peso: "PHP", pesos: "PHP",
   rupiah: "IDR", dong: "VND",
@@ -644,7 +644,7 @@ const CJK_CURRENCIES: Record<string, string | null> = {
   "人民币": "CNY", "港币": "HKD", "日元": "JPY", "欧元": "EUR",
 };
 
-function currency(token: string): string {
+export function currency(token: string): string {
   const code = PREFIX_CURRENCIES[token] ?? SUFFIX_CURRENCIES[token.toLowerCase()] ?? token.toUpperCase();
   return code === "RMB" ? "CNY" : code;
 }

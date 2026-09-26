@@ -6,7 +6,7 @@
  */
 
 import { add, compare, type Dec, dec, mul, sub } from "./decimal.ts";
-import { CODES, codePointsBefore, DOLLAR_FAMILY, extract, type Fact, nameShape, names, type Value, YEN_FAMILY } from "./extract.ts";
+import { CODES, codePointsBefore, currency, DOLLAR_FAMILY, extract, PREFIX_CURRENCIES, SUFFIX_CURRENCIES, type Fact, nameShape, names, type Value, YEN_FAMILY } from "./extract.ts";
 import { compile } from "./regex.ts";
 
 export type { Value } from "./extract.ts";
@@ -501,22 +501,26 @@ function withYears(evidence: (readonly [number, Fact])[], rendered: string[]): (
   return evidence.map(([i, e]) => {
     const readings = e.value as string[];
     if (e.kind !== "date" || !readings.some((r) => r.startsWith("XXXX"))) return [i, e] as const;
-    const added = readings.filter((r) => r.startsWith("XXXX")).flatMap((r) => anchors.map((a) => nearestYear(r, a)));
+    const added = readings.filter((r) => r.startsWith("XXXX")).flatMap((r) => anchors.flatMap((a) => lentYears(r, a)));
     return [i, { ...e, value: [...new Set([...readings, ...added])] }] as const;
   });
 }
 
 /**
- * The anchor's year, or the next or previous one when that is nearer: on 2025-12-30, "Jan 2" is
- * 2 January 2026, and on 2026-01-03, "Dec 28" is 28 December 2025.
+ * The anchor's year, and the next or previous one when that puts the date within six months of
+ * the anchor: on 2025-12-30, "Jan 2" reads as 2 January 2026 as well as 2025 (an order history's
+ * "Mar 5" is past; an ETA's "Jan 2" is next year; doubt keeps both). Never a 29 February that isn't.
  */
-function nearestYear(reading: string, anchor: string): string {
-  let year = Number(anchor.slice(0, 4));
+function lentYears(reading: string, anchor: string): string[] {
+  const year = Number(anchor.slice(0, 4));
+  const years = [year];
   if (anchor[5] !== "X" && reading[5] !== "X") {
     const months = Number(reading.slice(5, 7)) - Number(anchor.slice(5, 7));
-    year += months < -6 ? 1 : months > 6 ? -1 : 0;
+    if (months < -6) years.push(year + 1);
+    else if (months > 6) years.push(year - 1);
   }
-  return String(year).padStart(4, "0") + reading.slice(4);
+  const leap = (y: number) => y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0);
+  return years.filter((y) => reading.slice(5, 10) !== "02-29" || leap(y)).map((y) => String(y).padStart(4, "0") + reading.slice(4));
 }
 
 /**
@@ -554,7 +558,8 @@ export function check(output: string, sources: unknown[], options: CheckOptions 
       else index.set(key, [position]);
     }
   });
-  const named = currenciesNamed(rendered, evidence);
+  const named = sources.map(currenciesNamed);
+  const ends = sourceEnds(evidence, rendered.length);
   const claims: Claim[] = [];
   const facts = extract(output, true);
   for (const f of facts) {
@@ -562,8 +567,11 @@ export function check(output: string, sources: unknown[], options: CheckOptions 
     const lists = claimKeys(f).map((k) => index.get(k)).filter((l): l is number[] => l !== undefined);
     const candidates = lists.length === 1 ? lists[0] : [...new Set(lists.flat())].sort((x, y) => x - y);
     const found: Evidence[] = [];
-    for (const p of candidates) {
-      if (otherCurrency(f, evidence[p], named)) continue;
+    for (let k = 0; k < candidates.length;) {
+      const p = candidates[k];
+      const i = evidence[p][0];
+      if (otherCurrency(f, i, named)) { k = lowerBound(candidates, ends[i], k); continue; } // skip the rest of that Source
+      k++;
       if (!supports(evidence[p][1], f)) continue;
       found.push({ source: evidence[p][0], span: [evidence[p][1].start, evidence[p][1].end], text: evidence[p][1].text });
       if (found.length === EVIDENCE_PER_CLAIM) break;
@@ -581,25 +589,57 @@ export function check(output: string, sources: unknown[], options: CheckOptions 
   return { claims, sources: rendered, unsupported, unexplained, ok: unsupported.length === 0 };
 }
 
-const CURRENCY_NAMED = new RegExp(`(?<![A-Za-z])(${CODES.join("|")})(?![A-Za-z])`, "g");
+const CURRENCY_KEY = /curr|^ccy$/i;
+const KNOWN = new Set([...CODES, "CNY", ...Object.values(PREFIX_CURRENCIES), ...Object.values(SUFFIX_CURRENCIES)]);
 
-/** The currencies each Source names: its amounts' currencies and codes such as "currency": "MYR". */
-function currenciesNamed(rendered: string[], evidence: readonly (readonly [number, Fact])[]): Set<string>[] {
-  const named = rendered.map((text) => new Set([...text.matchAll(CURRENCY_NAMED)].map((m) => (m[1] === "RMB" ? "CNY" : m[1]))));
-  for (const [i, e] of evidence) {
-    if (e.kind === "money" && (e.value as [string | null, string])[0] !== null) named[i].add((e.value as [string, string])[0]);
+/**
+ * The currencies a JSON Source names in a currency key ("currency", "currency_code", "ccy"…):
+ * {"amount": 50, "currency": "myr"} names MYR. Free text and other amounts name nothing, so a
+ * note like "USD accepted" is no reason to doubt an amount (ADR-0003).
+ */
+function currenciesNamed(source: unknown): Set<string> {
+  const found = new Set<string>();
+  const stack: unknown[] = [source];
+  while (stack.length) {
+    const node = stack.pop();
+    if (Array.isArray(node)) stack.push(...node);
+    else if (node !== null && typeof node === "object") {
+      for (const [key, value] of Object.entries(node)) {
+        if (typeof value === "string" && CURRENCY_KEY.test(key) && KNOWN.has(currency(value.trim()))) found.add(currency(value.trim()));
+        else if (value !== null && typeof value === "object") stack.push(value);
+      }
+    }
   }
-  return named;
+  return found;
+}
+
+/** For each Source, the position just past its last piece of Evidence (Evidence is in Source order). */
+function sourceEnds(evidence: readonly (readonly [number, Fact])[], count: number): number[] {
+  const ends = new Array<number>(count).fill(0);
+  evidence.forEach(([i], position) => { ends[i] = position + 1; });
+  return ends;
+}
+
+/** The first index in sorted `list`, at or after `from`, whose value is at least `value`. */
+function lowerBound(list: number[], value: number, from: number): number {
+  let [lo, hi] = [from, list.length];
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (list[mid] < value) lo = mid + 1;
+    else hi = mid;
+  }
+  return lo;
 }
 
 /**
  * A bare number is in the currency its Source names: {"amount": 50, "currency": "MYR"} doesn't
- * support "USD 50". A Source naming no currency, or a compatible one, still does (ADR-0003).
+ * support "USD 50". Money Evidence is compared by supports() itself; a Source naming no currency,
+ * or a compatible one, still supports (ADR-0003).
  */
-function otherCurrency(claim: Fact, [i, e]: readonly [number, Fact], named: Set<string>[]): boolean {
-  const currency = (claim.value as [string | null, string])[0];
-  if (claim.kind !== "money" || e.kind === "money" || currency === null || !named[i].size) return false;
-  return ![...named[i]].some((c) => sameCurrency(currency, c));
+function otherCurrency(claim: Fact, source: number, named: Set<string>[]): boolean {
+  const code = (claim.value as [string | null, string])[0];
+  if (claim.kind !== "money" || code === null || !named[source].size) return false;
+  return ![...named[source]].some((c) => sameCurrency(code, c));
 }
 
 /** Names in the Output that a same-shaped name in the Sources makes checkable (ADR-0008). */

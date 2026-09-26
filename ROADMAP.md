@@ -27,6 +27,8 @@ These are measured gaps, not wishes. Each one says where the evidence is. A fix 
 - **An invented country code passes.** "+65 12-345 6789" is supported by a Malaysian local number "012-345 6789", although the Claim is more specific than its Evidence. When the Evidence has a trunk 0 and no country code, a Claim's country code should need support elsewhere in the Sources.
 - **Last-digit references match any number.** "card ending in 5238" is supported by the customer's phone number, or by an order ID with those last digits. The reference should prefer Evidence of the same sort (a card or account ID) when the Sources have one.
 - **Weekdays aren't checked.** "Friday, October 3" passes against "Wednesday, October 3".
+- **Minor units named by a field.** `{"fee_cents": 50}` doesn't support "50 cents": the Claim is $0.50, and the Source states a bare 50. "My 2 cents" is read as $0.02. (Round 12.)
+- **Shorthand after compound units.** `一亿五` and `一百万五` aren't read as 150 million and 1.5 million, and `3万5` splits into two numbers. (Round 12; this predates the shorthand fix.)
 
 ## Languages
 
