@@ -253,6 +253,7 @@ tools/verify.sh         every gate in one command</div>
       <td>${c.supported ? '<span class="pill ok">supported</span>' : '<span class="pill bad">no source</span>'}</td>
       <td class="ev">${c.supported ? c.evidence.slice(0, 2).map((e) => evidenceText(report, e)).join("<br>")
         : c.derivation ? `computed as <b>${esc(c.derivation.expression)}</b> from values this reply states: check they are the right ones to combine`
+        : c.kind === "money" ? "no source states this amount in this currency, and it isn't arithmetic on the reply's own values"
         : "nothing in the sources has this value, and it isn't arithmetic on the reply's own values"}</td>
     </tr>`).join("");
   }
