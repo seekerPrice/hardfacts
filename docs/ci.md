@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.2.0
       - run: uv tool install "git+https://github.com/seekerPrice/hardfacts"
       - run: hardfacts report evals/transcripts.jsonl --html hardfacts.html --fail-over 0.02
       - uses: actions/upload-artifact@v7
