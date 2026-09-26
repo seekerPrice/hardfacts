@@ -16,7 +16,7 @@ You can, and for prose ("the hotel has a pool") you should. For hard facts it's 
 - **Non-determinism.** The same response can pass on Monday and fail on Tuesday, so a flag can't go in a bug report or a CI gate.
 - **It's a lookup problem.** "Does 1Z999AA10123456785 appear in the order record?" doesn't need reasoning. It needs the right notion of *equal*.
 
-So the goal was a deterministic, dependency-free check that costs a millisecond and runs on every response. The paid judge then goes where only a judge helps.
+So the goal was a deterministic, dependency-free check that costs a few milliseconds and runs on every response. The paid judge then goes where only a judge helps.
 
 ## The naive version, and why it fails
 

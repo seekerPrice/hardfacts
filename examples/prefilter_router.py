@@ -65,4 +65,4 @@ if __name__ == "__main__":
     print(f"\n{'responses/month':>16} {'judge 100%':>12} {'hardfacts + judge 10%':>22}")
     for n in (100_000, 1_000_000, 10_000_000):
         print(f"{n:>16,} {'$' + format(monthly_cost(n, 1.0), ',.0f'):>12} {'$' + format(monthly_cost(n, 0.10), ',.0f'):>22}")
-    print("\nhardfacts itself: ~1 ms and $0 per response, on 100% of traffic (bench/ragtruth.py measures the time).")
+    print("\nhardfacts itself: ~2 ms (Python) or ~0.2 ms (TypeScript) and $0 per response, on 100% of traffic (bench/ragtruth.py measures the time).")
