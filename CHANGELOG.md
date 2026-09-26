@@ -5,6 +5,7 @@ The repository is public on GitHub. Nothing is on PyPI or npm yet (see ROADMAP.m
 ## Unreleased
 
 - **Contract dates** (found by a second RAGBench audit): "the 19th day of December 1997" and "October 1,1996" are read as dates.
+- **More citation forms**: `[Context 1]`, `[Passage 3]` and "(contexts 1 and 2)" are not claims.
 - **Percentages computed from the reply's own values show their working** ([ADR-0007](docs/adr/0007-derivations-come-from-the-output.md), amended): "a return of 37.9%" carries `(137.90 − 100.00) ÷ 100.00 × 100`, for a percentage stated to a decimal, using only the three values written nearest it. The first build used every number in the reply, and a hostile review (round 15) showed chance matches then grow with the reply (42% of random percentages at 20 numbers). Bounded, table QA goes from 61.9% to 61.4% of correct answers flagged, and τ²-bench coincidences stay at 1.0%.
 - **Hostile reviews, rounds 8–10:**
   - round 8, of the citation rule: 1 high (an answer written as a bracketed list, "the scores were [7, 8, 9]", went unchecked)

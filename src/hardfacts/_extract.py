@@ -136,7 +136,7 @@ _RATING_SCALE = _compile(r"\bout\s+of\s+((?:5|10|100)(?:\.0)?)\b(?![.,]?\d)", re
 
 
 _SELF_REFERENCE = _compile(
-    r"\b(?:steps?|passages?|reviews?|facts?|points?|tips?|methods?|options?)\s+"
+    r"\b(?:steps?|passages?|contexts?|reviews?|facts?|points?|tips?|methods?|options?)\s+"
     r"(\d{1,3}(?:\s*(?:,|and|or|&|-|–|to)\s*\d{1,3})*)\b",
     re.I,
 )
@@ -144,7 +144,7 @@ _SELF_REFERENCE = _compile(
 
 
 _CITATION = _compile(
-    r"\[(\^|(?:doc(?:ument)?|source|ref)\s*)?\d{1,2}(?:\s*[,–-]\s*\^?\d{1,2}){0,5}\]", re.I)
+    r"\[(\^|(?:doc(?:ument)?|source|ref|context|passage)\s*)?\d{1,2}(?:\s*[,–-]\s*\^?\d{1,2}){0,5}\]", re.I)
 """A citation marker's shape: "[10]", "[1, 2, 5]", "[1-6]", "[^2]", "[Doc 3]", with at most six entries
 of up to two digits each, so "[101, 102]" and "[2024]" are always values."""
 _CLOSES_A_CLAUSE = _compile(r"\s*(?:$|[.,;:!?)\[\n]|\s[A-Z])")

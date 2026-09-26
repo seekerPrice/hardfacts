@@ -103,7 +103,7 @@ const EVERY_DAY = compile(
 const HTML_ENTITY = compile(String.raw`&#?\w{1,8};`);
 const RATING_SCALE = compile(String.raw`\bout\s+of\s+((?:5|10|100)(?:\.0)?)\b(?![.,]?\d)`, { ignoreCase: true });
 const SELF_REFERENCE = compile(
-  String.raw`\b(?:steps?|passages?|reviews?|facts?|points?|tips?|methods?|options?)\s+` +
+  String.raw`\b(?:steps?|passages?|contexts?|reviews?|facts?|points?|tips?|methods?|options?)\s+` +
     String.raw`(\d{1,3}(?:\s*(?:,|and|or|&|-|–|to)\s*\d{1,3})*)\b`,
   { ignoreCase: true },
 );
@@ -112,7 +112,7 @@ const SELF_REFERENCE = compile(
  * of up to two digits each, so "[101, 102]" and "[2024]" are always values.
  */
 const CITATION = compile(
-  String.raw`\[(\^|(?:doc(?:ument)?|source|ref)\s*)?\d{1,2}(?:\s*[,–-]\s*\^?\d{1,2}){0,5}\]`,
+  String.raw`\[(\^|(?:doc(?:ument)?|source|ref|context|passage)\s*)?\d{1,2}(?:\s*[,–-]\s*\^?\d{1,2}){0,5}\]`,
   { ignoreCase: true },
 );
 const CLOSES_A_CLAUSE = compile(String.raw`\s*(?:$|[.,;:!?)\[\n]|\s[A-Z])`);

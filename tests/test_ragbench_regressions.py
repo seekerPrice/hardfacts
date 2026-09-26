@@ -66,3 +66,9 @@ def test_contract_dates_the_nth_day_of_month():
 def test_a_year_right_after_the_comma_is_still_the_dates_year():
     assert check("The Amendment Date is October 1, 1996.", ['entered into effective October 1,1996 ("Amendment Date")']).ok
     assert not check("The Amendment Date is October 1, 1997.", ['entered into effective October 1,1996']).ok
+
+
+def test_context_and_passage_citations_are_not_claims():
+    assert _claims("Portugal is 92,212 sq km in total. [Context 1]") == [("quantity", "92,212")]
+    assert _claims("No one was actually helping (contexts 1 and 2).") == []
+    assert _claims("See [Passage 3] and [Document 2].") == []
