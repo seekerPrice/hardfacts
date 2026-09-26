@@ -317,12 +317,89 @@ class Search {
           if (mul(a, BigInt(m)) === goal) return made("×", [first.get(a)!, this.multipliers.get(m)!]);
         }
       }
+      if (target.kind === "percent") return this.ratio(target, goal);
     } catch (e) {
       if (e instanceof OutOfBudget) return null;
       throw e;
     }
     return null;
   }
+
+  private ratioGroupsCache: [Dec[], Map<Dec, Claim>][] | null = null;
+
+  /**
+   * A percentage stated to a decimal, as a ÷ b × 100 or (a − b) ÷ b × 100 over two of the Output's
+   * own Supported numbers or same-currency amounts, rounded to the Claim's decimals. Measured before
+   * building (bench/ratio_experiment.py --strict): 8% of flags on correct table answers explained,
+   * 0.03% of planted fabrications explained by coincidence. A whole percentage is never searched.
+   */
+  private ratio(target: Claim, goal: Dec): Derivation | null {
+    const places = decimalPlaces(target.text);
+    if (!places) return null;
+    for (const [values, first] of this.ratioGroups()) {
+      for (const a of values) {
+        for (const b of values) {
+          if (a === b) continue;
+          this.budget.spend();
+          if (compare(percentOf(a, b, places), goal) === 0) {
+            return { expression: `${first.get(a)!.text} ÷ ${first.get(b)!.text} × 100`, operands: [[...first.get(a)!.span], [...first.get(b)!.span]] };
+          }
+          if (compare(percentOf(sub(a, b), b, places, true), goal) === 0) {
+            return { expression: `(${first.get(a)!.text} − ${first.get(b)!.text}) ÷ ${first.get(b)!.text} × 100`, operands: [[...first.get(a)!.span], [...first.get(b)!.span]] };
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  /** The Supported numbers, and the Supported amounts per currency, each group sorted by value. */
+  private ratioGroups(): [Dec[], Map<Dec, Claim>][] {
+    if (!this.ratioGroupsCache) {
+      const groups = new Map<string, [string, string, Map<Dec, Claim>]>();
+      for (const c of this.claims) {
+        if (!c.supported || (c.kind !== "quantity" && c.kind !== "money") || compare(claimAmount(c), "0") <= 0) continue;
+        const code = c.kind === "money" ? String((c.value as (string | null)[])[0] ?? "None") : "None";
+        const key = `${c.kind}\u0000${code}`;
+        if (!groups.has(key)) groups.set(key, [c.kind, code, new Map()]);
+        const first = groups.get(key)![2];
+        if (!first.has(claimAmount(c))) first.set(claimAmount(c), c);
+      }
+      this.ratioGroupsCache = [...groups.values()]
+        .sort((x, y) => (x[0] < y[0] ? -1 : x[0] > y[0] ? 1 : x[1] < y[1] ? -1 : x[1] > y[1] ? 1 : 0))
+        .map(([, , first]) => [[...first.keys()].sort(compare), first]);
+    }
+    return this.ratioGroupsCache;
+  }
+}
+
+/** Decimals a number is written with: "37.9%" has 1, "35%" none. */
+function decimalPlaces(text: string): number {
+  const m = /\d\.(\d+)/.exec(text);
+  return m ? m[1].length : 0;
+}
+
+/** a × 100 ÷ b, rounded half-up (away from zero) to `places` decimals; its absolute value when `absolute`. */
+function percentOf(a: Dec, b: Dec, places: number, absolute = false): Dec {
+  const [na, sa] = scaled(a);
+  const [nb, sb] = scaled(b);
+  let num = na * 100n * 10n ** BigInt(sb + places);
+  let den = nb * 10n ** BigInt(sa);
+  const negative = (num < 0n) !== (den < 0n);
+  if (num < 0n) num = -num;
+  if (den < 0n) den = -den;
+  const q = (2n * num + den) / (2n * den);
+  const digits = q.toString().padStart(places + 1, "0");
+  const text = `${digits.slice(0, -places)}.${digits.slice(-places)}`;
+  return dec(negative && !absolute && q !== 0n ? `-${text}` : text);
+}
+
+/** A decimal string as an integer and a power-of-ten scale: "-1.25" is [-125n, 2]. */
+function scaled(d: Dec): [bigint, number] {
+  const negative = d.startsWith("-");
+  const [whole, frac = ""] = (negative ? d.slice(1) : d).split(".");
+  const n = BigInt(whole + frac);
+  return [negative ? -n : n, frac.length];
 }
 
 // ---------------------------------------------------------------------------- the index

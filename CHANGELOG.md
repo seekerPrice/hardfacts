@@ -4,6 +4,7 @@ The repository is public on GitHub. Nothing is on PyPI or npm yet (see ROADMAP.m
 
 ## Unreleased
 
+- **Percentages computed from the reply's own values show their working** ([ADR-0007](docs/adr/0007-derivations-come-from-the-output.md), amended): "a return of 37.9%" carries `(137.90 − 100.00) ÷ 100.00 × 100`, for a percentage stated to a decimal. It was measured first. RAGBench table QA goes from 61.9% to 60.2% of correct answers flagged, and τ²-bench coincidences are unchanged at 1.0%.
 - **Hostile reviews, rounds 8–10:**
   - round 8, of the citation rule: 1 high (an answer written as a bracketed list, "the scores were [7, 8, 9]", went unchecked)
   - round 9, of names: 1 high (quadratic time on 20,000 names) and 3 low (hyphens merging digit runs, full-width digits)

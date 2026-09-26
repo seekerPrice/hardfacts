@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from decimal import Decimal
+import re
+from decimal import ROUND_HALF_UP, Decimal
 
 from dataclasses import replace
 
@@ -32,6 +33,15 @@ class _Budget:
 
 class _OutOfBudget(Exception):
     pass
+
+
+_PLACES = re.compile(r"\d\.(\d+)")
+
+
+def _places(text: str) -> int:
+    """Decimals a number is written with: "37.9%" has 1, "35%" none."""
+    m = _PLACES.search(text)
+    return len(m.group(1)) if m else 0
 
 
 def _amount(claim: Claim) -> Decimal:
@@ -72,6 +82,7 @@ class _Search:
         self.budget = _Budget(_WORK_PER_CHECK)
         self.groups: dict[tuple, tuple[list[Decimal], dict[Decimal, Claim]]] = {}
         self.multipliers: dict[Decimal, Claim] = {}
+        self._ratio_groups: list | None = None
         for c in claims:
             if c.supported and c.kind == "quantity" and c.value == c.value.to_integral_value() and 2 <= c.value <= _LARGEST_MULTIPLIER:
                 self.multipliers.setdefault(c.value, c)
@@ -117,9 +128,47 @@ class _Search:
                         raise _OutOfBudget
                     if EXACT.multiply(a, m) == goal:
                         return made("×", [first[a], self.multipliers[m]])
+            if target.kind == "percent":
+                return self.ratio(target, goal)
         except _OutOfBudget:
             return None
         return None
+
+    def ratio(self, target: Claim, goal: Decimal) -> Derivation | None:
+        """A percentage stated to a decimal, as a ÷ b × 100 or (a − b) ÷ b × 100 over two of the Output's
+        own Supported numbers or same-currency amounts, rounded to the Claim's decimals. Measured before
+        building (bench/ratio_experiment.py --strict): 8% of flags on correct table answers explained,
+        0.03% of planted fabrications explained by coincidence. A whole percentage is never searched."""
+        places = _places(target.text)
+        if not places:
+            return None
+        step = Decimal(1).scaleb(-places)
+        for group in self.ratio_groups():
+            values, first = group
+            for a in values:
+                for b in values:
+                    if a == b:
+                        continue
+                    if not self.budget.spend():
+                        raise _OutOfBudget
+                    share = EXACT.divide(EXACT.multiply(a, Decimal(100)), b).quantize(step, rounding=ROUND_HALF_UP)
+                    if share == goal:
+                        return Derivation(f"{first[a].text} ÷ {first[b].text} × 100", (first[a].span, first[b].span))
+                    change = EXACT.divide(EXACT.multiply(EXACT.subtract(a, b), Decimal(100)), b).quantize(step, rounding=ROUND_HALF_UP)
+                    if abs(change) == goal:
+                        return Derivation(f"({first[a].text} − {first[b].text}) ÷ {first[b].text} × 100", (first[a].span, first[b].span))
+        return None
+
+    def ratio_groups(self) -> list[tuple[list[Decimal], dict[Decimal, Claim]]]:
+        """The Supported numbers, and the Supported amounts per currency, each group sorted by value."""
+        if self._ratio_groups is None:
+            groups: dict[tuple, dict[Decimal, Claim]] = {}
+            for c in self.claims:
+                if c.supported and c.kind in ("quantity", "money") and _amount(c) > 0:
+                    key = (c.kind, c.value[0] if c.kind == "money" else None)
+                    groups.setdefault(key, {}).setdefault(_amount(c), c)
+            self._ratio_groups = [(sorted(g), g) for _, g in sorted(groups.items(), key=lambda kv: (kv[0][0], str(kv[0][1])))]
+        return self._ratio_groups
 
 
 def derive(target: Claim, claims: tuple[Claim, ...]) -> Derivation | None:

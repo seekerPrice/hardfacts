@@ -63,3 +63,27 @@ def test_a_reply_with_many_amounts_is_still_fast():
     t0 = time.perf_counter()
     check(output, [{"prices": prices}])
     assert time.perf_counter() - t0 < 0.1
+
+
+# Ratios and percentage changes, for a percentage stated to a decimal (bench/ratio_experiment.py --strict).
+def test_a_percentage_change_between_the_replys_own_values_shows_its_working():
+    report = check("The value rose from 100.00 to 137.90, a return of 37.9%.", ["The index was 100.00 on 1/2/2010 and 137.90 on 1/1/2011."])
+    claim = next(c for c in report.claims if c.text == "37.9%")
+    assert not claim.supported and claim.derivation.expression == "(137.90 − 100.00) ÷ 100.00 × 100"
+    assert not report.unexplained
+
+
+def test_a_share_shows_its_working():
+    report = check("Of 250 orders, 87 were late: 34.8%.", ["250 orders, 87 late"])
+    claim = next(c for c in report.claims if c.text == "34.8%")
+    assert claim.derivation.expression == "87 ÷ 250 × 100"
+
+
+def test_a_whole_percentage_is_not_searched_for_ratios():
+    report = check("Of 250 orders, 87 were late: 35%.", ["250 orders, 87 late"])
+    assert next(c for c in report.claims if c.text == "35%").derivation is None
+
+
+def test_a_wrong_percentage_gets_no_ratio_working():
+    report = check("Of 250 orders, 87 were late: 38.4%.", ["250 orders, 87 late"])
+    assert next(c for c in report.claims if c.text == "38.4%").derivation is None

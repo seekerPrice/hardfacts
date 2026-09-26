@@ -19,6 +19,13 @@ Decisions:
 - The operand Claims are of the same Kind as the target. A multiplier is a Supported whole number from 2 to 9 ("2 passengers").
 - The operations are a difference of two operands, a sum of 2 to 5, and one operand times a multiplier. The search order is fixed and shared by both ports: differences, then sums by size, then products, each over operands in ascending order. Sums of 4 or 5 are tried only for up to 16 operands, and sums of 3 only for up to 60, which bounds the cost.
 - Date arithmetic ("move it by one day") is not covered.
+- **Amended 2026-09-27: ratios.** A percentage stated to at least one decimal is also searched as a ÷ b × 100 or (a − b) ÷ b × 100, over two Supported numbers, or two Supported amounts in one currency. The result is rounded half-up to the Claim's own decimals, and the search runs last, on the same work budget.
+
+  Measured before building (`bench/ratio_experiment.py`):
+  - The loose version, with any percentage and also means, "explained" 2.3% of planted fabrications, and was rejected.
+  - The strict one explained 8% of the flags on correct FinQA/TAT-QA answers, and 0.03% of fabrications.
+
+  Built, it moved RAGBench table QA from 61.9% to 60.2% of correct answers flagged, and left τ²-bench unchanged (Derivations on 41.9% of flags, 1.0% of caught fabrications explained by coincidence). A whole percentage ("35%") is never searched, because too many ratios round to it.
 
 Considered, and rejected:
 - **Operands from the Sources.** See the table above.
