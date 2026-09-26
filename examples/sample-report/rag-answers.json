@@ -1,0 +1,1635 @@
+{
+  "responses": 6170,
+  "responses_with_unsupported": 267,
+  "unsupported_rate": 0.0433,
+  "responses_with_unexplained": 260,
+  "unsupported_with_derivation": 19,
+  "hard_facts": 11185,
+  "hard_facts_by_kind": {
+    "quantity": 7267,
+    "percent": 1341,
+    "name": 1032,
+    "date": 537,
+    "identifier": 362,
+    "money": 357,
+    "url": 155,
+    "temperature": 101,
+    "time": 26,
+    "phone": 4,
+    "email": 3
+  },
+  "unsupported_by_kind": {
+    "quantity": 364,
+    "date": 88,
+    "identifier": 73,
+    "url": 73,
+    "percent": 39,
+    "name": 11,
+    "money": 9,
+    "email": 2,
+    "temperature": 1,
+    "time": 1
+  },
+  "examples": [
+    {
+      "id": "covidqa/1560",
+      "kind": "percent",
+      "text": "98%",
+      "before": "t two days, and 2% reported only a physician's diagnosis of pneumonia. This means that in ",
+      "after": " of the cases (323 - 2), the symptoms at diagnosis were cons",
+      "derivation": null
+    },
+    {
+      "id": "covidqa/166",
+      "kind": "quantity",
+      "text": "144",
+      "before": "Approximately ",
+      "after": "-230 million people worldwide have persistent hepatitis C vi",
+      "derivation": null
+    },
+    {
+      "id": "covidqa/166",
+      "kind": "quantity",
+      "text": "230 million",
+      "before": "Approximately 144-",
+      "after": " people worldwide have persistent hepatitis C virus.",
+      "derivation": null
+    },
+    {
+      "id": "covidqa/543",
+      "kind": "date",
+      "text": "Feb. 10, 2020",
+      "before": "given pieces of context do not provide information on the number of people affected as of ",
+      "after": ". Therefore, we cannot answer the question based on the prov",
+      "derivation": null
+    },
+    {
+      "id": "covidqa/378",
+      "kind": "quantity",
+      "text": "5",
+      "before": "The provided context does not contain information about the ",
+      "after": "-year survival rate for colorectal cancer patients. Therefor",
+      "derivation": null
+    },
+    {
+      "id": "covidqa/1495",
+      "kind": "percent",
+      "text": "95%",
+      "before": "ean percentage of the total population infected in France as of 28th March is 3.0% with a ",
+      "after": " credible interval.",
+      "derivation": null
+    },
+    {
+      "id": "covidqa/1281",
+      "kind": "date",
+      "text": "March 11th",
+      "before": "As of ",
+      "after": ", there were 3,169 deaths due to COVID-19 in mainland China.",
+      "derivation": null
+    },
+    {
+      "id": "covidqa/717",
+      "kind": "identifier",
+      "text": "T20/N36",
+      "before": "The ",
+      "after": " complex did not show a typical alpha helical conformation d",
+      "derivation": null
+    },
+    {
+      "id": "covidqa/152",
+      "kind": "name",
+      "text": "CD40",
+      "before": "The ",
+      "after": " Ligand is a type II membrane glycoprotein with a sandwiched",
+      "derivation": null
+    },
+    {
+      "id": "covidqa/1494",
+      "kind": "date",
+      "text": "28th March",
+      "before": "pieces of context, Denmark's estimated mean percentage of total population infected as of ",
+      "after": " is 1.1% with a 95% credible interval.",
+      "derivation": null
+    },
+    {
+      "id": "covidqa/1494",
+      "kind": "percent",
+      "text": "95%",
+      "before": "'s estimated mean percentage of total population infected as of 28th March is 1.1% with a ",
+      "after": " credible interval.",
+      "derivation": null
+    },
+    {
+      "id": "cuad/PrecheckHealthServicesInc_20200320_8-K_EX-99.2_12070169_EX-99.2_Distributor Agreement__Renewal Term",
+      "kind": "date",
+      "text": "March 18, 2021",
+      "before": " is no mention of a renewal term or automatic extension after the initial term expires on ",
+      "after": ". The agreement states:\n\n\"This Agreement shall be in effect ",
+      "derivation": null
+    },
+    {
+      "id": "cuad/PrecheckHealthServicesInc_20200320_8-K_EX-99.2_12070169_EX-99.2_Distributor Agreement__Renewal Term",
+      "kind": "date",
+      "text": "March 18, 2021",
+      "before": "th prior notice after the initial term. It appears the agreement will simply terminate on ",
+      "after": ", unless terminated earlier by either party with 30 days wri",
+      "derivation": null
+    },
+    {
+      "id": "cuad/BOLIVARMININGCORP_05_23_2003-EX-2.1-VISP WEB SITE BUILDING AND HOSTING AGREEMENT__Expiration Date",
+      "kind": "date",
+      "text": "May 12, 2003",
+      "before": ", the initial term of the contract is for 5 years from the date of the document, which is ",
+      "after": ". Therefore, the initial term of the contract will expire on",
+      "derivation": null
+    },
+    {
+      "id": "cuad/BOLIVARMININGCORP_05_23_2003-EX-2.1-VISP WEB SITE BUILDING AND HOSTING AGREEMENT__Expiration Date",
+      "kind": "date",
+      "text": "May 12, 2008",
+      "before": "cument, which is May 12, 2003. Therefore, the initial term of the contract will expire on ",
+      "after": ".",
+      "derivation": null
+    },
+    {
+      "id": "cuad/NETGEAR,INC_04_21_2003-EX-10.16- AMENDMENT #2 TO THE DISTRIBUTION AGREEMENT__Non-Compete",
+      "kind": "date",
+      "text": "October 1, 1996",
+      "before": "ain geographies:\n\n1. During the initial one-year period starting from the Amendment Date (",
+      "after": "), Ingram Micro shall be the only distributor appointed by N",
+      "derivation": null
+    },
+    {
+      "id": "cuad/NakedBrandGroupInc_20150731_POS AM (on S-1)_EX-10.75_9196027_EX-10.75_Endorsement Agreement__Liquidated Damages",
+      "kind": "quantity",
+      "text": "12B",
+      "before": "Wade shall forfeit all unvested warrants he has received under the agreement.\n\n2. Section ",
+      "after": " states that if Wade terminates the agreement due to certain",
+      "derivation": null
+    },
+    {
+      "id": "cuad/NETGEAR,INC_04_21_2003-EX-10.16- AMENDMENT #2 TO THE DISTRIBUTION AGREEMENT__Expiration Date",
+      "kind": "date",
+      "text": "October 1, 1996",
+      "before": "According to the context provided:\n\nThe Amendment is entered into effective ",
+      "after": " (\"Amendment Date\"). \n\nSection 2 of the Amendment states tha",
+      "derivation": null
+    },
+    {
+      "id": "cuad/NETGEAR,INC_04_21_2003-EX-10.16- AMENDMENT #2 TO THE DISTRIBUTION AGREEMENT__Expiration Date",
+      "kind": "date",
+      "text": "October 1, 1997",
+      "before": "pointed by NETGEAR in [*]...\"\n\nTherefore, the initial term of the contract will expire on ",
+      "after": ", one year after the Amendment Date of October 1, 1996.",
+      "derivation": null
+    },
+    {
+      "id": "cuad/NETGEAR,INC_04_21_2003-EX-10.16- AMENDMENT #2 TO THE DISTRIBUTION AGREEMENT__Expiration Date",
+      "kind": "date",
+      "text": "October 1, 1996",
+      "before": "term of the contract will expire on October 1, 1997, one year after the Amendment Date of ",
+      "after": ".",
+      "derivation": null
+    },
+    {
+      "id": "cuad/StampscomInc_20001114_10-Q_EX-10.47_2631630_EX-10.47_Co-Branding Agreement__Expiration Date",
+      "kind": "date",
+      "text": "April 27, 2004",
+      "before": "e (April 27, 1999) and end on the fifth anniversary of the Effective Date, which would be ",
+      "after": ".",
+      "derivation": null
+    },
+    {
+      "id": "cuad/IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT__Expiration Date",
+      "kind": "date",
+      "text": "December 10, 1994",
+      "before": "term of the Maintenance Agreement will expire one year after the Effective Date, which is ",
+      "after": ".",
+      "derivation": null
+    },
+    {
+      "id": "cuad/MOVADOGROUPINC_04_30_2003-EX-10.28-ENDORSEMENT AGREEMENT__Effective Date",
+      "kind": "date",
+      "text": "April 4, 2003",
+      "before": "According to the document, the Endorsement Agreement is dated ",
+      "after": ", as stated in the last section:\n\n\"IN WITNESS WHEREOF, the p",
+      "derivation": null
+    },
+    {
+      "id": "cuad/MOVADOGROUPINC_04_30_2003-EX-10.28-ENDORSEMENT AGREEMENT__Effective Date",
+      "kind": "date",
+      "text": "April 4, 2003",
+      "before": "ent as of this 4th day of April, 2003.\"\n\nTherefore, the effective date of the contract is ",
+      "after": ".",
+      "derivation": null
+    },
+    {
+      "id": "cuad/ORBSATCORP_08_17_2007-EX-7.3-STRATEGIC ALLIANCE AGREEMENT__Expiration Date",
+      "kind": "date",
+      "text": "September 9, 2006",
+      "before": "red into on September 9, 2005. Therefore, the initial term of the contract will expire on ",
+      "after": ".",
+      "derivation": null
+    },
+    {
+      "id": "cuad/OMINTO,INC_03_29_2004-EX-10-RESELLER AGREEMENT__Expiration Date",
+      "kind": "date",
+      "text": "March 19, 2004",
+      "before": "greement, the initial term of the contract will expire 1 year after the Effective Date of ",
+      "after": ". Therefore, the initial term of the contract will expire on",
+      "derivation": null
+    },
+    {
+      "id": "cuad/OMINTO,INC_03_29_2004-EX-10-RESELLER AGREEMENT__Expiration Date",
+      "kind": "date",
+      "text": "March 19, 2005",
+      "before": "ective Date of March 19, 2004. Therefore, the initial term of the contract will expire on ",
+      "after": ".",
+      "derivation": null
+    },
+    {
+      "id": "cuad/VEONEER,INC_02_21_2020-EX-10.11-JOINT VENTURE AGREEMENT__Cap On Liability",
+      "kind": "quantity",
+      "text": "1.4",
+      "before": "itation for the counterparty to bring claims.\n\nThe key relevant sections are:\n\n1. Article ",
+      "after": ": This section states that the termination of the JV Agreeme",
+      "derivation": null
+    },
+    {
+      "id": "cuad/PROLONGINTERNATIONALCORP_03_23_1998-EX-10.16-SPONSORSHIP AGREEMENT__Agreement Date",
+      "kind": "date",
+      "text": "December 19, 1997",
+      "before": "The date of the contract is ",
+      "after": ", as stated in the first paragraph:\n\n\"THIS SPONSORSHIP AGREE",
+      "derivation": null
+    },
+    {
+      "id": "cuad/VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT__Effective Date",
+      "kind": "date",
+      "text": "April 7, 2003",
+      "before": "According to the agreement, the Effective Date of the contract is ",
+      "after": ".",
+      "derivation": null
+    },
+    {
+      "id": "cuad/NakedBrandGroupInc_20150731_POS AM (on S-1)_EX-10.75_9196027_EX-10.75_Endorsement Agreement__Expiration Date",
+      "kind": "date",
+      "text": "June 15, 2015",
+      "before": "is Agreement shall be for a period of four (4) years, commencing on the Effective Date of ",
+      "after": ". Therefore, the initial term of the agreement will expire o",
+      "derivation": null
+    },
+    {
+      "id": "cuad/NakedBrandGroupInc_20150731_POS AM (on S-1)_EX-10.75_9196027_EX-10.75_Endorsement Agreement__Expiration Date",
+      "kind": "date",
+      "text": "June 14, 2019",
+      "before": "ective Date of June 15, 2015. Therefore, the initial term of the agreement will expire on ",
+      "after": ".",
+      "derivation": null
+    },
+    {
+      "id": "delucionqa/739",
+      "kind": "date",
+      "text": "15 may",
+      "before": "Some possible damages that E-",
+      "after": " cause include starting and drivability problems, damage to ",
+      "derivation": null
+    },
+    {
+      "id": "emanual/emanual_82",
+      "kind": "quantity",
+      "text": "0000",
+      "before": "app you want to lock.\n3. Select \"Lock/Unlock\".\n4. Enter the default PIN (which is usually ",
+      "after": ") or the custom PIN you have set.\n5. The selected app will n",
+      "derivation": null
+    },
+    {
+      "id": "emanual/emanual_82",
+      "kind": "quantity",
+      "text": "0000",
+      "before": "ntext mentions that to lock or unlock an app, you need to enter a PIN. The default PIN is ",
+      "after": ", but you can change it by going to Settings > General > Sys",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1471",
+      "kind": "quantity",
+      "text": "9",
+      "before": "evelopment and does not require medical intervention unless it persists beyond the age of ",
+      "after": " or presents with severe deformity and functional limitation",
+      "derivation": "3 × 3"
+    },
+    {
+      "id": "expertqa/expertqa_494",
+      "kind": "quantity",
+      "text": "5",
+      "before": "ls are **performance attainment targets** and **performance descriptors** for pupils aged ",
+      "after": " to 16 with special educational needs (SEN) who are working ",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_494",
+      "kind": "quantity",
+      "text": "16",
+      "before": "e **performance attainment targets** and **performance descriptors** for pupils aged 5 to ",
+      "after": " with special educational needs (SEN) who are working below ",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1792",
+      "kind": "quantity",
+      "text": "1448",
+      "before": " Oecophylla smaragdina brood, a type of weaver ant, has been reported to be approximately ",
+      "after": " kJ per 100 grams of dry mass . These ants are known for the",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1792",
+      "kind": "quantity",
+      "text": "100",
+      "before": "smaragdina brood, a type of weaver ant, has been reported to be approximately 1448 kJ per ",
+      "after": " grams of dry mass . These ants are known for their high pro",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_909",
+      "kind": "quantity",
+      "text": "6",
+      "before": " genetics, and the presence of other medical conditions . Symptoms typically begin within ",
+      "after": "-24 hours after the last drink and may include tremors, swea",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_909",
+      "kind": "quantity",
+      "text": "24",
+      "before": "enetics, and the presence of other medical conditions . Symptoms typically begin within 6-",
+      "after": " hours after the last drink and may include tremors, sweatin",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_137",
+      "kind": "percent",
+      "text": "58%",
+      "before": ". Firstly, trade would be impacted as the EU accounts for about 81% of Polish exports and ",
+      "after": " of its imports . The absence of the EU would mean the loss ",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1789",
+      "kind": "name",
+      "text": "BRCA2",
+      "before": "overies have been made through such research, for example, the discovery of the BRCA1 and ",
+      "after": " genes . The discovery of a gene, however, is only the first",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_927",
+      "kind": "quantity",
+      "text": "5",
+      "before": "l of contextual social psychology, relevant citations include Passage ID 1 and Passage ID ",
+      "after": ".  Passage ID 1 discusses Pettigrew's commitment to comprehe",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_927",
+      "kind": "quantity",
+      "text": "5",
+      "before": "logical work, calling it \"contextual social psychology\".  In addition to this, Passage ID ",
+      "after": " reveals that Pettigrew spent more than two decades as a pro",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_554",
+      "kind": "percent",
+      "text": "35%",
+      "before": "ng to one source, the ideal medical practice model has an overhead cost ratio of **nearly ",
+      "after": "** of revenue, while a typical family practice has an overhe",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1611",
+      "kind": "quantity",
+      "text": "70",
+      "before": "It is not accurate to say that marketers in the ",
+      "after": "s were more creative and genius than marketers in the 21st c",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1611",
+      "kind": "quantity",
+      "text": "21",
+      "before": "rate to say that marketers in the 70s were more creative and genius than marketers in the ",
+      "after": "st century. The difference lies in the approach to marketing",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1611",
+      "kind": "quantity",
+      "text": "70",
+      "before": "s in the 21st century. The difference lies in the approach to marketing. In the 1960s and ",
+      "after": "s, marketing was almost purely conceptual, with guru-like fi",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1611",
+      "kind": "quantity",
+      "text": "21",
+      "before": "rketing genius was not challenged much during that time . \n\nIn contrast, marketing in the ",
+      "after": "st century has become more data-driven and scientific . This",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1568",
+      "kind": "quantity",
+      "text": "2",
+      "before": "tegration of Variable: If x is any variable, then the integral of x is given by ∫x dx = x^",
+      "after": "/2 + C  .\n\n3. Integration of Square: The integral of x^2 is ",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1568",
+      "kind": "quantity",
+      "text": "2",
+      "before": "gration of Variable: If x is any variable, then the integral of x is given by ∫x dx = x^2/",
+      "after": " + C  .\n\n3. Integration of Square: The integral of x^2 is gi",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1568",
+      "kind": "quantity",
+      "text": "2",
+      "before": "tegral of x is given by ∫x dx = x^2/2 + C  .\n\n3. Integration of Square: The integral of x^",
+      "after": " is given by ∫x^2 dx = x^3/3 + C .\n\n4. Integration of Recipr",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1568",
+      "kind": "quantity",
+      "text": "2",
+      "before": "ven by ∫x dx = x^2/2 + C  .\n\n3. Integration of Square: The integral of x^2 is given by ∫x^",
+      "after": " dx = x^3/3 + C .\n\n4. Integration of Reciprocal: The integra",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1568",
+      "kind": "quantity",
+      "text": "3",
+      "before": " dx = x^2/2 + C  .\n\n3. Integration of Square: The integral of x^2 is given by ∫x^2 dx = x^",
+      "after": "/3 + C .\n\n4. Integration of Reciprocal: The integral of 1/x ",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1568",
+      "kind": "quantity",
+      "text": "3",
+      "before": "x = x^2/2 + C  .\n\n3. Integration of Square: The integral of x^2 is given by ∫x^2 dx = x^3/",
+      "after": " + C .\n\n4. Integration of Reciprocal: The integral of 1/x is",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1568",
+      "kind": "quantity",
+      "text": "2",
+      "before": "+ C; the integral of sin(x) is given by ∫sin(x) dx = -cos(x) + C; and the integral of sec^",
+      "after": "(x) is given by ∫sec^2(x) dx = tan(x) + C .\n\nAdditionally, t",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1568",
+      "kind": "quantity",
+      "text": "2",
+      "before": "in(x) is given by ∫sin(x) dx = -cos(x) + C; and the integral of sec^2(x) is given by ∫sec^",
+      "after": "(x) dx = tan(x) + C .\n\nAdditionally, there are rules for int",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_912",
+      "kind": "quantity",
+      "text": "1848",
+      "before": "ith the Seneca Falls Convention, the first women's rights convention, held in New York in ",
+      "after": ".\n\n",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_572",
+      "kind": "quantity",
+      "text": "50",
+      "before": "pecific proportions of these minerals may vary, but on average, granite consists of about ",
+      "after": "-70% feldspar (including both alkali and plagioclase feldspa",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_572",
+      "kind": "percent",
+      "text": "70%",
+      "before": "ific proportions of these minerals may vary, but on average, granite consists of about 50-",
+      "after": " feldspar (including both alkali and plagioclase feldspar), ",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_572",
+      "kind": "quantity",
+      "text": "25",
+      "before": "anite consists of about 50-70% feldspar (including both alkali and plagioclase feldspar), ",
+      "after": "-35% quartz, 3-10% mica (biotite and/or muscovite), and 1-5%",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_572",
+      "kind": "percent",
+      "text": "35%",
+      "before": "te consists of about 50-70% feldspar (including both alkali and plagioclase feldspar), 25-",
+      "after": " quartz, 3-10% mica (biotite and/or muscovite), and 1-5% amp",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_572",
+      "kind": "quantity",
+      "text": "3",
+      "before": "of about 50-70% feldspar (including both alkali and plagioclase feldspar), 25-35% quartz, ",
+      "after": "-10% mica (biotite and/or muscovite), and 1-5% amphiboles (s",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_572",
+      "kind": "percent",
+      "text": "10%",
+      "before": " about 50-70% feldspar (including both alkali and plagioclase feldspar), 25-35% quartz, 3-",
+      "after": " mica (biotite and/or muscovite), and 1-5% amphiboles (such ",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_572",
+      "kind": "quantity",
+      "text": "1",
+      "before": "kali and plagioclase feldspar), 25-35% quartz, 3-10% mica (biotite and/or muscovite), and ",
+      "after": "-5% amphiboles (such as hornblende) . Additionally, minor am",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_572",
+      "kind": "percent",
+      "text": "5%",
+      "before": "li and plagioclase feldspar), 25-35% quartz, 3-10% mica (biotite and/or muscovite), and 1-",
+      "after": " amphiboles (such as hornblende) . Additionally, minor amoun",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_457",
+      "kind": "quantity",
+      "text": "85",
+      "before": "nce of certain genetic features . In children, the overall 5-year survival rate is around ",
+      "after": "-90%, and about 98% of children achieve remission after init",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_457",
+      "kind": "percent",
+      "text": "90%",
+      "before": " of certain genetic features . In children, the overall 5-year survival rate is around 85-",
+      "after": ", and about 98% of children achieve remission after initial ",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_457",
+      "kind": "percent",
+      "text": "98%",
+      "before": "etic features . In children, the overall 5-year survival rate is around 85-90%, and about ",
+      "after": " of children achieve remission after initial treatment . How",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_63",
+      "kind": "money",
+      "text": "£124 billion",
+      "before": "re a vital component of the UK economy, with the logistics sector alone generating around ",
+      "after": " in gross value added (GVA) in 2019 and directly providing a",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_63",
+      "kind": "quantity",
+      "text": "2019",
+      "before": "h the logistics sector alone generating around £124 billion in gross value added (GVA) in ",
+      "after": " and directly providing around one million jobs . The total ",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_63",
+      "kind": "quantity",
+      "text": "one million",
+      "before": "ting around £124 billion in gross value added (GVA) in 2019 and directly providing around ",
+      "after": " jobs . The total revenue generated by supply chains within ",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_63",
+      "kind": "money",
+      "text": "£200 billion",
+      "before": "istics industry specifically, which is a crucial part of supply chains, is valued at over ",
+      "after": ", accounting for around 10% of the UK's GDP . Meanwhile, the",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_63",
+      "kind": "percent",
+      "text": "10%",
+      "before": "is a crucial part of supply chains, is valued at over £200 billion, accounting for around ",
+      "after": " of the UK's GDP . Meanwhile, the manufacturing sector of th",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_63",
+      "kind": "money",
+      "text": "£191 billion",
+      "before": "ing sector of the UK, often interconnected with supply chain operations, generated around ",
+      "after": " in GVA in 2021, contributing about 9% of the total national",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_63",
+      "kind": "quantity",
+      "text": "2021",
+      "before": "ften interconnected with supply chain operations, generated around £191 billion in GVA in ",
+      "after": ", contributing about 9% of the total national GVA . As both ",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_63",
+      "kind": "percent",
+      "text": "9%",
+      "before": "supply chain operations, generated around £191 billion in GVA in 2021, contributing about ",
+      "after": " of the total national GVA . As both the logistics and manuf",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1115",
+      "kind": "quantity",
+      "text": "2006",
+      "before": "**Faddan More Psalter**, a manuscript that was discovered in a bog in County Tipperary in ",
+      "after": ". It dates from the late eighth century and contains both La",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1115",
+      "kind": "percent",
+      "text": "7%",
+      "before": "on, but it is not very high. A recent study found that the average Irish person has about ",
+      "after": " Anglo-Saxon DNA, compared to 37% for the English and 30% fo",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1115",
+      "kind": "percent",
+      "text": "37%",
+      "before": "ecent study found that the average Irish person has about 7% Anglo-Saxon DNA, compared to ",
+      "after": " for the English and 30% for the Scots.\n\n ",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1968",
+      "kind": "url",
+      "text": "www.gearslutz.com",
+      "before": "t resources to stay on top of music hardware and software updates include:\n\n1. Gearslutz (",
+      "after": "): A forum where professionals in the audio industry discuss",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1968",
+      "kind": "url",
+      "text": "www.musictech.net",
+      "before": "audio plugins and software synthesizers, featuring news, reviews, and forums . MusicTech (",
+      "after": "): A website and magazine offering coverage on music product",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1968",
+      "kind": "url",
+      "text": "www.audiofanzine.com",
+      "before": "erparts, featuring information on various synth models, news, and reviews . AudioFanzine (",
+      "after": "): A website that publishes industry news, reviews, and guid",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1510",
+      "kind": "quantity",
+      "text": "33",
+      "before": "mpulsory detention and treatment, known as sectioning, if they meet specific criteria . A ",
+      "after": "-year-old male presenting with suicidal thoughts, self-harm,",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1510",
+      "kind": "quantity",
+      "text": "33",
+      "before": "ptions to address his specific mental health needs . If the above conditions are met, the ",
+      "after": "-year-old male could be sectioned under Section 2 (for asses",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1414",
+      "kind": "quantity",
+      "text": "1,000",
+      "before": "igners.\n- Using a **public-domain free-to-use dataset** with pixel information for around ",
+      "after": " images of each of 24 ASL letters.\n- Using a **webcam or sma",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_855",
+      "kind": "quantity",
+      "text": "Ten",
+      "before": "The Ethics' Code of Athens, also known as the ",
+      "after": " Commandments of Solon, is a set of moral and ethical guidel",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_855",
+      "kind": "quantity",
+      "text": "6",
+      "before": "of moral and ethical guidelines attributed to the Athenian lawmaker and poet Solon in the ",
+      "after": "th century BCE . It promotes virtues such as wisdom, truthfu",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_114",
+      "kind": "quantity",
+      "text": "15",
+      "before": " has been reported that the fluid flow rate at one of the Loki's Castle chimneys is about ",
+      "after": " liters per second, with temperatures reaching up to 317°C .",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_114",
+      "kind": "temperature",
+      "text": "317°C",
+      "before": "he Loki's Castle chimneys is about 15 liters per second, with temperatures reaching up to ",
+      "after": " . The energy output of the vent field is estimated to be ar",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_114",
+      "kind": "quantity",
+      "text": "50",
+      "before": "ures reaching up to 317°C . The energy output of the vent field is estimated to be around ",
+      "after": "-100 Megawatts . Furthermore, the microorganisms found at Lo",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_114",
+      "kind": "quantity",
+      "text": "100",
+      "before": "s reaching up to 317°C . The energy output of the vent field is estimated to be around 50-",
+      "after": " Megawatts . Furthermore, the microorganisms found at Loki's",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_114",
+      "kind": "quantity",
+      "text": "15",
+      "before": "of unique microorganisms adapted to the extreme environment. The fluid flow rate is about ",
+      "after": " liters per second, with an energy output of 50-100 Megawatt",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_114",
+      "kind": "quantity",
+      "text": "50",
+      "before": " environment. The fluid flow rate is about 15 liters per second, with an energy output of ",
+      "after": "-100 Megawatts, and the vent field is a valuable site for st",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_114",
+      "kind": "quantity",
+      "text": "100",
+      "before": "vironment. The fluid flow rate is about 15 liters per second, with an energy output of 50-",
+      "after": " Megawatts, and the vent field is a valuable site for study ",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1581",
+      "kind": "percent",
+      "text": "97%",
+      "before": "standard for detecting and characterizing kidney stones due to its higher sensitivity (94-",
+      "after": ") and specificity (96-100%) compared to ultrasound  . CT sca",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1581",
+      "kind": "quantity",
+      "text": "96",
+      "before": " and characterizing kidney stones due to its higher sensitivity (94-97%) and specificity (",
+      "after": "-100%) compared to ultrasound  . CT scans can accurately mea",
+      "derivation": null
+    },
+    {
+      "id": "expertqa/expertqa_1581",
+      "kind": "percent",
+      "text": "100%",
+      "before": "d characterizing kidney stones due to its higher sensitivity (94-97%) and specificity (96-",
+      "after": ") compared to ultrasound  . CT scans can accurately measure ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2085_0",
+      "kind": "date",
+      "text": "September 26, 1889",
+      "before": "Martin Heidegger was born on ",
+      "after": " .",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_924_0",
+      "kind": "quantity",
+      "text": "12",
+      "before": "l ever . The African bush elephant is the heaviest living land mammal and can weigh up to ",
+      "after": " tonnes .",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_1977_0",
+      "kind": "quantity",
+      "text": "2.5 million",
+      "before": "The Smilodon lived during the Pleistocene epoch, which occurred from ",
+      "after": " years ago to 10,000 years ago. ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3350_0",
+      "kind": "date",
+      "text": "July 08, 2021",
+      "before": "inia in March 1860. In 1862 it became part of Italy . \"Tuscany\", Encyclopædia Britannica, ",
+      "after": ". https://www.britannica.com/place/Tuscany \"March of Tuscany",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3350_0",
+      "kind": "url",
+      "text": "https://www.britannica.com/place/Tuscany",
+      "before": "860. In 1862 it became part of Italy . \"Tuscany\", Encyclopædia Britannica, July 08, 2021. ",
+      "after": " \"March of Tuscany\", Encyclopædia Britannica, October 25, 20",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3350_0",
+      "kind": "date",
+      "text": "October 25, 2017",
+      "before": "21. https://www.britannica.com/place/Tuscany \"March of Tuscany\", Encyclopædia Britannica, ",
+      "after": ". https://www.britannica.com/place/March-of-Tuscany \"Grand D",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3350_0",
+      "kind": "url",
+      "text": "https://www.britannica.com/place/March-of-Tuscany",
+      "before": "itannica.com/place/Tuscany \"March of Tuscany\", Encyclopædia Britannica, October 25, 2017. ",
+      "after": " \"Grand Duchy of Tuscany\", Wikipedia, July 06, 2021. https:/",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3350_0",
+      "kind": "date",
+      "text": "July 06, 2021",
+      "before": "7. https://www.britannica.com/place/March-of-Tuscany \"Grand Duchy of Tuscany\", Wikipedia, ",
+      "after": ". https://en.wikipedia.org/wiki/Grand_Duchy_of_Tuscany",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3350_0",
+      "kind": "url",
+      "text": "https://en.wikipedia.org/wiki/Grand_Duchy_of_Tuscany",
+      "before": "britannica.com/place/March-of-Tuscany \"Grand Duchy of Tuscany\", Wikipedia, July 06, 2021. ",
+      "after": "",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3020_0",
+      "kind": "quantity",
+      "text": "2014",
+      "before": "The head coach of the San Diego Chargers in the ",
+      "after": " season was Mike McCoy. ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_807_1",
+      "kind": "url",
+      "text": "http://www.toureiffel.paris/en/the-monument/origin-and-history.html",
+      "before": "h year.  The Eiffel Tower. Société d'Exploitation de la Tour Eiffel. [Online]. Available: ",
+      "after": ". [Accessed May 20, 2021]. Eiffel Tower. Encyclopædia Britan",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_807_1",
+      "kind": "date",
+      "text": "May 20, 2021",
+      "before": "Available: http://www.toureiffel.paris/en/the-monument/origin-and-history.html. [Accessed ",
+      "after": "]. Eiffel Tower. Encyclopædia Britannica. Encyclopædia Brita",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_807_1",
+      "kind": "url",
+      "text": "https://www.britannica.com/topic/Eiffel-Tower",
+      "before": "iffel Tower. Encyclopædia Britannica. Encyclopædia Britannica, Inc., [Online]. Available: ",
+      "after": ". [Accessed May 20, 2021]. Eiffel Tower. Wikipedia. Wikimedi",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_807_1",
+      "kind": "date",
+      "text": "May 20, 2021",
+      "before": "nica, Inc., [Online]. Available: https://www.britannica.com/topic/Eiffel-Tower. [Accessed ",
+      "after": "]. Eiffel Tower. Wikipedia. Wikimedia Foundation, [Online]. ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_807_1",
+      "kind": "url",
+      "text": "https://en.wikipedia.org/wiki/Eiffel_Tower",
+      "before": "cessed May 20, 2021]. Eiffel Tower. Wikipedia. Wikimedia Foundation, [Online]. Available: ",
+      "after": ". [Accessed May 20, 2021].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_807_1",
+      "kind": "date",
+      "text": "May 20, 2021",
+      "before": "ia Foundation, [Online]. Available: https://en.wikipedia.org/wiki/Eiffel_Tower. [Accessed ",
+      "after": "].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2253_1",
+      "kind": "quantity",
+      "text": "2",
+      "before": "owing that someone else could do it, resulting in no one actually helping (contexts 1 and ",
+      "after": "). Factors like ambiguity, group cohesiveness, and mutual de",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2253_1",
+      "kind": "quantity",
+      "text": "2",
+      "before": "eness, and mutual denial of a situation's severity contribute to this phenomenon (context ",
+      "after": "). Reference: ,",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2294_1",
+      "kind": "url",
+      "text": "MDText.com",
+      "before": "or less of heavy carbohydrate consumption.  P. J. Lee, \"Reactive Hypoglycemia,\" Endotext, ",
+      "after": ", Inc, 2020. [Online]. Available: https://www.ncbi.nlm.nih.g",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2294_1",
+      "kind": "quantity",
+      "text": "2020",
+      "before": "carbohydrate consumption.  P. J. Lee, \"Reactive Hypoglycemia,\" Endotext, MDText.com, Inc, ",
+      "after": ". [Online]. Available: https://www.ncbi.nlm.nih.gov/books/NB",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2294_1",
+      "kind": "url",
+      "text": "https://www.ncbi.nlm.nih.gov/books/NBK279083/",
+      "before": "P. J. Lee, \"Reactive Hypoglycemia,\" Endotext, MDText.com, Inc, 2020. [Online]. Available: ",
+      "after": ". [Accessed: 01-Aug-2021].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2294_1",
+      "kind": "date",
+      "text": "01-Aug-2021",
+      "before": "Inc, 2020. [Online]. Available: https://www.ncbi.nlm.nih.gov/books/NBK279083/. [Accessed: ",
+      "after": "].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3162_0",
+      "kind": "date",
+      "text": "January 15, 1867",
+      "before": "Konstantin Dmitriyevich Balmont was born on ",
+      "after": ". ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_568_0",
+      "kind": "quantity",
+      "text": "1",
+      "before": "According to the given contexts, Dragoon can mean multiple things. ",
+      "after": ". In a fictional context, Dragoon is the last of the Dragon ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_568_0",
+      "kind": "quantity",
+      "text": "2",
+      "before": "rying warriors who attack by jumping high in the air and coming down on their opponents.  ",
+      "after": ". In a historical context, Dragoon is occasionally used as a",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_568_0",
+      "kind": "quantity",
+      "text": "3",
+      "before": "the imposition of troops; and by extension to compel by any violent measures or threats.  ",
+      "after": ". In a military context, early dragoons were not organized i",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2586_1",
+      "kind": "quantity",
+      "text": "58",
+      "before": "he 1st century BC . J. Fearon, \"What Is Civil War?,\" Journal of Conflict Resolution, vol. ",
+      "after": ", no. 2, pp. 207–226, Mar. 2014, doi: 10.1177/00220027135150",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2586_1",
+      "kind": "quantity",
+      "text": "2",
+      "before": "entury BC . J. Fearon, \"What Is Civil War?,\" Journal of Conflict Resolution, vol. 58, no. ",
+      "after": ", pp. 207–226, Mar. 2014, doi: 10.1177/0022002713515063.",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2586_1",
+      "kind": "quantity",
+      "text": "207",
+      "before": "BC . J. Fearon, \"What Is Civil War?,\" Journal of Conflict Resolution, vol. 58, no. 2, pp. ",
+      "after": "–226, Mar. 2014, doi: 10.1177/0022002713515063.",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2586_1",
+      "kind": "quantity",
+      "text": "226",
+      "before": " J. Fearon, \"What Is Civil War?,\" Journal of Conflict Resolution, vol. 58, no. 2, pp. 207–",
+      "after": ", Mar. 2014, doi: 10.1177/0022002713515063.",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2586_1",
+      "kind": "date",
+      "text": "Mar. 2014",
+      "before": "earon, \"What Is Civil War?,\" Journal of Conflict Resolution, vol. 58, no. 2, pp. 207–226, ",
+      "after": ", doi: 10.1177/0022002713515063.",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2586_1",
+      "kind": "quantity",
+      "text": "10.1177",
+      "before": "Civil War?,\" Journal of Conflict Resolution, vol. 58, no. 2, pp. 207–226, Mar. 2014, doi: ",
+      "after": "/0022002713515063.",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2586_1",
+      "kind": "quantity",
+      "text": "0022002713515063",
+      "before": "r?,\" Journal of Conflict Resolution, vol. 58, no. 2, pp. 207–226, Mar. 2014, doi: 10.1177/",
+      "after": ".",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_100_1",
+      "kind": "quantity",
+      "text": "2018",
+      "before": "ke, Louisiana,” in Oxford Research Encyclopedia of Anthropology. Oxford University Press, ",
+      "after": ". ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_363_0",
+      "kind": "quantity",
+      "text": "2021",
+      "before": "Drake Hogestyn was born on September 29, 1953 and therefore is currently (as of ",
+      "after": ") 68 years old. ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_363_0",
+      "kind": "quantity",
+      "text": "68",
+      "before": "Drake Hogestyn was born on September 29, 1953 and therefore is currently (as of 2021) ",
+      "after": " years old. ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_599_0",
+      "kind": "quantity",
+      "text": "1",
+      "before": "eferences to other exoplanets discovered by the COROT mission in different announcements [",
+      "after": ", 3, and 4].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_599_0",
+      "kind": "quantity",
+      "text": "3",
+      "before": "rences to other exoplanets discovered by the COROT mission in different announcements [1, ",
+      "after": ", and 4].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_599_0",
+      "kind": "quantity",
+      "text": "4",
+      "before": "to other exoplanets discovered by the COROT mission in different announcements [1, 3, and ",
+      "after": "].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_1979_0",
+      "kind": "quantity",
+      "text": "1849",
+      "before": "Ivan Petrovich Pavlov lived from ",
+      "after": " to 1936 .",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_119_1",
+      "kind": "quantity",
+      "text": "1",
+      "before": "Bengal is 232,752 sq km in total. [Context ",
+      "after": "] Reference: ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_298_0",
+      "kind": "quantity",
+      "text": "1968",
+      "before": "The Cincinnati Bengals were established in ",
+      "after": " . Therefore, as of 2021, they have been in the National Foo",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_298_0",
+      "kind": "quantity",
+      "text": "2021",
+      "before": "The Cincinnati Bengals were established in 1968 . Therefore, as of ",
+      "after": ", they have been in the National Football League for 53 year",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_298_0",
+      "kind": "quantity",
+      "text": "53",
+      "before": "ished in 1968 . Therefore, as of 2021, they have been in the National Football League for ",
+      "after": " years. Additionally, based on the information provided in c",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_1406_1",
+      "kind": "date",
+      "text": "September 11",
+      "before": "The first plane hit the World Trade Center on ",
+      "after": " at 8:46:40 AM ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3109_0",
+      "kind": "quantity",
+      "text": "169",
+      "before": "d K. Singh, \"Machines for Olive Harvesting,\" in Encyclopedia of Agricultural Science, pp. ",
+      "after": "-187, 2018. \"The Machine Industry\" by D. Shaw, D. D. Gray, a",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3109_0",
+      "kind": "quantity",
+      "text": "187",
+      "before": " Singh, \"Machines for Olive Harvesting,\" in Encyclopedia of Agricultural Science, pp. 169-",
+      "after": ", 2018. \"The Machine Industry\" by D. Shaw, D. D. Gray, and J",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3109_0",
+      "kind": "quantity",
+      "text": "2018",
+      "before": "h, \"Machines for Olive Harvesting,\" in Encyclopedia of Agricultural Science, pp. 169-187, ",
+      "after": ". \"The Machine Industry\" by D. Shaw, D. D. Gray, and J. T. S",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3109_0",
+      "kind": "quantity",
+      "text": "2017",
+      "before": "nce, pp. 169-187, 2018. \"The Machine Industry\" by D. Shaw, D. D. Gray, and J. T. Simpson, ",
+      "after": ". \"Machine Industry in Europe\" by K. Wojtanowski and R. Roso",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3109_0",
+      "kind": "quantity",
+      "text": "2014",
+      "before": "d J. T. Simpson, 2017. \"Machine Industry in Europe\" by K. Wojtanowski and R. Rosochowski, ",
+      "after": ". \"Investments in Machinery Industry in the EU\" by E. Gornig",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3109_0",
+      "kind": "quantity",
+      "text": "2013",
+      "before": "sochowski, 2014. \"Investments in Machinery Industry in the EU\" by E. Gornig and S. Edler, ",
+      "after": ".",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_1055_0",
+      "kind": "quantity",
+      "text": "2021",
+      "before": " in line for the Presidency would be the Speaker of the House of Representatives (Pelosi, ",
+      "after": ") [no. reference provided in the contexts]. However, in the ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_1055_0",
+      "kind": "quantity",
+      "text": "2021",
+      "before": " President pro tempore of the Senate, followed by the Secretary of State, and so on (CNN, ",
+      "after": ") [no. reference provided in the contexts]. Reference:CNN. (",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_1055_0",
+      "kind": "quantity",
+      "text": "2021",
+      "before": "of State, and so on (CNN, 2021) [no. reference provided in the contexts]. Reference:CNN. (",
+      "after": ", January 20). Presidential line of succession: A look at wh",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_1055_0",
+      "kind": "date",
+      "text": "January 20",
+      "before": "te, and so on (CNN, 2021) [no. reference provided in the contexts]. Reference:CNN. (2021, ",
+      "after": "). Presidential line of succession: A look at who's next. Re",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_1055_0",
+      "kind": "url",
+      "text": "https://edition.cnn.com/2021/01/20/politics/presidential-line-of-succession-trnd/index.htmlPelosi",
+      "before": "(2021, January 20). Presidential line of succession: A look at who's next. Retrieved from ",
+      "after": ", N. (2021, January 20).",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_1055_0",
+      "kind": "quantity",
+      "text": "2021",
+      "before": "on.cnn.com/2021/01/20/politics/presidential-line-of-succession-trnd/index.htmlPelosi, N. (",
+      "after": ", January 20).",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_1055_0",
+      "kind": "date",
+      "text": "January 20",
+      "before": ".com/2021/01/20/politics/presidential-line-of-succession-trnd/index.htmlPelosi, N. (2021, ",
+      "after": ").",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_199_0",
+      "kind": "quantity",
+      "text": "2003",
+      "before": "s considering sperm donation or using donor sperm seek advice from medical professionals (",
+      "after": "). Therefore, the safety of sperm donation depends on variou",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_199_0",
+      "kind": "quantity",
+      "text": "03",
+      "before": "s considering sperm donation or using donor sperm seek advice from medical professionals (",
+      "after": ")",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_463_0",
+      "kind": "quantity",
+      "text": "29",
+      "before": "ker, L. (2012). The engineering technology profession. Journal of Engineering Technology, ",
+      "after": "(1), Institution of Mechanical Engineers. (2017). What is an",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_463_0",
+      "kind": "quantity",
+      "text": "2017",
+      "before": "ofession. Journal of Engineering Technology, 29(1), Institution of Mechanical Engineers. (",
+      "after": "). What is an engineering technician? Retrieved from https:/",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_463_0",
+      "kind": "url",
+      "text": "https://www.imeche.org/careers-education/education-skills/what-is-an-engineering-technician",
+      "before": "tution of Mechanical Engineers. (2017). What is an engineering technician? Retrieved from ",
+      "after": "",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2710_1",
+      "kind": "url",
+      "text": "Waterinfo.net.pk",
+      "before": "ntities of water in autumn and winter . \"Major Drainage Systems of Balochistan Province,\" ",
+      "after": ". [Online]. Available: http://waterinfo.net.pk/system/files/",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2710_1",
+      "kind": "url",
+      "text": "http://waterinfo.net.pk/system/files/Major%20Drainage%20Systems%20of%20Balochistan%20Province.pdf",
+      "before": " \"Major Drainage Systems of Balochistan Province,\" Waterinfo.net.pk. [Online]. Available: ",
+      "after": ". [Accessed: 15-Apr-2021]. \"Stream Permanence,\" Encyclopedia",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2710_1",
+      "kind": "date",
+      "text": "15-Apr-2021",
+      "before": ".pk/system/files/Major%20Drainage%20Systems%20of%20Balochistan%20Province.pdf. [Accessed: ",
+      "after": "]. \"Stream Permanence,\" Encyclopedia of Earth. [Online]. Ava",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2710_1",
+      "kind": "url",
+      "text": "https://editors.eol.org/eoearth/wiki/Stream_permanence",
+      "before": "[Accessed: 15-Apr-2021]. \"Stream Permanence,\" Encyclopedia of Earth. [Online]. Available: ",
+      "after": ". [Accessed: 15-Apr-2021]. \"Algiers stream network,\" Environ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2710_1",
+      "kind": "date",
+      "text": "15-Apr-2021",
+      "before": ". [Online]. Available: https://editors.eol.org/eoearth/wiki/Stream_permanence. [Accessed: ",
+      "after": "]. \"Algiers stream network,\" Environment and Climate Change ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2710_1",
+      "kind": "url",
+      "text": "https://www.canada.ca/en/environment-climate-change/services/water-overview/quantity/monitoring/survey/data-products/algiers-stream-network.html",
+      "before": "1]. \"Algiers stream network,\" Environment and Climate Change Canada. [Online]. Available: ",
+      "after": ". [Accessed: 15-Apr-2021]. \"Stream channel,\" Wikipedia. [Onl",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2710_1",
+      "kind": "date",
+      "text": "15-Apr-2021",
+      "before": "overview/quantity/monitoring/survey/data-products/algiers-stream-network.html. [Accessed: ",
+      "after": "]. \"Stream channel,\" Wikipedia. [Online]. Available: https:/",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2710_1",
+      "kind": "url",
+      "text": "https://en.wikipedia.org/wiki/Stream_channel",
+      "before": "-network.html. [Accessed: 15-Apr-2021]. \"Stream channel,\" Wikipedia. [Online]. Available: ",
+      "after": ". [Accessed: 15-Apr-2021].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2710_1",
+      "kind": "date",
+      "text": "15-Apr-2021",
+      "before": " Wikipedia. [Online]. Available: https://en.wikipedia.org/wiki/Stream_channel. [Accessed: ",
+      "after": "].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2413_1",
+      "kind": "quantity",
+      "text": "2013",
+      "before": " movement in starfish is due to their bilateral organism ancestry . Source: Sheppard, A. (",
+      "after": ", February 1). Starfish - General overview. Marine Species I",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2413_1",
+      "kind": "date",
+      "text": "February 1",
+      "before": "ent in starfish is due to their bilateral organism ancestry . Source: Sheppard, A. (2013, ",
+      "after": "). Starfish - General overview. Marine Species Identificatio",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2413_1",
+      "kind": "url",
+      "text": "https://species-identification.org/species.php?species_group=echinodermata&id=121",
+      "before": "A. (2013, February 1). Starfish - General overview. Marine Species Identification Portal. ",
+      "after": "",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_1779_0",
+      "kind": "quantity",
+      "text": "1",
+      "before": "The Silent Hill series was published by Konami. [Context ",
+      "after": ": \"Silent Hill is a survival horror video game for the PlayS",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3035_1",
+      "kind": "quantity",
+      "text": "2",
+      "before": "John Wesley Hanes founded Hanes Hosiery Mills [",
+      "after": " and 4]. On the other hand, his brother Pleasant H. Hanes fo",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3035_1",
+      "kind": "quantity",
+      "text": "4",
+      "before": "John Wesley Hanes founded Hanes Hosiery Mills [2 and ",
+      "after": "]. On the other hand, his brother Pleasant H. Hanes founded ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3035_1",
+      "kind": "quantity",
+      "text": "1",
+      "before": "On the other hand, his brother Pleasant H. Hanes founded the P.H. Hanes Knitting Company [",
+      "after": " and 3]. The P.H. Hanes Knitting Company merged with Hanes H",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3035_1",
+      "kind": "quantity",
+      "text": "1",
+      "before": "ing Company [1 and 3]. The P.H. Hanes Knitting Company merged with Hanes Hosiery in 1965 [",
+      "after": " and 3]. The P.H. Hanes Knitting Company merged with Hanes H",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3035_1",
+      "kind": "quantity",
+      "text": "2",
+      "before": "ery in 1965 [1 and 3]. The P.H. Hanes Knitting Company merged with Hanes Hosiery in 1965 [",
+      "after": " and 4].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3035_1",
+      "kind": "quantity",
+      "text": "4",
+      "before": " 1965 [1 and 3]. The P.H. Hanes Knitting Company merged with Hanes Hosiery in 1965 [2 and ",
+      "after": "].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3974_1",
+      "kind": "quantity",
+      "text": "68",
+      "before": "Therefore, it is at least ",
+      "after": " years old as of 2021.",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3974_1",
+      "kind": "quantity",
+      "text": "2021",
+      "before": "Therefore, it is at least 68 years old as of ",
+      "after": ".",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_3876_0",
+      "kind": "date",
+      "text": "January 29, 1722",
+      "before": "Count Carl Gustav Rehnskiöld died on ",
+      "after": ", at the Läggesta Inn outside of Mariefred . He fell ill dur",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2669_0",
+      "kind": "date",
+      "text": "25-Aug-2016",
+      "before": "he 1930s.  J. C. Varghese, \"Hot air vs hydrogen balloons – Which are safer?,\" Safety4Sea, ",
+      "after": ". [Online]. Available: https://safety4sea.com/hot-air-vs-hyd",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2669_0",
+      "kind": "url",
+      "text": "https://safety4sea.com/hot-air-vs-hydrogen-balloons-safer/",
+      "before": "r vs hydrogen balloons – Which are safer?,\" Safety4Sea, 25-Aug-2016. [Online]. Available: ",
+      "after": ". [Accessed: 9-May-2021]. \"Why Use Helium Instead of Hydroge",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2669_0",
+      "kind": "date",
+      "text": "9-May-2021",
+      "before": "nline]. Available: https://safety4sea.com/hot-air-vs-hydrogen-balloons-safer/. [Accessed: ",
+      "after": "]. \"Why Use Helium Instead of Hydrogen for Balloons?,\" HowSt",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2669_0",
+      "kind": "date",
+      "text": "24-May-2019",
+      "before": "Accessed: 9-May-2021]. \"Why Use Helium Instead of Hydrogen for Balloons?,\" HowStuffWorks, ",
+      "after": ". [Online]. Available: https://science.howstuffworks.com/hel",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2669_0",
+      "kind": "url",
+      "text": "https://science.howstuffworks.com/helium-vs-hydrogen-balloons.htm",
+      "before": "lium Instead of Hydrogen for Balloons?,\" HowStuffWorks, 24-May-2019. [Online]. Available: ",
+      "after": ". [Accessed: 9-May-2021]. \"Hydrogen,\" Lenntech, [Online]. Av",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2669_0",
+      "kind": "date",
+      "text": "9-May-2021",
+      "before": " Available: https://science.howstuffworks.com/helium-vs-hydrogen-balloons.htm. [Accessed: ",
+      "after": "]. \"Hydrogen,\" Lenntech, [Online]. Available: https://www.le",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2669_0",
+      "kind": "url",
+      "text": "https://www.lenntech.com/periodic/elements/h.htm",
+      "before": "hydrogen-balloons.htm. [Accessed: 9-May-2021]. \"Hydrogen,\" Lenntech, [Online]. Available: ",
+      "after": ". [Accessed: 9-May-2021]. \"Lifting Gas,\" HowStuffWorks, 15-A",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2669_0",
+      "kind": "date",
+      "text": "9-May-2021",
+      "before": "nntech, [Online]. Available: https://www.lenntech.com/periodic/elements/h.htm. [Accessed: ",
+      "after": "]. \"Lifting Gas,\" HowStuffWorks, 15-Apr-2008. [Online]. Avai",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2669_0",
+      "kind": "date",
+      "text": "15-Apr-2008",
+      "before": "nntech.com/periodic/elements/h.htm. [Accessed: 9-May-2021]. \"Lifting Gas,\" HowStuffWorks, ",
+      "after": ". [Online]. Available: https://science.howstuffworks.com/tra",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2669_0",
+      "kind": "url",
+      "text": "https://science.howstuffworks.com/transport/flight/modern/helium3.htm",
+      "before": ". [Accessed: 9-May-2021]. \"Lifting Gas,\" HowStuffWorks, 15-Apr-2008. [Online]. Available: ",
+      "after": ". [Accessed: 9-May-2021].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2669_0",
+      "kind": "date",
+      "text": "9-May-2021",
+      "before": "ilable: https://science.howstuffworks.com/transport/flight/modern/helium3.htm. [Accessed: ",
+      "after": "].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2029_0",
+      "kind": "quantity",
+      "text": "62",
+      "before": "r of 1894–1895 and Its Place in the History of War,\" in Journal of Military History, vol. ",
+      "after": ", no. 3, pp. 637-655, July 1998. \"The Sino-Japanese War at S",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2029_0",
+      "kind": "quantity",
+      "text": "3",
+      "before": "4–1895 and Its Place in the History of War,\" in Journal of Military History, vol. 62, no. ",
+      "after": ", pp. 637-655, July 1998. \"The Sino-Japanese War at Sea 1894",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2029_0",
+      "kind": "quantity",
+      "text": "637",
+      "before": "and Its Place in the History of War,\" in Journal of Military History, vol. 62, no. 3, pp. ",
+      "after": "-655, July 1998. \"The Sino-Japanese War at Sea 1894,\" IMDb, ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2029_0",
+      "kind": "quantity",
+      "text": "655",
+      "before": "Its Place in the History of War,\" in Journal of Military History, vol. 62, no. 3, pp. 637-",
+      "after": ", July 1998. \"The Sino-Japanese War at Sea 1894,\" IMDb, 2012",
+      "derivation": null
+    }
+  ]
+}

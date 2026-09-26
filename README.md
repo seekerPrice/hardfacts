@@ -68,7 +68,7 @@ hardfacts check --json --kinds identifier,phone - order.json < reply.txt
 hardfacts report transcripts.jsonl --html audit.html --fail-over 0.05   # a whole dataset (Python CLI)
 ```
 
-`hardfacts report` reads one `{"id", "output", "sources"}` object per line and writes a self-contained audit: the share of responses with an unsupported hard fact, a breakdown by Kind, and the worst examples in context. Samples: [support-agent replies from τ-bench](examples/sample-report/support-agents.html) (4.5% of 4,937 GPT-4o replies state a value no source contains, and half of those values are shown as arithmetic with their working) and [900 RAGTruth business write-ups](examples/sample-report/business-listings.html) (11.2%, mostly opening hours).
+`hardfacts report` reads one `{"id", "output", "sources"}` object per line and writes a self-contained audit: the share of responses with an unsupported hard fact, a breakdown by Kind, and the worst examples in context. Samples: [support-agent replies from τ-bench](examples/sample-report/support-agents.html) (4.5% of 4,937 GPT-4o replies state a value no source contains, and half of those values are shown as arithmetic with their working) [900 RAGTruth business write-ups](examples/sample-report/business-listings.html) (11.3%, mostly opening hours) and [6,170 RAG answers from RAGBench](examples/sample-report/rag-answers.html) (4.3%).
 
 Integration examples, all runnable offline:
 - [Python verify-and-retry](examples/verify_and_retry.py)

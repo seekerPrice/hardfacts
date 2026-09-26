@@ -1,22 +1,24 @@
 {
   "responses": 900,
-  "responses_with_unsupported": 101,
-  "unsupported_rate": 0.1122,
-  "responses_with_unexplained": 101,
+  "responses_with_unsupported": 102,
+  "unsupported_rate": 0.1133,
+  "responses_with_unexplained": 102,
   "unsupported_with_derivation": 0,
-  "hard_facts": 2230,
+  "hard_facts": 2240,
   "hard_facts_by_kind": {
     "quantity": 1179,
     "time": 975,
     "money": 41,
     "date": 24,
-    "percent": 11
+    "percent": 11,
+    "name": 10
   },
   "unsupported_by_kind": {
     "time": 67,
     "quantity": 41,
     "money": 17,
-    "percent": 2
+    "percent": 2,
+    "date": 1
   },
   "examples": [
     {
@@ -985,6 +987,14 @@
       "text": "75",
       "before": "e for events and parties. The club has a cozy and intimate atmosphere, with a capacity of ",
       "after": " people, making it an ideal setting for both small and large",
+      "derivation": null
+    },
+    {
+      "id": "llama-2-7b-chat#10881",
+      "kind": "date",
+      "text": "April 18th, 2010",
+      "before": "ries and Telegraph beer on tap. However, there is a closing notice for the business as of ",
+      "after": ". Customers have praised the late-night hours and healthier ",
       "derivation": null
     },
     {

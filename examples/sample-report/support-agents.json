@@ -4,13 +4,14 @@
   "unsupported_rate": 0.0446,
   "responses_with_unexplained": 113,
   "unsupported_with_derivation": 152,
-  "hard_facts": 10182,
+  "hard_facts": 10362,
   "hard_facts_by_kind": {
-    "identifier": 3726,
-    "quantity": 2764,
+    "identifier": 3508,
+    "quantity": 2965,
     "money": 2376,
     "time": 646,
     "date": 634,
+    "name": 197,
     "percent": 21,
     "email": 14,
     "url": 1

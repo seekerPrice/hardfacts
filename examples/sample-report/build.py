@@ -1,13 +1,16 @@
 """Rebuild the sample client reports from the benchmark data (fetch it first).
 
-    bench/fetch_ragtruth.sh && bench/fetch_taubench.sh
-    uv run python examples/sample-report/build.py
+    bench/fetch_ragtruth.sh && bench/fetch_taubench.sh && bench/fetch_ragbench.sh
+    uv run --with pyarrow python examples/sample-report/build.py
 
 - business-listings: 900 business write-ups by six LLMs from Yelp-style JSON records
   (RAGTruth test split, Data2txt task; each Source is the record itself).
 - support-agents: every reply GPT-4o wrote as a retail and an airline support agent in
   tau-bench's published runs, with the tool definitions, policy, user turns and tool
   results it had seen by then.
+- rag-answers: RAG answers over medical, legal, technical, manual and open-web documents
+  (RAGBench test, CC BY 4.0, Galileo; its ten non-numeric datasets). FinQA and TAT-QA are left
+  out: their answers are ratio calculations, which hardfacts flags (docs/reviews/2026-09-27-ragbench-results.md).
 """
 
 from __future__ import annotations
@@ -45,9 +48,17 @@ def support_agents():
                 yield {"id": f"{name}/{n}/{i}", "output": text, "sources": seen}
 
 
+def rag_answers():
+    from ragbench import NUMERIC, rows
+    for r in rows(BENCH / "data" / "ragbench"):
+        if r["subset"] not in NUMERIC:
+            yield {"id": f"{r['subset']}/{r['id']}", "output": r["response"] or "", "sources": [d for d in r["documents"] if d]}
+
+
 REPORTS = {
     "business-listings": (business_listings, "Business write-ups from JSON records"),
     "support-agents": (support_agents, "Support-agent replies from tool results"),
+    "rag-answers": (rag_answers, "RAG answers over medical, legal and technical documents"),
 }
 
 if __name__ == "__main__":
