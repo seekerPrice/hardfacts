@@ -39,13 +39,15 @@ function group(m: RegExpExecArray, g: number): string | undefined {
 
 // --------------------------------------------------------------------------- numbers
 
-const NUM = String.raw`\d{1,3}(?:\.\d{3}){2,}(?:,\d{1,2})?(?!\d|\.\d)|\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+`;
-export const MAGNITUDE_WORDS: Record<string, number> = { thousand: 1e3, million: 1e6, billion: 1e9, trillion: 1e12 };
+const NUM = String.raw`\d{1,3}\.\d{3},\d{1,2}(?![\d.,])|\d{1,3}(?:\.\d{3}){2,}(?:,\d{1,2})?(?!\d|\.\d)|\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+`;
+export const MAGNITUDE_WORDS: Record<string, number> = {
+  thousand: 1e3, lakh: 1e5, lakhs: 1e5, million: 1e6, crore: 1e7, crores: 1e7, billion: 1e9, trillion: 1e12,
+};
 const MALAY_MAGNITUDES: Record<string, number> = {
   ribu: 1e3, juta: 1e6, bilion: 1e9, miliar: 1e9, trilion: 1e12, triliun: 1e12,
 };
 const MONEY_SUFFIXES: Record<string, number> = { k: 1e3, m: 1e6, mn: 1e6, mil: 1e6, b: 1e9, bn: 1e9, t: 1e12, tn: 1e12 };
-const MAGNITUDE_WORD = "(?i:thousand|million|billion|trillion|ribu|juta|bilion|miliar|trilion|triliun)";
+const MAGNITUDE_WORD = "(?i:thousand|lakhs?|million|crores?|billion|trillion|ribu|juta|bilion|miliar|trilion|triliun)";
 
 const WORD_TOKEN = /[A-Za-z]+/g;
 
@@ -629,7 +631,7 @@ const PREFIX_CURRENCIES: Record<string, string> = {
   "€": "EUR", "£": "GBP", "¥": "¥", "₹": "INR", "₱": "PHP", "₫": "VND", "฿": "THB",
   RM: "MYR", Rp: "IDR", "Rs.": "INR", Rs: "INR",
 };
-const CODES = ["USD", "SGD", "MYR", "EUR", "GBP", "JPY", "CNY", "RMB", "INR", "IDR", "THB", "PHP", "VND", "AUD", "CAD", "HKD", "NZD"];
+export const CODES = ["USD", "SGD", "MYR", "EUR", "GBP", "JPY", "CNY", "RMB", "INR", "IDR", "THB", "PHP", "VND", "AUD", "CAD", "HKD", "NZD"];
 const SUFFIX_CURRENCIES: Record<string, string> = {
   dollar: "$", dollars: "$", ringgit: "MYR", euro: "EUR", euros: "EUR", yen: "JPY",
   yuan: "CNY", rupee: "INR", rupees: "INR", baht: "THB", peso: "PHP", pesos: "PHP",
@@ -1059,8 +1061,13 @@ export function cjkNumber(token: string): Dec {
       number = 0n;
     }
   }
+  const chars = [...token];
+  if (number && chars.length > 1 && chars[chars.length - 2] in SHORTHAND) number *= SHORTHAND[chars[chars.length - 2]]; // 一万五 is 15000
   return dec((total + section + number).toString());
 }
+
+/** A lone last digit after 百, 千 or 万 counts the next unit down; after 零 (一万零五) it is ones. */
+const SHORTHAND: Record<string, bigint> = { 百: 10n, 千: 100n, 万: 1000n };
 
 const CJK_ANY = new RegExp(`[${CJK_CHARS}]`);
 
@@ -1170,12 +1177,22 @@ export function extract(text: string, claims = false): Fact[] {
 const MAJOR_UNIT = compile(String.raw`\s+(${alternation(Object.keys(SUFFIX_CURRENCIES))})\b`, { ignoreCase: true });
 const MINOR_JOIN = compile(String.raw`\s+(?:(?:and|dan)\s+)?`, { ignoreCase: true });
 const MINOR_UNIT = compile(String.raw`\s+(?:cents?|sen)\b`, { ignoreCase: true });
+/** A minor unit on its own is a hundredth: "50 sen" is RM0.50, "50 cents" and "50¢" are $0.50. */
+const MINOR_ALONE = compile(String.raw`\s*(¢)|(?:\s+|-)(cents?|sen)\b`, { ignoreCase: true });
 
 /**
  * "one hundred forty-nine dollars and ninety cents", "RM149 dan 90 sen": one amount, as a voice
  * agent writes it for text-to-speech. A number followed by a currency word is an amount, and
  * "[and|dan] N cents/sen" (N under 100) adds its minor unit.
  */
+/** d / 100, exactly: "50" → "0.5", "2.5" → "0.025". */
+function divideBy100(d: Dec): Dec {
+  const negative = d.startsWith("-");
+  const [whole, frac = ""] = (negative ? d.slice(1) : d).split(".");
+  const padded = whole.padStart(3, "0");
+  return dec(`${negative ? "-" : ""}${padded.slice(0, -2)}.${padded.slice(-2)}${frac}`);
+}
+
 function spelledAmounts(scan: string, text: string, facts: Fact[]): Fact[] {
   const out: Fact[] = [];
   for (let i = 0; i < facts.length; i++) {
@@ -1189,7 +1206,16 @@ function spelledAmounts(scan: string, text: string, facts: Fact[]): Fact[] {
     } else if (f.kind === "money") {
       [currency, major] = f.value as [string, Dec];
     }
-    if (currency === null || major === null) { out.push(f); continue; }
+    if (currency === null || major === null) {
+      const alone = f.kind === "quantity" ? MINOR_ALONE.at(scan, f.end) : null;
+      if (alone) {
+        const amount = divideBy100(f.value as Dec);
+        const unit = (alone[2] ?? "").toLowerCase() === "sen" ? "MYR" : "$";
+        const stop = span(alone)[1];
+        out.push(fact("money", f.start, stop, text.slice(f.start, stop), [unit, amount], [amount, f.value as Dec]));
+      } else out.push(f);
+      continue;
+    }
     const next = facts[i + 1];
     const join = MINOR_JOIN.at(scan, end);
     const minorUnit = next ? MINOR_UNIT.at(scan, next.end) : null;

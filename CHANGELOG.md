@@ -4,6 +4,12 @@ The repository is public on GitHub. Nothing is on PyPI or npm yet (see ROADMAP.m
 
 ## Unreleased
 
+- **Round 11, a whole-library adversarial review** (not a diff review), fixed test-first in both ports:
+  - **A bare JSON amount is in the currency its Source names.** `{"amount": 50, "currency": "MYR"}` no longer supports "USD 50", "€50" or "$50". A Source naming no currency, or a compatible one, still does.
+  - Chinese shorthand: `一万五` is 15,000 and `一百五` is 150. They were read as 10,005 and 105.
+  - European amounts (`1.500,00 €`), `lakh` and `crore`, and minor units on their own (`50 sen` = RM0.50, `50¢`, `77-cent`).
+  - A year-less date borrows the nearest year. On 2025-12-30, "Jan 2" is 2 January 2026, not 2025.
+  - Time zones, invented country codes, last-digit references matching phone numbers, and weekdays are recorded in ROADMAP.md.
 - **Names with digits** (new Kind `name`, [ADR-0008](docs/adr/0008-names-are-checked-against-their-siblings.md)). `COVID-12` is flagged when a source says `COVID-19`, and `H2N1` when it says `H1N1`. A name is checked only against same-shaped names in the sources, so a name no source mentions still passes. On RAGBench, fabrications planted into names are caught 96% of the time, up from 46%, and 1 of 10,125 correct responses is newly flagged.
 - **Middle-dot decimals** (`37·8°C`) are read as decimals.
 - **Malaysian support text** (found by `bench/sea_probe.py`, 30 BM, 中文 and Manglish replies):

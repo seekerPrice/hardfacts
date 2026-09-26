@@ -10,9 +10,9 @@ from decimal import Decimal
 from typing import Any, Collection, Iterable, Iterator
 
 from ._derive import explain
-from ._extract import Fact, extract, name_shape, names
+from ._extract import _CODES, Fact, extract, name_shape, names
 from ._kinds import KINDS
-from ._match import claim_keys, evidence_keys, supports
+from ._match import _same_currency, claim_keys, evidence_keys, supports
 from ._model import Claim, Evidence, Report
 
 
@@ -113,12 +113,23 @@ def _with_years(evidence: list[tuple[int, Fact]], rendered: tuple[str, ...]) -> 
     """A date a Source states without a year ("May 23rd", as a user types it) also reads with the
     conversation's year: the year of a date introduced as the current time, today or now. Never
     any year a Source happens to mention (a record's created_at, an unrelated event)."""
-    years = sorted({r[:4] for i, e in evidence if e.kind == "date" and _ANCHOR.search(rendered[i][max(0, e.start - 40):e.start])
-                    for r in e.value if r[0] != "X"})
-    if not years or len(years) > _ANCHOR_YEARS:
+    anchors = sorted({r[:7] for i, e in evidence if e.kind == "date" and _ANCHOR.search(rendered[i][max(0, e.start - 40):e.start])
+                      for r in e.value if r[0] != "X"})
+    if not anchors or len({a[:4] for a in anchors}) > _ANCHOR_YEARS:
         return evidence
-    return [(i, replace(e, value=e.value + tuple(y + r[4:] for r in e.value if r.startswith("XXXX") for y in years)))
+    return [(i, replace(e, value=tuple(dict.fromkeys(e.value + tuple(_nearest_year(r, a) for r in e.value
+                                                                       if r.startswith("XXXX") for a in anchors)))))
             if e.kind == "date" and any(r.startswith("XXXX") for r in e.value) else (i, e) for i, e in evidence]
+
+
+def _nearest_year(reading: str, anchor: str) -> str:
+    """The anchor's year, or the next or previous one when that is nearer: on 2025-12-30, "Jan 2" is
+    2 January 2026, and on 2026-01-03, "Dec 28" is 28 December 2025."""
+    year = int(anchor[:4])
+    if anchor[5] != "X" and reading[5] != "X":
+        months = int(reading[5:7]) - int(anchor[5:7])
+        year += 1 if months < -6 else -1 if months > 6 else 0
+    return f"{year:04d}{reading[4:]}"
 
 
 EVIDENCE_PER_CLAIM = 10
@@ -155,6 +166,7 @@ def check(output: str, sources: Iterable[Any], *, kinds: Collection[str] | None 
     for position, (_, e) in enumerate(evidence):
         for key in evidence_keys(e):
             index[key].append(position)
+    named = _currencies_named(rendered, evidence)
     claims = []
     facts = extract(output, claims=True)
     for fact in facts:
@@ -162,6 +174,8 @@ def check(output: str, sources: Iterable[Any], *, kinds: Collection[str] | None 
             continue
         found: list[Evidence] = []
         for p in _in_order([index[key] for key in claim_keys(fact) if key in index]):
+            if _other_currency(fact, evidence[p], named):
+                continue
             if supports(evidence[p][1], fact):
                 found.append(Evidence(evidence[p][0], (evidence[p][1].start, evidence[p][1].end), evidence[p][1].text))
                 if len(found) == EVIDENCE_PER_CLAIM:
@@ -172,6 +186,29 @@ def check(output: str, sources: Iterable[Any], *, kinds: Collection[str] | None 
         claims += _name_claims(output, rendered, [(f.start, f.end) for f in facts])
         claims.sort(key=lambda c: c.span[0])
     return Report(explain(tuple(claims)), rendered)
+
+
+_CURRENCY_CODE = re.compile(rf"(?<![A-Za-z])({'|'.join(_CODES)})(?![A-Za-z])")
+
+
+def _currencies_named(rendered: tuple[str, ...], evidence: list) -> dict[int, set[str]]:
+    """The currencies each Source names: its amounts' currencies and codes such as "currency": "MYR"."""
+    named: dict[int, set[str]] = defaultdict(set)
+    for i, text in enumerate(rendered):
+        named[i].update("CNY" if m.group(1) == "RMB" else m.group(1) for m in _CURRENCY_CODE.finditer(text))
+    for i, e in evidence:
+        if e.kind == "money" and e.value[0] is not None:
+            named[i].add(e.value[0])
+    return named
+
+
+def _other_currency(claim: Fact, found: tuple[int, Fact], named: dict[int, set[str]]) -> bool:
+    """A bare number is in the currency its Source names: {"amount": 50, "currency": "MYR"} doesn't
+    support "USD 50". A Source naming no currency, or a compatible one, still does (ADR-0003)."""
+    i, e = found
+    if claim.kind != "money" or e.kind == "money" or claim.value[0] is None or not named[i]:
+        return False
+    return not any(_same_currency(claim.value[0], c) for c in named[i])
 
 
 def _name_claims(output: str, rendered: tuple[str, ...], taken: list[tuple[int, int]]) -> list[Claim]:

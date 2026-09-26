@@ -39,7 +39,7 @@ const LONGEST_FLOAT = 40;
 /** "1,200.50" → "1200.5"; ".9" → "0.9"; "007" → "7"; "3.759999999999991" → "3.76". */
 export function dec(text: string): Dec {
   // "1.500.000" and "1.234.567,89": dots group thousands and a comma marks decimals
-  if ((text.match(/\./g) ?? []).length >= 2) {
+  if ((text.match(/\./g) ?? []).length >= 2 || /^\d{1,3}\.\d{3},\d{1,2}$/.test(text)) { // "1.500,00" too
     const [n, s] = toParts(text.replace(/\./g, "").replace(",", "."));
     return fromParts(n, s);
   }

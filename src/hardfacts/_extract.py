@@ -37,12 +37,13 @@ Recogniser = Callable[[str, Words], Iterator[Fact]]
 
 # --------------------------------------------------------------------------- numbers
 
-NUM = r"\d{1,3}(?:\.\d{3}){2,}(?:,\d{1,2})?(?!\d|\.\d)|\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+"
-"""A number: dot-thousands with 2+ groups (1.500.000), comma-thousands (1,500,000), plain, or .5."""
-MAGNITUDE_WORDS = {"thousand": 10**3, "million": 10**6, "billion": 10**9, "trillion": 10**12}
+NUM = r"\d{1,3}\.\d{3},\d{1,2}(?![\d.,])|\d{1,3}(?:\.\d{3}){2,}(?:,\d{1,2})?(?!\d|\.\d)|\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+"
+"""A number: European 1.500,00, dot-thousands with 2+ groups (1.500.000), comma-thousands (1,500,000), plain, or .5."""
+MAGNITUDE_WORDS = {"thousand": 10**3, "lakh": 10**5, "lakhs": 10**5, "million": 10**6, "crore": 10**7,
+                   "crores": 10**7, "billion": 10**9, "trillion": 10**12}
 MALAY_MAGNITUDES = {"ribu": 10**3, "juta": 10**6, "bilion": 10**9, "miliar": 10**9, "trilion": 10**12, "triliun": 10**12}
 MONEY_SUFFIXES = {"k": 10**3, "m": 10**6, "mn": 10**6, "mil": 10**6, "b": 10**9, "bn": 10**9, "t": 10**12, "tn": 10**12}
-_MAGNITUDE_WORD = r"(?i:thousand|million|billion|trillion|ribu|juta|bilion|miliar|trilion|triliun)"
+_MAGNITUDE_WORD = r"(?i:thousand|lakhs?|million|crores?|billion|trillion|ribu|juta|bilion|miliar|trilion|triliun)"
 
 
 def _alternation(tokens) -> str:
@@ -87,8 +88,11 @@ and the lazy noise pattern is quadratic on a 40,000-digit number."""
 """A double holds 15-17 significant digits, so noise lives there: "5.1000000000009" (14) is a real value."""
 
 
+_EUROPEAN = re.compile(r"\d{1,3}\.\d{3},\d{1,2}")
+
+
 def to_decimal(digits: str) -> Decimal:
-    if digits.count(".") >= 2:  # "1.500.000" and "1.234.567,89": dots group thousands, a comma marks decimals
+    if digits.count(".") >= 2 or _EUROPEAN.fullmatch(digits):  # "1.500.000", "1.500,00": dots group thousands, a comma marks decimals
         return Decimal(digits.replace(".", "").replace(",", "."))
     digits = digits.replace(",", "")
     noise = len(digits) <= _LONGEST_FLOAT and _FLOAT_NOISE.fullmatch(digits)
@@ -1027,6 +1031,10 @@ _CJK_DAYPART_CLOCK = _compile(
 _CJK_IDIOMS = ("十分", "万一", "千万", "一起", "一些", "一般", "一样", "一直", "一定", "一下", "一点", "一切", "统一", "唯一")
 
 
+_SHORTHAND = {"百": 10, "千": 100, "万": 1000}
+"""A lone last digit after 百, 千 or 万 counts the next unit down; after 零 (一万零五) it is ones."""
+
+
 def cjk_number(token: str) -> Decimal:
     """``三千五百`` → 3500, ``1.2万`` → 12000, ``两百零五`` → 205."""
     lead = re.match(r"(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?", token)
@@ -1055,6 +1063,8 @@ def cjk_number(token: str) -> Decimal:
         else:  # 亿 scales everything before it, so 一万亿 is 10^12
             total = (total + section + number or 1) * 10**8
             section = number = 0
+    if number and len(token) > 1 and token[-2] in _SHORTHAND:  # 一万五 is 15000, 一百五 is 150
+        number *= _SHORTHAND[token[-2]]
     return Decimal(total + section + number)
 
 
@@ -1173,6 +1183,8 @@ def extract(text: str, *, claims: bool = False) -> list[Fact]:
 _MAJOR_UNIT = _compile(rf"\s+({_alternation(_SUFFIX_CURRENCIES)})\b", re.I)
 _MINOR_JOIN = _compile(r"\s+(?:(?:and|dan)\s+)?", re.I)
 _MINOR_UNIT = _compile(r"\s+(?:cents?|sen)\b", re.I)
+_MINOR_ALONE = _compile(r"\s*(¢)|(?:\s+|-)(cents?|sen)\b", re.I)
+"""A minor unit on its own is a hundredth: "50 sen" is RM0.50, "50 cents" and "50¢" are $0.50."""
 
 
 def _spelled_amounts(scan: str, text: str, facts: list[Fact]) -> list[Fact]:
@@ -1191,7 +1203,13 @@ def _spelled_amounts(scan: str, text: str, facts: list[Fact]) -> list[Fact]:
         elif f.kind == "money":
             currency, major = f.value
         if currency is None:
-            out.append(f)
+            alone = _MINOR_ALONE.match(scan, f.end) if f.kind == "quantity" else None
+            if alone:
+                amount = EXACT.divide(f.value, Decimal(100))
+                unit = "MYR" if (alone.group(2) or "").lower() == "sen" else "$"
+                out.append(Fact("money", f.start, alone.end(), text[f.start:alone.end()], (unit, amount), frozenset({amount, f.value})))
+            else:
+                out.append(f)
             i += 1
             continue
         nxt = facts[i + 1] if i + 1 < len(facts) else None

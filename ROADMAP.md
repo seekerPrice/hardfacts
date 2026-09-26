@@ -21,6 +21,13 @@ These are measured gaps, not wishes. Each one says where the evidence is. A fix 
 - **Units.** Matching ignores units, so "20cm" supports "20 minutes". Requiring unit agreement was measured and made things worse ([ADR-0006](docs/adr/0006-values-not-context.md)). A narrower rule might not.
 - **Names no source mentions.** Since [ADR-0008](docs/adr/0008-names-are-checked-against-their-siblings.md), a name is checked when the sources name something of the same shape (`COVID-12` against `COVID-19`), which lifted RAGBench name recall from 46% to 96%. A name whose shape no source contains still passes, so an invented model number with no sibling isn't caught.
 
+## Found by the whole-library review (round 11), not yet fixed
+
+- **Time zones are ignored.** "3pm MYT" is supported by `2025-10-03T15:00:00Z`, which is 11pm in Malaysia, and "3pm SGT" by "3pm MYT". The fix is to read zone designators into the time Value and compare in UTC only when both sides state a zone.
+- **An invented country code passes.** "+65 12-345 6789" is supported by a Malaysian local number "012-345 6789", although the Claim is more specific than its Evidence. When the Evidence has a trunk 0 and no country code, a Claim's country code should need support elsewhere in the Sources.
+- **Last-digit references match any number.** "card ending in 5238" is supported by the customer's phone number, or by an order ID with those last digits. The reference should prefer Evidence of the same sort (a card or account ID) when the Sources have one.
+- **Weekdays aren't checked.** "Friday, October 3" passes against "Wednesday, October 3".
+
 ## Languages
 
 - **Bahasa Melayu and 中文** rules have not had a full native-speaker review. Realistic support replies in BM, 中文 and Manglish, added as tests, are the most useful contribution anyone can make here.

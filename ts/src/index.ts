@@ -6,7 +6,7 @@
  */
 
 import { add, compare, type Dec, dec, mul, sub } from "./decimal.ts";
-import { codePointsBefore, DOLLAR_FAMILY, extract, type Fact, nameShape, names, type Value, YEN_FAMILY } from "./extract.ts";
+import { CODES, codePointsBefore, DOLLAR_FAMILY, extract, type Fact, nameShape, names, type Value, YEN_FAMILY } from "./extract.ts";
 import { compile } from "./regex.ts";
 
 export type { Value } from "./extract.ts";
@@ -494,16 +494,29 @@ const ANCHOR_YEARS = 2;
  * any year a Source happens to mention (a record's created_at, an unrelated event).
  */
 function withYears(evidence: (readonly [number, Fact])[], rendered: string[]): (readonly [number, Fact])[] {
-  const years = [...new Set(evidence.flatMap(([i, e]) =>
+  const anchors = [...new Set(evidence.flatMap(([i, e]) =>
     e.kind === "date" && ANCHOR.search(codePointsBefore(rendered[i], e.start, 40)) !== null
-      ? (e.value as string[]).filter((r) => r[0] !== "X").map((r) => r.slice(0, 4)) : []))].sort();
-  if (!years.length || years.length > ANCHOR_YEARS) return evidence;
+      ? (e.value as string[]).filter((r) => r[0] !== "X").map((r) => r.slice(0, 7)) : []))].sort();
+  if (!anchors.length || new Set(anchors.map((a) => a.slice(0, 4))).size > ANCHOR_YEARS) return evidence;
   return evidence.map(([i, e]) => {
     const readings = e.value as string[];
     if (e.kind !== "date" || !readings.some((r) => r.startsWith("XXXX"))) return [i, e] as const;
-    const added = readings.filter((r) => r.startsWith("XXXX")).flatMap((r) => years.map((y) => y + r.slice(4)));
-    return [i, { ...e, value: [...readings, ...added] }] as const;
+    const added = readings.filter((r) => r.startsWith("XXXX")).flatMap((r) => anchors.map((a) => nearestYear(r, a)));
+    return [i, { ...e, value: [...new Set([...readings, ...added])] }] as const;
   });
+}
+
+/**
+ * The anchor's year, or the next or previous one when that is nearer: on 2025-12-30, "Jan 2" is
+ * 2 January 2026, and on 2026-01-03, "Dec 28" is 28 December 2025.
+ */
+function nearestYear(reading: string, anchor: string): string {
+  let year = Number(anchor.slice(0, 4));
+  if (anchor[5] !== "X" && reading[5] !== "X") {
+    const months = Number(reading.slice(5, 7)) - Number(anchor.slice(5, 7));
+    year += months < -6 ? 1 : months > 6 ? -1 : 0;
+  }
+  return String(year).padStart(4, "0") + reading.slice(4);
 }
 
 /**
@@ -541,6 +554,7 @@ export function check(output: string, sources: unknown[], options: CheckOptions 
       else index.set(key, [position]);
     }
   });
+  const named = currenciesNamed(rendered, evidence);
   const claims: Claim[] = [];
   const facts = extract(output, true);
   for (const f of facts) {
@@ -549,6 +563,7 @@ export function check(output: string, sources: unknown[], options: CheckOptions 
     const candidates = lists.length === 1 ? lists[0] : [...new Set(lists.flat())].sort((x, y) => x - y);
     const found: Evidence[] = [];
     for (const p of candidates) {
+      if (otherCurrency(f, evidence[p], named)) continue;
       if (!supports(evidence[p][1], f)) continue;
       found.push({ source: evidence[p][0], span: [evidence[p][1].start, evidence[p][1].end], text: evidence[p][1].text });
       if (found.length === EVIDENCE_PER_CLAIM) break;
@@ -564,6 +579,27 @@ export function check(output: string, sources: unknown[], options: CheckOptions 
   const unsupported = claims.filter((c) => !c.supported);
   const unexplained = unsupported.filter((c) => c.derivation === null);
   return { claims, sources: rendered, unsupported, unexplained, ok: unsupported.length === 0 };
+}
+
+const CURRENCY_NAMED = new RegExp(`(?<![A-Za-z])(${CODES.join("|")})(?![A-Za-z])`, "g");
+
+/** The currencies each Source names: its amounts' currencies and codes such as "currency": "MYR". */
+function currenciesNamed(rendered: string[], evidence: readonly (readonly [number, Fact])[]): Set<string>[] {
+  const named = rendered.map((text) => new Set([...text.matchAll(CURRENCY_NAMED)].map((m) => (m[1] === "RMB" ? "CNY" : m[1]))));
+  for (const [i, e] of evidence) {
+    if (e.kind === "money" && (e.value as [string | null, string])[0] !== null) named[i].add((e.value as [string, string])[0]);
+  }
+  return named;
+}
+
+/**
+ * A bare number is in the currency its Source names: {"amount": 50, "currency": "MYR"} doesn't
+ * support "USD 50". A Source naming no currency, or a compatible one, still does (ADR-0003).
+ */
+function otherCurrency(claim: Fact, [i, e]: readonly [number, Fact], named: Set<string>[]): boolean {
+  const currency = (claim.value as [string | null, string])[0];
+  if (claim.kind !== "money" || e.kind === "money" || currency === null || !named[i].size) return false;
+  return ![...named[i]].some((c) => sameCurrency(currency, c));
 }
 
 /** Names in the Output that a same-shaped name in the Sources makes checkable (ADR-0008). */
