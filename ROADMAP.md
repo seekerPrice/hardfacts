@@ -11,7 +11,7 @@ These are measured gaps, not wishes. Each one says where the evidence is. A fix 
   | loose | 30% | 2.3% |
   | strict: percentages only, with a stated decimal | 8% | 0.03% |
 
-  The strict version is now built ([ADR-0007](docs/adr/0007-derivations-come-from-the-output.md), amended): table QA moved from 61.9% to 60.2% of correct answers flagged. Most table answers still combine more than two values or state whole percentages. That is the open question, and operands restricted to the sentence the value appears in are one idea.
+  The strict version is now built ([ADR-0007](docs/adr/0007-derivations-come-from-the-output.md), amended): table QA moved from 61.9% to 61.4% of correct answers flagged. It uses only the three values nearest the percentage, so that chance matches don't grow with the reply. Most table answers combine values written far apart, or more than two, or state whole percentages. That is the open question, and operands restricted to the sentence the value appears in are one idea.
 - **Date arithmetic.** "Your trip is 5 days", computed from two dates, is flagged, and no Derivation shows it. It was measured and deprioritised (`bench/date_diff_experiment.py`): across every τ-bench and τ²-bench reply, only 10 flagged numbers are day counts, and none is the difference between two dates in the same reply. Real data first; a reply set where this is common would change the answer.
 - **Circular Derivations.** When an agent computes a remainder *from* an invented total, the total gets "explained" by the remainder ([τ²-bench results](docs/reviews/2026-09-26-tau2bench-results.md)). Fixing it needs tool-call provenance, which text alone doesn't carry.
 

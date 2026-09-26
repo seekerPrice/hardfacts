@@ -25,7 +25,9 @@ Decisions:
   - The loose version, with any percentage and also means, "explained" 2.3% of planted fabrications, and was rejected.
   - The strict one explained 8% of the flags on correct FinQA/TAT-QA answers, and 0.03% of fabrications.
 
-  Built, it moved RAGBench table QA from 61.9% to 60.2% of correct answers flagged, and left τ²-bench unchanged (Derivations on 41.9% of flags, 1.0% of caught fabrications explained by coincidence). A whole percentage ("35%") is never searched, because too many ratios round to it.
+  The first build searched every number in the reply. A hostile review (round 15) showed that chance matches grow with the number of values: a random one-decimal percentage found some ratio 13% of the time with 12 numbers in the reply, and 42% with 20. A chance Derivation takes a value out of `unexplained`, which silences the Stop hook and the retry loop, so that build was withdrawn.
+
+  A ratio now uses only the **three Supported values written nearest the percentage**, within 200 characters. That caps the candidates at 6 ordered pairs and 2 formulas, and keeps a random one-decimal percentage explained about 1% of the time however long the reply is. Bounded, it moves RAGBench table QA from 61.9% to 61.4% of correct answers flagged, and leaves τ²-bench unchanged (1.0% of caught fabrications explained by coincidence). The gain is small, because most table answers combine values written far apart. A whole percentage ("35%") is never searched.
 
 Considered, and rejected:
 - **Operands from the Sources.** See the table above.

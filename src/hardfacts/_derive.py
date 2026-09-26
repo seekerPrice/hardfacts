@@ -35,7 +35,11 @@ class _OutOfBudget(Exception):
     pass
 
 
-_PLACES = re.compile(r"\d\.(\d+)")
+_PLACES = re.compile(r"[0-9]\.([0-9]+)")
+_RATIO_REACH = 200
+"""Characters between a percentage and the values a ratio may use."""
+_RATIO_OPERANDS = 3
+"""The values a ratio may use, nearest first: 6 ordered pairs, 2 formulas."""
 
 
 def _places(text: str) -> int:
@@ -82,7 +86,6 @@ class _Search:
         self.budget = _Budget(_WORK_PER_CHECK)
         self.groups: dict[tuple, tuple[list[Decimal], dict[Decimal, Claim]]] = {}
         self.multipliers: dict[Decimal, Claim] = {}
-        self._ratio_groups: list | None = None
         for c in claims:
             if c.supported and c.kind == "quantity" and c.value == c.value.to_integral_value() and 2 <= c.value <= _LARGEST_MULTIPLIER:
                 self.multipliers.setdefault(c.value, c)
@@ -135,40 +138,44 @@ class _Search:
         return None
 
     def ratio(self, target: Claim, goal: Decimal) -> Derivation | None:
-        """A percentage stated to a decimal, as a ÷ b × 100 or (a − b) ÷ b × 100 over two of the Output's
-        own Supported numbers or same-currency amounts, rounded to the Claim's decimals. Measured before
-        building (bench/ratio_experiment.py --strict): 8% of flags on correct table answers explained,
-        0.03% of planted fabrications explained by coincidence. A whole percentage is never searched."""
+        """A percentage stated to a decimal, as a ÷ b × 100 or (a − b) ÷ b × 100 over two of the three
+        Supported numbers (or same-currency amounts) written nearest to it, within _RATIO_REACH
+        characters, rounded half-up to the Claim's decimals. The candidates never grow with the reply:
+        with every number in a long reply, a random one-decimal percentage found some ratio 42% of
+        the time at 20 numbers (round 15 of hostile review); with three, about 1%. A whole percentage is
+        never searched. Measured first in bench/ratio_experiment.py --strict."""
         places = _places(target.text)
         if not places:
             return None
         step = Decimal(1).scaleb(-places)
-        for group in self.ratio_groups():
-            values, first = group
+        for values, first in self.near(target):
             for a in values:
                 for b in values:
                     if a == b:
                         continue
                     if not self.budget.spend():
                         raise _OutOfBudget
-                    share = EXACT.divide(EXACT.multiply(a, Decimal(100)), b).quantize(step, rounding=ROUND_HALF_UP)
+                    share = EXACT.divide(EXACT.multiply(a, Decimal(100)), b).quantize(step, rounding=ROUND_HALF_UP, context=EXACT)
                     if share == goal:
                         return Derivation(f"{first[a].text} ÷ {first[b].text} × 100", (first[a].span, first[b].span))
-                    change = EXACT.divide(EXACT.multiply(EXACT.subtract(a, b), Decimal(100)), b).quantize(step, rounding=ROUND_HALF_UP)
-                    if abs(change) == goal:
-                        return Derivation(f"({first[a].text} − {first[b].text}) ÷ {first[b].text} × 100", (first[a].span, first[b].span))
+                    change = EXACT.divide(EXACT.multiply(EXACT.subtract(a, b), Decimal(100)), b).quantize(
+                        step, rounding=ROUND_HALF_UP, context=EXACT)
+                    if abs(change) == goal:  # written the way round that gives the stated value
+                        high, low = (first[a], first[b]) if change > 0 else (first[b], first[a])
+                        return Derivation(f"({high.text} − {low.text}) ÷ {first[b].text} × 100", (high.span, low.span))
         return None
 
-    def ratio_groups(self) -> list[tuple[list[Decimal], dict[Decimal, Claim]]]:
-        """The Supported numbers, and the Supported amounts per currency, each group sorted by value."""
-        if self._ratio_groups is None:
-            groups: dict[tuple, dict[Decimal, Claim]] = {}
-            for c in self.claims:
-                if c.supported and c.kind in ("quantity", "money") and _amount(c) > 0:
-                    key = (c.kind, c.value[0] if c.kind == "money" else None)
-                    groups.setdefault(key, {}).setdefault(_amount(c), c)
-            self._ratio_groups = [(sorted(g), g) for _, g in sorted(groups.items(), key=lambda kv: (kv[0][0], str(kv[0][1])))]
-        return self._ratio_groups
+    def near(self, target: Claim) -> list[tuple[list[Decimal], dict[Decimal, Claim]]]:
+        """The three Supported numbers or amounts written nearest the target, grouped by Kind and currency."""
+        def gap(c: Claim) -> int:
+            return max(c.span[0] - target.span[1], target.span[0] - c.span[1], 0)
+        close = sorted((c for c in self.claims if c.supported and c.kind in ("quantity", "money") and _amount(c) > 0
+                        and gap(c) <= _RATIO_REACH), key=lambda c: (gap(c), c.span[0]))[:_RATIO_OPERANDS]
+        groups: dict[tuple, dict[Decimal, Claim]] = {}
+        for c in sorted(close, key=lambda c: c.span[0]):
+            key = (c.kind, c.value[0] if c.kind == "money" else None)
+            groups.setdefault(key, {}).setdefault(_amount(c), c)
+        return [(sorted(g), g) for _, g in sorted(groups.items(), key=lambda kv: (kv[0][0], str(kv[0][1])))]
 
 
 def derive(target: Claim, claims: tuple[Claim, ...]) -> Derivation | None:

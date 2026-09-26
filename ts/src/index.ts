@@ -325,18 +325,18 @@ class Search {
     return null;
   }
 
-  private ratioGroupsCache: [Dec[], Map<Dec, Claim>][] | null = null;
-
   /**
-   * A percentage stated to a decimal, as a ÷ b × 100 or (a − b) ÷ b × 100 over two of the Output's
-   * own Supported numbers or same-currency amounts, rounded to the Claim's decimals. Measured before
-   * building (bench/ratio_experiment.py --strict): 8% of flags on correct table answers explained,
-   * 0.03% of planted fabrications explained by coincidence. A whole percentage is never searched.
+   * A percentage stated to a decimal, as a ÷ b × 100 or (a − b) ÷ b × 100 over two of the three
+   * Supported numbers (or same-currency amounts) written nearest to it, within RATIO_REACH
+   * characters, rounded half-up to the Claim's decimals. The candidates never grow with the reply:
+   * with every number in a long reply, a random one-decimal percentage found some ratio 42% of
+   * the time at 20 numbers (round 15 of hostile review); with three, about 1%. A whole percentage is
+   * never searched. Measured first in bench/ratio_experiment.py --strict.
    */
   private ratio(target: Claim, goal: Dec): Derivation | null {
     const places = decimalPlaces(target.text);
     if (!places) return null;
-    for (const [values, first] of this.ratioGroups()) {
+    for (const [values, first] of this.near(target)) {
       for (const a of values) {
         for (const b of values) {
           if (a === b) continue;
@@ -344,8 +344,10 @@ class Search {
           if (compare(percentOf(a, b, places), goal) === 0) {
             return { expression: `${first.get(a)!.text} ÷ ${first.get(b)!.text} × 100`, operands: [[...first.get(a)!.span], [...first.get(b)!.span]] };
           }
-          if (compare(percentOf(sub(a, b), b, places, true), goal) === 0) {
-            return { expression: `(${first.get(a)!.text} − ${first.get(b)!.text}) ÷ ${first.get(b)!.text} × 100`, operands: [[...first.get(a)!.span], [...first.get(b)!.span]] };
+          const change = percentOf(sub(a, b), b, places);
+          if (compare(change.startsWith("-") ? change.slice(1) : change, goal) === 0) { // written the way round that gives the stated value
+            const [high, low] = compare(change, "0") > 0 ? [first.get(a)!, first.get(b)!] : [first.get(b)!, first.get(a)!];
+            return { expression: `(${high.text} − ${low.text}) ÷ ${first.get(b)!.text} × 100`, operands: [[...high.span], [...low.span]] };
           }
         }
       }
@@ -353,29 +355,36 @@ class Search {
     return null;
   }
 
-  /** The Supported numbers, and the Supported amounts per currency, each group sorted by value. */
-  private ratioGroups(): [Dec[], Map<Dec, Claim>][] {
-    if (!this.ratioGroupsCache) {
-      const groups = new Map<string, [string, string, Map<Dec, Claim>]>();
-      for (const c of this.claims) {
-        if (!c.supported || (c.kind !== "quantity" && c.kind !== "money") || compare(claimAmount(c), "0") <= 0) continue;
-        const code = c.kind === "money" ? String((c.value as (string | null)[])[0] ?? "None") : "None";
-        const key = `${c.kind}\u0000${code}`;
-        if (!groups.has(key)) groups.set(key, [c.kind, code, new Map()]);
-        const first = groups.get(key)![2];
-        if (!first.has(claimAmount(c))) first.set(claimAmount(c), c);
-      }
-      this.ratioGroupsCache = [...groups.values()]
-        .sort((x, y) => (x[0] < y[0] ? -1 : x[0] > y[0] ? 1 : x[1] < y[1] ? -1 : x[1] > y[1] ? 1 : 0))
-        .map(([, , first]) => [[...first.keys()].sort(compare), first]);
+  /** The three Supported numbers or amounts written nearest the target, grouped by Kind and currency. */
+  private near(target: Claim): [Dec[], Map<Dec, Claim>][] {
+    const gap = (c: Claim) => Math.max(c.span[0] - target.span[1], target.span[0] - c.span[1], 0);
+    const close = this.claims
+      .filter((c) => c.supported && (c.kind === "quantity" || c.kind === "money") && compare(claimAmount(c), "0") > 0 && gap(c) <= RATIO_REACH)
+      .sort((x, y) => gap(x) - gap(y) || x.span[0] - y.span[0])
+      .slice(0, RATIO_OPERANDS)
+      .sort((x, y) => x.span[0] - y.span[0]);
+    const groups = new Map<string, [string, string, Map<Dec, Claim>]>();
+    for (const c of close) {
+      const code = c.kind === "money" ? String((c.value as (string | null)[])[0] ?? "None") : "None";
+      const key = `${c.kind}\u0000${code}`;
+      if (!groups.has(key)) groups.set(key, [c.kind, code, new Map()]);
+      const first = groups.get(key)![2];
+      if (!first.has(claimAmount(c))) first.set(claimAmount(c), c);
     }
-    return this.ratioGroupsCache;
+    return [...groups.values()]
+      .sort((x, y) => (x[0] < y[0] ? -1 : x[0] > y[0] ? 1 : x[1] < y[1] ? -1 : x[1] > y[1] ? 1 : 0))
+      .map(([, , first]) => [[...first.keys()].sort(compare), first]);
   }
 }
 
+/** Characters between a percentage and the values a ratio may use. */
+const RATIO_REACH = 200;
+/** The values a ratio may use, nearest first: 6 ordered pairs, 2 formulas. */
+const RATIO_OPERANDS = 3;
+
 /** Decimals a number is written with: "37.9%" has 1, "35%" none. */
 function decimalPlaces(text: string): number {
-  const m = /\d\.(\d+)/.exec(text);
+  const m = /[0-9]\.([0-9]+)/.exec(text);
   return m ? m[1].length : 0;
 }
 

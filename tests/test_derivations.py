@@ -87,3 +87,30 @@ def test_a_whole_percentage_is_not_searched_for_ratios():
 def test_a_wrong_percentage_gets_no_ratio_working():
     report = check("Of 250 orders, 87 were late: 38.4%.", ["250 orders, 87 late"])
     assert next(c for c in report.claims if c.text == "38.4%").derivation is None
+
+
+# Round 15 of hostile review: the ratio search must not grow with the reply.
+def test_a_ratio_uses_only_the_three_nearest_values_so_chance_matches_stay_rare():
+    import random
+    rng = random.Random(0)
+    explained = 0
+    for _ in range(200):
+        values = [rng.randint(100, 9999) for _ in range(20)]
+        pct = f"{rng.uniform(1, 60):.1f}%"
+        text = "Figures: " + ", ".join(map(str, values)) + f". Share {pct}."
+        claim = next(c for c in check(text, [" ".join(map(str, values))]).claims if c.text == pct)
+        explained += claim.derivation is not None
+    assert explained <= 6, explained  # about 1% expected with 3 operands (6 ordered pairs, 2 formulas)
+
+
+def test_ratio_rounding_ignores_the_callers_decimal_context():
+    import decimal
+    check("Values: 1, 3. So 33.333333333333333333333333333%.", ["1 and 3"])
+    with decimal.localcontext() as ctx:
+        ctx.traps[decimal.Inexact] = True
+        check("Values 1 and 3. Share 33.3%.", ["1 and 3"])
+
+
+def test_a_fall_is_written_in_the_order_that_gives_its_value():
+    report = check("It fell from 8 to 3, a 62.5% drop.", ["8 and 3"])
+    assert next(c for c in report.claims if c.text == "62.5%").derivation.expression == "(8 − 3) ÷ 8 × 100"
