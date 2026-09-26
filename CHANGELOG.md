@@ -6,6 +6,11 @@ The repository is public on GitHub. Nothing is on PyPI or npm yet (see ROADMAP.m
 
 - **Names with digits** (new Kind `name`, [ADR-0008](docs/adr/0008-names-are-checked-against-their-siblings.md)). `COVID-12` is flagged when a source says `COVID-19`, and `H2N1` when it says `H1N1`. A name is checked only against same-shaped names in the sources, so a name no source mentions still passes. On RAGBench, fabrications planted into names are caught 96% of the time, up from 46%, and 1 of 10,125 correct responses is newly flagged.
 - **Middle-dot decimals** (`37·8°C`) are read as decimals.
+- **Malaysian support text** (found by `bench/sea_probe.py`, 30 BM, 中文 and Manglish replies):
+  - Colloquial `八块五` and `八元五角` are 8.50.
+  - "arrive 3/10" is a date with both readings (3 October in Malaysia, 10 March in the US) after a strong date word. After a weak one ("after 1/2 hour", "and 1/4 cup") it is still a fraction.
+  - Amounts written out for text-to-speech are one amount: "seratus empat puluh sembilan ringgit sembilan puluh sen", "one hundred forty-nine dollars and ninety cents", "RM149 dan 90 sen".
+  - The probe now has 0 false alarms and 0 missed errors, and 2 of ~40,000 RAGTruth and τ-bench outputs change. A latent Python bug that read "9/0" as a date was found by the port differential and fixed.
 - **Citation markers** (`[10]`, `[1, 2, 5]`, `[1-6]`, `[^2]`, `[Doc 3]`) are no longer claims. They were 24 of the 30 checker errors a blind audit found on RAGBench. A marker counts only where it closes a clause, so a bracketed list stated as the answer ("the scores were [7, 8, 9]") is still checked. That regression was found by a hostile review of the first version.
 - **RAGBench**, pre-registered ([results](docs/reviews/2026-09-27-ragbench-results.md)): 11,802 responses over 12 RAG datasets, compared with RAGAS, TruLens and a GPT-3.5 judge on the same responses. 4 of 6 predictions pass. **Table-arithmetic QA (FinQA, TAT-QA) fails**: 61.8% of correct answers are flagged, because ratios and percentage changes aren't Derivations. A stricter ratio search was measured and not built (`bench/ratio_experiment.py`).
 - **Integrations:** an OpenAI Agents SDK output guardrail and a LangChain `create_agent` middleware (verify, retry once, hand off).

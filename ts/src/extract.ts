@@ -483,10 +483,13 @@ const NUMERIC_MONTH_DAY = compile(String.raw`(?<![\w./])(\d{1,2})/(\d{1,2})(?![\
  * "3/16 inch", "16/9" and "7/13 games" are fractions, and a Source's fraction must not vouch for a date.
  * A range to another date is date enough: "3/19 - 3/30/2017".
  */
+/** Only these make "3/10" a date when either order could be one: "arrive 3/10", "on 10/3", "due 1/2". */
+const STRONG_DATE_WORD = compile(String.raw`\b(?:on|dated?|due|expires?|expiring|departs?|departing|arrives?|arriving|returns?|returning|deliver(?:y|s|ed)?|ship(?:s|ped|ping)?|dispatch(?:ed)?|eta|sampai)\s*$`, { ignoreCase: true });
 const TO_A_DATE = compile(String.raw`\s*(?:[-–]|to|through|thru|until)\s*\d{1,2}/\d{1,2}(?!\d)`, { ignoreCase: true });
 const DATE_WORD = compile(
   String.raw`(?:\b(?:on|by|until|till|due|before|after|from|since|through|thru|to|and|dated?|valid|effective|expires?|expiring|` +
-    String.raw`departs?|departing|arrives?|arriving|returns?|returning|starts?|starting|ends?|ending)|[-–])\s*$`,
+    String.raw`departs?|departing|arrives?|arriving|returns?|returning|starts?|starting|ends?|ending|` +
+    String.raw`deliver(?:y|s|ed)?|ship(?:s|ped|ping)?|dispatch(?:ed)?|eta|sampai)|[-–])\s*$`,
   { ignoreCase: true },
 );
 const ISO_DATETIME = compile(
@@ -577,12 +580,17 @@ function* dates(text: string, ws: Words, inSource = false): Generator<Fact> {
   for (const m of NUMERIC_MONTH_DAY.all(text)) {
     const [a, b] = [Number(m[1]), Number(m[2])];
     const start = span(m)[0];
-    if ((a > 12) === (b > 12) || (DATE_WORD.search(codePointsBefore(text, start, 20)) === null
-      && TO_A_DATE.at(text, span(m)[1]) === null)) {
-      continue; // "5/6" could be either; "13/20" is neither; "3/16 inch" has no date word
+    const before = codePointsBefore(text, start, 20);
+    if ((a > 12 && b > 12) || !a || !b || (DATE_WORD.search(before) === null && TO_A_DATE.at(text, span(m)[1]) === null)) {
+      continue; // "13/20" is neither; "3/16 inch" has no date word
     }
-    const [month, day] = b > 12 ? [a, b] : [b, a];
-    found.push([...span(m), [dateValue(undefined, month, String(day))], inSource ? [dec(String(a)), dec(String(b))] : []]);
+    if (a <= 12 && b <= 12 && STRONG_DATE_WORD.search(before) === null) {
+      continue; // "after 1/2 hour", "and 1/4 cup": either order is a fraction first
+    }
+    // "arrive 3/10" is 3 October in Malaysia and 10 March in the US: both readings, doubt is Supported
+    const readings: [number, number][] = b > 12 ? [[a, b]] : a > 12 ? [[b, a]] : [[a, b], [b, a]];
+    found.push([...span(m), readings.map(([month, day]) => dateValue(undefined, month, String(day))),
+      inSource ? [dec(String(a)), dec(String(b))] : []]);
   }
   for (const m of NUMERIC_DATE.all(text)) {
     const [, a, , b, year] = m;
@@ -671,7 +679,8 @@ function* money(text: string): Generator<Fact> {
   }
   if (Object.keys(CJK_CURRENCIES).some((c) => text.includes(c))) {
     for (const m of CJK_MONEY.all(text)) {
-      const value = cjkNumber(m[1]);
+      let value = cjkNumber(m[1]);
+      if (m[3]) value = add(value, dec(`0.${cjkNumber(m[3])}`));
       yield fact("money", ...span(m), m[0], [CJK_CURRENCIES[m[2]], value], [value]);
     }
   }
@@ -992,7 +1001,8 @@ const CJK_CHARS = [...Object.keys(CJK_DIGITS), ...Object.keys(CJK_UNITS), ...Obj
 const CJK_NUMBER = String.raw`(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?\s?[${Object.keys(CJK_UNITS).join("")}${Object.keys(CJK_BIG).join("")}]*(?![克米瓦卡])` +
   String.raw`|[${CJK_CHARS}]+(?:点[${Object.keys(CJK_DIGITS).join("")}]+[万亿]*(?![十分刻]))?`;
 const CJK_NUMERAL = compile(String.raw`(?<![第${CJK_CHARS}\d.,])(${CJK_NUMBER})`);
-const CJK_MONEY = compile(String.raw`(?<![\d.,])(${CJK_NUMBER})\s?(${alternation(Object.keys(CJK_CURRENCIES))})`);
+/** 八块五 and 八元五角 are 8.50: a lone digit after 块 or 元 counts tenths (毛, 角). */
+const CJK_MONEY = compile(String.raw`(?<![\d.,])(${CJK_NUMBER})\s?(${alternation(Object.keys(CJK_CURRENCIES))})(?:(?<=[块元])([1-9一二两三四五六七八九])(?![0-9十百千万〇零一二两三四五六七八九])(?:毛|角)?)?`);
 const CJK_PERCENT = compile(String.raw`百分之(${CJK_NUMBER})`);
 const CJK_CLOCK_NUMBER = String.raw`(?:[${Object.keys(CJK_DIGITS).join("")}十]{1,3}|[0-9]{1,2})`;
 /** 十一点五十分 (11:50), 三点半 (3:30), 八点一刻 (8:15). 点 is o'clock here, not a decimal point. */
@@ -1148,5 +1158,45 @@ export function extract(text: string, claims = false): Fact[] {
   }
   facts = facts.filter((f) => f.kind !== EXEMPT && !(claims && isSmallWordCount(f)));
   facts.sort((a, b) => a.start - b.start);
-  return readClockStyle(scan, facts);
+  return readClockStyle(scan, spelledAmounts(scan, text, facts));
+}
+
+const MAJOR_UNIT = compile(String.raw`\s+(${alternation(Object.keys(SUFFIX_CURRENCIES))})\b`, { ignoreCase: true });
+const MINOR_JOIN = compile(String.raw`\s+(?:(?:and|dan)\s+)?`, { ignoreCase: true });
+const MINOR_UNIT = compile(String.raw`\s+(?:cents?|sen)\b`, { ignoreCase: true });
+
+/**
+ * "one hundred forty-nine dollars and ninety cents", "RM149 dan 90 sen": one amount, as a voice
+ * agent writes it for text-to-speech. A number followed by a currency word is an amount, and
+ * "[and|dan] N cents/sen" (N under 100) adds its minor unit.
+ */
+function spelledAmounts(scan: string, text: string, facts: Fact[]): Fact[] {
+  const out: Fact[] = [];
+  for (let i = 0; i < facts.length; i++) {
+    const f = facts[i];
+    let currency: string | null = null;
+    let major: Dec | null = null;
+    let end = f.end;
+    if (f.kind === "quantity") {
+      const unit = MAJOR_UNIT.at(scan, f.end);
+      if (unit) [currency, major, end] = [SUFFIX_CURRENCIES[unit[1].toLowerCase()], f.value as Dec, span(unit)[1]];
+    } else if (f.kind === "money") {
+      [currency, major] = f.value as [string, Dec];
+    }
+    if (currency === null || major === null) { out.push(f); continue; }
+    const next = facts[i + 1];
+    const join = MINOR_JOIN.at(scan, end);
+    const minorUnit = next ? MINOR_UNIT.at(scan, next.end) : null;
+    const minor = next?.value as Dec;
+    if (join && next && next.kind === "quantity" && next.start === span(join)[1] && minorUnit
+      && /^\d{1,2}$/.test(minor)) {
+      const amount = add(major, dec(`0.${minor.padStart(2, "0")}`));
+      const stop = span(minorUnit)[1];
+      out.push(fact("money", f.start, stop, text.slice(f.start, stop), [currency, amount], [amount, major]));
+      i++;
+      continue;
+    }
+    out.push(f.kind === "money" ? f : fact("money", f.start, end, text.slice(f.start, end), [currency, major], [major]));
+  }
+  return out;
 }

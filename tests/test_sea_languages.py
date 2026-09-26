@@ -126,3 +126,29 @@ def test_chinese_times_with_a_day_part():
 def test_chinese_and_malay_phone_cues():
     assert check("您的电话号码8123 4567本月账单已出。", [{"msisdn": "+6581234567"}]).ok
     assert not check("您的电话号码8123 4568本月账单已出。", [{"msisdn": "+6581234567"}]).ok
+
+
+# SEA probe (bench/sea_probe.py), 2026-09-27.
+def test_colloquial_chinese_kuai_with_a_trailing_digit_is_tenths():
+    assert check("运费是八块五。", [{"shipping_fee": 8.50}]).ok
+    assert check("运费是8块5。", [{"shipping_fee": 8.50}]).ok
+    assert not check("运费是九块五。", [{"shipping_fee": 8.50}]).ok
+    assert check("一共十二块。", [{"total": 12}]).ok
+
+
+def test_an_ambiguous_day_month_after_a_delivery_word_is_a_date_with_both_readings():
+    source = [{"eta": "2026-10-03"}]
+    assert check("Order confirm arrive 3/10.", source).ok  # Malaysian day/month
+    assert check("Delivery on 10/3.", source).ok  # US month/day
+    assert not check("Order confirm arrive 4/10.", source).ok
+    assert ("date", "1/2") not in [(c.kind, c.text) for c in check("Add 1/2 cup.", []).claims]
+    assert [c.kind for c in check("Rated on 9/0 scale.", []).claims] == ["quantity", "quantity"]  # no day 0
+    for fraction in ("After 1/2 hour, turn it down.", "Add 1/2 cup and 1/4 cup of cheese.", "About 1/2 inch to 1 inch wide."):
+        assert "date" not in [c.kind for c in check(fraction, []).claims], fraction
+
+
+def test_a_malay_amount_in_words_with_sen_is_one_amount():
+    source = [{"total": 149.90}]
+    assert check("Jumlahnya seratus empat puluh sembilan ringgit sembilan puluh sen.", source).ok
+    assert not check("Jumlahnya seratus lima puluh sembilan ringgit sembilan puluh sen.", source).ok
+    assert check("It comes to one hundred forty-nine dollars and ninety cents.", source).ok

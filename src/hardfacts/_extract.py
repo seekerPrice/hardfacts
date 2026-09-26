@@ -498,10 +498,13 @@ _NUMERIC_MONTH_DAY = _compile(r"(?<![\w./])(\d{1,2})/(\d{1,2})(?![\w/]|[.,]\d|\s
 misread; "1/2", "5/6" and "24/7" stay what they were."""
 _DATE_WORD = _compile(
     r"(?:\b(?:on|by|until|till|due|before|after|from|since|through|thru|to|and|dated?|valid|effective|expires?|expiring|"
-    r"departs?|departing|arrives?|arriving|returns?|returning|starts?|starting|ends?|ending)|[-–])\s*\Z", re.I)
+    r"departs?|departing|arrives?|arriving|returns?|returning|starts?|starting|ends?|ending|"
+    r"deliver(?:y|s|ed)?|ship(?:s|ped|ping)?|dispatch(?:ed)?|eta|sampai)|[-–])\s*\Z", re.I)
 """A numeric month/day needs a date word before it: "on 5/19", "from 5/19 to 5/22". Without one,
 "3/16 inch", "16/9" and "7/13 games" are fractions, and a Source's fraction must not vouch for a date.
 A range to another date is date enough: "3/19 - 3/30/2017"."""
+_STRONG_DATE_WORD = _compile(r"\b(?:on|dated?|due|expires?|expiring|departs?|departing|arrives?|arriving|returns?|returning|deliver(?:y|s|ed)?|ship(?:s|ped|ping)?|dispatch(?:ed)?|eta|sampai)\s*\Z", re.I)
+"""Only these make "3/10" a date when either order could be one: "arrive 3/10", "on 10/3", "due 1/2"."""
 _TO_A_DATE = _compile(r"\s*(?:[-–]|to|through|thru|until)\s*\d{1,2}/\d{1,2}(?!\d)", re.I)
 
 
@@ -584,11 +587,15 @@ def _dates(text: str, words: Words, in_source: bool = False) -> Iterator[Fact]:
         found.append((m.start(), m.end(), [_date_value(_full_year(year), month, day)]))
     for m in _NUMERIC_MONTH_DAY.finditer(text):
         a, b = int(m.group(1)), int(m.group(2))
-        if (a > 12) == (b > 12) or not (_DATE_WORD.search(text[max(0, m.start() - 20):m.start()])
-                                        or _TO_A_DATE.match(text, m.end())):
-            continue  # "5/6" could be either; "13/20" is neither; "3/16 inch" has no date word
-        month, day = (a, b) if b > 12 else (b, a)
-        found.append((m.start(), m.end(), [_date_value(None, month, day)], {Decimal(a), Decimal(b)} if in_source else set()))
+        before = text[max(0, m.start() - 20):m.start()]
+        if (a > 12 and b > 12) or not a or not b or not (_DATE_WORD.search(before) or _TO_A_DATE.match(text, m.end())):
+            continue  # "13/20" is neither; "3/16 inch" has no date word
+        if a <= 12 and b <= 12 and not _STRONG_DATE_WORD.search(before):
+            continue  # "after 1/2 hour", "and 1/4 cup": either order is a fraction first
+        # "arrive 3/10" is 3 October in Malaysia and 10 March in the US: both readings, doubt is Supported
+        readings = [(a, b)] if b > 12 else [(b, a)] if a > 12 else [(a, b), (b, a)]
+        found.append((m.start(), m.end(), [_date_value(None, month, day) for month, day in readings],
+                      {Decimal(a), Decimal(b)} if in_source else set()))
     for m in _NUMERIC_DATE.finditer(text):
         a, _, b, year = m.groups()
         found.append((m.start(), m.end(), [_date_value(year, int(b), a), _date_value(year, int(a), b)]))  # d/m or m/d
@@ -687,6 +694,8 @@ def _money(text: str, words: Words) -> Iterator[Fact]:
     if any(c in text for c in _CJK_CURRENCIES):
         for m in _CJK_MONEY.finditer(text):
             value = cjk_number(m.group(1))
+            if m.group(3):
+                value = EXACT.add(value, EXACT.divide(cjk_number(m.group(3)), Decimal(10)))
             yield Fact("money", m.start(), m.end(), m.group(), (_CJK_CURRENCIES[m.group(2)], value), frozenset({value}))
 
 
@@ -1000,7 +1009,8 @@ _CJK_NUMBER = (
     rf"|[{_CJK_CHARS}]+(?:点[{''.join(_CJK_DIGITS)}]+[万亿]*(?![十分刻]))?"
 )
 _CJK_NUMERAL = _compile(rf"(?<![第{_CJK_CHARS}\d.,])({_CJK_NUMBER})")
-_CJK_MONEY = _compile(rf"(?<![\d.,])({_CJK_NUMBER})\s?({_alternation(_CJK_CURRENCIES)})")
+_CJK_MONEY = _compile(rf"(?<![\d.,])({_CJK_NUMBER})\s?({_alternation(_CJK_CURRENCIES)})(?:(?<=[块元])([1-9一二两三四五六七八九])(?![0-9十百千万〇零一二两三四五六七八九])(?:毛|角)?)?")
+"""八块五 and 八元五角 are 8.50: a lone digit after 块 or 元 counts tenths (毛, 角)."""
 _CJK_PERCENT = _compile(rf"百分之({_CJK_NUMBER})")
 _CJK_CLOCK_NUMBER = rf"(?:[{''.join(_CJK_DIGITS)}十]{{1,3}}|[0-9]{{1,2}})"
 _CJK_CLOCK = _compile(rf"(?<![{_CJK_CHARS}0-9])({_CJK_CLOCK_NUMBER})点(?:(半)|({_CJK_CLOCK_NUMBER})分|([一三])刻)")
@@ -1152,7 +1162,46 @@ def extract(text: str, *, claims: bool = False) -> list[Fact]:
             facts.append(fact)
     facts = [f for f in facts if f.kind != EXEMPT and not (claims and _is_small_word_count(f))]
     facts.sort(key=lambda f: f.start)
-    return _read_clock_style(scan, facts)
+    return _read_clock_style(scan, _spelled_amounts(scan, text, facts))
+
+
+_MAJOR_UNIT = _compile(rf"\s+({_alternation(_SUFFIX_CURRENCIES)})\b", re.I)
+_MINOR_JOIN = _compile(r"\s+(?:(?:and|dan)\s+)?", re.I)
+_MINOR_UNIT = _compile(r"\s+(?:cents?|sen)\b", re.I)
+
+
+def _spelled_amounts(scan: str, text: str, facts: list[Fact]) -> list[Fact]:
+    """"one hundred forty-nine dollars and ninety cents", "RM149 dan 90 sen": one amount, as a voice
+    agent writes it for text-to-speech. A number followed by a currency word is an amount, and
+    "[and|dan] N cents/sen" (N under 100) adds its minor unit."""
+    out: list[Fact] = []
+    i = 0
+    while i < len(facts):
+        f = facts[i]
+        currency, major, end = None, None, f.end
+        if f.kind == "quantity":
+            unit = _MAJOR_UNIT.match(scan, f.end)
+            if unit:
+                currency, major, end = _SUFFIX_CURRENCIES[unit.group(1).lower()], f.value, unit.end()
+        elif f.kind == "money":
+            currency, major = f.value
+        if currency is None:
+            out.append(f)
+            i += 1
+            continue
+        nxt = facts[i + 1] if i + 1 < len(facts) else None
+        join = _MINOR_JOIN.match(scan, end)
+        minor_unit = nxt and _MINOR_UNIT.match(scan, nxt.end)
+        if (join and nxt and nxt.kind == "quantity" and nxt.start == join.end() and minor_unit
+                and nxt.value == nxt.value.to_integral_value() and 0 <= nxt.value < 100):
+            amount = EXACT.add(major, EXACT.divide(nxt.value, Decimal(100)))
+            stop = minor_unit.end()
+            out.append(Fact("money", f.start, stop, text[f.start:stop], (currency, amount), frozenset({amount, major})))
+            i += 2
+            continue
+        out.append(f if f.kind == "money" else Fact("money", f.start, end, text[f.start:end], (currency, major), frozenset({major})))
+        i += 1
+    return out
 
 
 _TWENTY_FOUR_HOUR = _compile(r"(?<![\w.,:])(?:1[3-9]|2[0-3]):(?:\d{2}|0(?!\d))(?!\s?[ap]\.?\s?m\b)", re.I)
