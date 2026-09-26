@@ -145,7 +145,7 @@
     <h2>Measured where it could fail, including where it did</h2>
     <div class="results">
       <div class="stat"><b>0.758</b><span>of flags hit a human-labelled hallucination (RAGTruth test, scored once per release)</span><div class="vs">naive digit check: 0.221</div></div>
-      <div class="stat"><b>86%</b><span>of those flags point at a hallucination once the missed ones are audited</span><div class="vs">97.2% counting derived values</div></div>
+      <div class="stat"><b>41%</b><span>of flagged RAG answers were unfaithful, at the same flag count as the others (RAGBench, 10 datasets, pre-registered)</span><div class="vs">RAGAS 39% · GPT-3.5 judge 27% · TruLens 15%</div></div>
       <div class="stat"><b>98.2%</b><span>of planted fabrications caught on held-out support agents (τ²-bench, pre-registered)</span><div class="vs">τ-bench: 98.9% · RAGTruth: 96.4%</div></div>
       <div class="stat"><b>19.7%</b><span>of held-out flags were the checker's own mistakes. It predicted ≤ 10% and failed.</span><div class="vs">causes fixed and labelled post-fix</div></div>
       <div class="stat"><b>90%</b><span>of support-bot flags are the agent's own arithmetic, and about 1 in 10 of those sums is wrong</span><div class="vs">so each flag shows its working</div></div>
