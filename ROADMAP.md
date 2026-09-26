@@ -12,7 +12,7 @@ These are measured gaps, not wishes. Each one says where the evidence is. A fix 
   | strict: percentages only, with a stated decimal | 8% | 0.03% |
 
   Neither was built. Something in between, such as operands restricted to the sentence the value appears in, is the open question.
-- **Date arithmetic.** "Your trip is 5 days", computed from two dates, is flagged, and no Derivation shows it.
+- **Date arithmetic.** "Your trip is 5 days", computed from two dates, is flagged, and no Derivation shows it. It was measured and deprioritised (`bench/date_diff_experiment.py`): across every τ-bench and τ²-bench reply, only 10 flagged numbers are day counts, and none is the difference between two dates in the same reply. Real data first; a reply set where this is common would change the answer.
 - **Circular Derivations.** When an agent computes a remainder *from* an invented total, the total gets "explained" by the remainder ([τ²-bench results](docs/reviews/2026-09-26-tau2bench-results.md)). Fixing it needs tool-call provenance, which text alone doesn't carry.
 
 ## Values hardfacts doesn't read yet
