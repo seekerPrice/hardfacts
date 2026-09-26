@@ -52,7 +52,7 @@ Fixing them cut the share of turns the hook would stop from 36% to **16%**, with
 - URLs Claude brought from a web search or its own knowledge
 - values from more than 8 MB back in a very long session
 
-Re-measured on 27 September with `survey.py`, over a different random 60 sessions with subagent transcripts excluded (1,199 turns, the current rules, counts only): the hook would warn on **17.4%** of turns, mostly IDs (129) and URLs (76). Run it on your own: `uv run python integrations/claude-code/survey.py ~/.claude/projects --sessions 60`.
+Re-measured on 27 September with `survey.py`, over a different random 60 sessions with subagent transcripts excluded (1,199 turns, the current rules, counts only): the hook would warn on **17.4%** of turns, mostly IDs (129) and URLs (76). Run it on your own: `uv run python integrations/claude-code/survey.py ~/.claude/projects --sessions 60`. Classified by shape only, the biggest group of flagged values (119 of about 400) was URLs whose host the session had seen but not the full path. That is the Specificity rule working: an invented deep link on a real domain is what it exists to catch. If you'd rather not review those in coding sessions, leave URLs out: `HARDFACTS_HOOK_KINDS=identifier,money,percent,phone,email,date`.
 
 **That's why warn is the default.** A block on one turn in six is too often for coding sessions. For work that states amounts, dates or contact details to other people, narrow the Kinds (`HARDFACTS_HOOK_KINDS=money,percent,date,phone,email`) and block.
 
