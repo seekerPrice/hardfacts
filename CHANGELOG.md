@@ -7,7 +7,7 @@ The repository is public on GitHub. Nothing is on PyPI or npm yet (see ROADMAP.m
 - **Names with digits** (new Kind `name`, [ADR-0008](docs/adr/0008-names-are-checked-against-their-siblings.md)). `COVID-12` is flagged when a source says `COVID-19`, and `H2N1` when it says `H1N1`. A name is checked only against same-shaped names in the sources, so a name no source mentions still passes. On RAGBench, fabrications planted into names are caught 96% of the time, up from 46%, and 1 of 10,125 correct responses is newly flagged.
 - **Middle-dot decimals** (`37·8°C`) are read as decimals.
 - **Malaysian support text** (found by `bench/sea_probe.py`, 30 BM, 中文 and Manglish replies):
-  - Colloquial `八块五` and `八元五角` are 8.50.
+  - Colloquial `八块五` and `八元五角` are 8.50, and `十块五毛五` is 10.55. A digit that starts the next word is not read as tenths: `三块五花肉` is three pieces of pork belly.
   - "arrive 3/10" is a date with both readings (3 October in Malaysia, 10 March in the US) after a strong date word. After a weak one ("after 1/2 hour", "and 1/4 cup") it is still a fraction.
   - Amounts written out for text-to-speech are one amount: "seratus empat puluh sembilan ringgit sembilan puluh sen", "one hundred forty-nine dollars and ninety cents", "RM149 dan 90 sen".
   - The probe now has 0 false alarms and 0 missed errors, and 2 of ~40,000 RAGTruth and τ-bench outputs change. A latent Python bug that read "9/0" as a date was found by the port differential and fixed.
@@ -42,6 +42,7 @@ Support-bot readiness, from testing on real support agents (τ-bench), a held-ou
   - round 7, of the τ² fixes: 5 findings (2 high, e.g. "3/16 inch" in a Source vouching for "March 16")
   - round 8, of the citation rule: 1 high (an answer written as a bracketed list, "the scores were [7, 8, 9]", went unchecked)
   - round 9, of names: 1 high (quadratic time on 20,000 names) and 3 low (hyphens merging digit runs, full-width digits)
+  - round 10, of the Malaysian-text fixes: 1 high (an invented `十块五毛五` passed as 10.5) and 2 lower (fractions after "on", a counter read as money)
 - **Indexed matching.** Evidence is looked up by keys derived from the matching rules, and checked against brute force in CI. 50 KB of dates: 36 s → 0.34 s.
 - **τ²-bench**, pre-registered as a held-out test of the τ-bench-era rules ([results](docs/reviews/2026-09-26-tau2bench-results.md)). It covers 4 newer agents and a new telecom domain.
   - 98.2% of planted fabrications were caught (prediction ≥ 97%: pass).

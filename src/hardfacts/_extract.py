@@ -505,6 +505,8 @@ _DATE_WORD = _compile(
 A range to another date is date enough: "3/19 - 3/30/2017"."""
 _STRONG_DATE_WORD = _compile(r"\b(?:on|dated?|due|expires?|expiring|departs?|departing|arrives?|arriving|returns?|returning|deliver(?:y|s|ed)?|ship(?:s|ped|ping)?|dispatch(?:ed)?|eta|sampai)\s*\Z", re.I)
 """Only these make "3/10" a date when either order could be one: "arrive 3/10", "on 10/3", "due 1/2"."""
+_FRACTION_OF = _compile(r"\s*(?:of\b|cups?\b|inch(?:es)?\b|hours?\b|miles?\b|teaspoons?\b|tablespoons?\b)", re.I)
+"""After "on 3/4" or "shipped 2/3": "of the days", "cup", "inch" make it a fraction."""
 _TO_A_DATE = _compile(r"\s*(?:[-–]|to|through|thru|until)\s*\d{1,2}/\d{1,2}(?!\d)", re.I)
 
 
@@ -590,7 +592,7 @@ def _dates(text: str, words: Words, in_source: bool = False) -> Iterator[Fact]:
         before = text[max(0, m.start() - 20):m.start()]
         if (a > 12 and b > 12) or not a or not b or not (_DATE_WORD.search(before) or _TO_A_DATE.match(text, m.end())):
             continue  # "13/20" is neither; "3/16 inch" has no date word
-        if a <= 12 and b <= 12 and not _STRONG_DATE_WORD.search(before):
+        if a <= 12 and b <= 12 and (not _STRONG_DATE_WORD.search(before) or _FRACTION_OF.match(text, m.end())):
             continue  # "after 1/2 hour", "and 1/4 cup": either order is a fraction first
         # "arrive 3/10" is 3 October in Malaysia and 10 March in the US: both readings, doubt is Supported
         readings = [(a, b)] if b > 12 else [(b, a)] if a > 12 else [(a, b), (b, a)]
@@ -696,6 +698,8 @@ def _money(text: str, words: Words) -> Iterator[Fact]:
             value = cjk_number(m.group(1))
             if m.group(3):
                 value = EXACT.add(value, EXACT.divide(cjk_number(m.group(3)), Decimal(10)))
+            if m.group(4):
+                value = EXACT.add(value, EXACT.divide(cjk_number(m.group(4)), Decimal(100)))
             yield Fact("money", m.start(), m.end(), m.group(), (_CJK_CURRENCIES[m.group(2)], value), frozenset({value}))
 
 
@@ -1009,8 +1013,9 @@ _CJK_NUMBER = (
     rf"|[{_CJK_CHARS}]+(?:点[{''.join(_CJK_DIGITS)}]+[万亿]*(?![十分刻]))?"
 )
 _CJK_NUMERAL = _compile(rf"(?<![第{_CJK_CHARS}\d.,])({_CJK_NUMBER})")
-_CJK_MONEY = _compile(rf"(?<![\d.,])({_CJK_NUMBER})\s?({_alternation(_CJK_CURRENCIES)})(?:(?<=[块元])([1-9一二两三四五六七八九])(?![0-9十百千万〇零一二两三四五六七八九])(?:毛|角)?)?")
-"""八块五 and 八元五角 are 8.50: a lone digit after 块 or 元 counts tenths (毛, 角)."""
+_CJK_MONEY = _compile(rf"(?<![\d.,])({_CJK_NUMBER})\s?({_alternation(_CJK_CURRENCIES)})(?:(?<=[块元])([1-9一二两三四五六七八九])(?![0-9十百千万〇零一二两三四五六七八九])(?=[毛角钱]|[^一-鿿]|$)(?:[毛角](?:([1-9一二两三四五六七八九])(?![0-9十百千万〇零一二两三四五六七八九])(?=[分钱]|[^一-鿿]|$)分?)?)?)?")
+"""八块五 and 八元五角 are 8.50, 十块五毛五 is 10.55: after 块 or 元 a lone digit counts tenths (毛, 角) and the
+next hundredths (分), but only where no other word starts (三块五花肉 is three pieces of pork belly)."""
 _CJK_PERCENT = _compile(rf"百分之({_CJK_NUMBER})")
 _CJK_CLOCK_NUMBER = rf"(?:[{''.join(_CJK_DIGITS)}十]{{1,3}}|[0-9]{{1,2}})"
 _CJK_CLOCK = _compile(rf"(?<![{_CJK_CHARS}0-9])({_CJK_CLOCK_NUMBER})点(?:(半)|({_CJK_CLOCK_NUMBER})分|([一三])刻)")

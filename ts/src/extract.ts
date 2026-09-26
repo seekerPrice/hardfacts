@@ -485,6 +485,8 @@ const NUMERIC_MONTH_DAY = compile(String.raw`(?<![\w./])(\d{1,2})/(\d{1,2})(?![\
  */
 /** Only these make "3/10" a date when either order could be one: "arrive 3/10", "on 10/3", "due 1/2". */
 const STRONG_DATE_WORD = compile(String.raw`\b(?:on|dated?|due|expires?|expiring|departs?|departing|arrives?|arriving|returns?|returning|deliver(?:y|s|ed)?|ship(?:s|ped|ping)?|dispatch(?:ed)?|eta|sampai)\s*$`, { ignoreCase: true });
+/** After "on 3/4" or "shipped 2/3": "of the days", "cup", "inch" make it a fraction. */
+const FRACTION_OF = compile(String.raw`\s*(?:of\b|cups?\b|inch(?:es)?\b|hours?\b|miles?\b|teaspoons?\b|tablespoons?\b)`, { ignoreCase: true });
 const TO_A_DATE = compile(String.raw`\s*(?:[-–]|to|through|thru|until)\s*\d{1,2}/\d{1,2}(?!\d)`, { ignoreCase: true });
 const DATE_WORD = compile(
   String.raw`(?:\b(?:on|by|until|till|due|before|after|from|since|through|thru|to|and|dated?|valid|effective|expires?|expiring|` +
@@ -584,7 +586,7 @@ function* dates(text: string, ws: Words, inSource = false): Generator<Fact> {
     if ((a > 12 && b > 12) || !a || !b || (DATE_WORD.search(before) === null && TO_A_DATE.at(text, span(m)[1]) === null)) {
       continue; // "13/20" is neither; "3/16 inch" has no date word
     }
-    if (a <= 12 && b <= 12 && STRONG_DATE_WORD.search(before) === null) {
+    if (a <= 12 && b <= 12 && (STRONG_DATE_WORD.search(before) === null || FRACTION_OF.at(text, span(m)[1]) !== null)) {
       continue; // "after 1/2 hour", "and 1/4 cup": either order is a fraction first
     }
     // "arrive 3/10" is 3 October in Malaysia and 10 March in the US: both readings, doubt is Supported
@@ -681,6 +683,7 @@ function* money(text: string): Generator<Fact> {
     for (const m of CJK_MONEY.all(text)) {
       let value = cjkNumber(m[1]);
       if (m[3]) value = add(value, dec(`0.${cjkNumber(m[3])}`));
+      if (m[4]) value = add(value, dec(`0.0${cjkNumber(m[4])}`));
       yield fact("money", ...span(m), m[0], [CJK_CURRENCIES[m[2]], value], [value]);
     }
   }
@@ -1001,8 +1004,11 @@ const CJK_CHARS = [...Object.keys(CJK_DIGITS), ...Object.keys(CJK_UNITS), ...Obj
 const CJK_NUMBER = String.raw`(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?\s?[${Object.keys(CJK_UNITS).join("")}${Object.keys(CJK_BIG).join("")}]*(?![克米瓦卡])` +
   String.raw`|[${CJK_CHARS}]+(?:点[${Object.keys(CJK_DIGITS).join("")}]+[万亿]*(?![十分刻]))?`;
 const CJK_NUMERAL = compile(String.raw`(?<![第${CJK_CHARS}\d.,])(${CJK_NUMBER})`);
-/** 八块五 and 八元五角 are 8.50: a lone digit after 块 or 元 counts tenths (毛, 角). */
-const CJK_MONEY = compile(String.raw`(?<![\d.,])(${CJK_NUMBER})\s?(${alternation(Object.keys(CJK_CURRENCIES))})(?:(?<=[块元])([1-9一二两三四五六七八九])(?![0-9十百千万〇零一二两三四五六七八九])(?:毛|角)?)?`);
+/**
+ * 八块五 and 八元五角 are 8.50, 十块五毛五 is 10.55: after 块 or 元 a lone digit counts tenths (毛, 角) and the
+ * next hundredths (分), but only where no other word starts (三块五花肉 is three pieces of pork belly).
+ */
+const CJK_MONEY = compile(String.raw`(?<![\d.,])(${CJK_NUMBER})\s?(${alternation(Object.keys(CJK_CURRENCIES))})(?:(?<=[块元])([1-9一二两三四五六七八九])(?![0-9十百千万〇零一二两三四五六七八九])(?=[毛角钱]|[^一-鿿]|$)(?:[毛角](?:([1-9一二两三四五六七八九])(?![0-9十百千万〇零一二两三四五六七八九])(?=[分钱]|[^一-鿿]|$)分?)?)?)?`);
 const CJK_PERCENT = compile(String.raw`百分之(${CJK_NUMBER})`);
 const CJK_CLOCK_NUMBER = String.raw`(?:[${Object.keys(CJK_DIGITS).join("")}十]{1,3}|[0-9]{1,2})`;
 /** 十一点五十分 (11:50), 三点半 (3:30), 八点一刻 (8:15). 点 is o'clock here, not a decimal point. */

@@ -152,3 +152,19 @@ def test_a_malay_amount_in_words_with_sen_is_one_amount():
     assert check("Jumlahnya seratus empat puluh sembilan ringgit sembilan puluh sen.", source).ok
     assert not check("Jumlahnya seratus lima puluh sembilan ringgit sembilan puluh sen.", source).ok
     assert check("It comes to one hundred forty-nine dollars and ninety cents.", source).ok
+
+
+# Round 10 of hostile review.
+def test_kuai_mao_fen_reads_the_hundredths_digit():
+    assert not check("价格是十块五毛五。", ["10.50元"]).ok
+    assert check("价格是十块五毛五。", ["10.55元"]).ok
+    assert not check("8块5毛5", ["8.50元"]).ok
+
+
+def test_a_digit_that_starts_the_next_word_is_not_tenths():
+    assert check("买了三块五花肉。", ["3块"]).ok
+
+
+def test_a_fraction_of_something_after_a_date_word_stays_a_fraction():
+    assert check("It rained on 3/4 of the days.", ["3/4 of the days"]).ok
+    assert "date" not in [c.kind for c in check("We shipped 2/3 of orders.", []).claims]
