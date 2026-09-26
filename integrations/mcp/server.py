@@ -9,7 +9,9 @@ correction instruction it can follow before replying.
 
 from __future__ import annotations
 
-from typing import Any, TypedDict
+from typing import Any
+
+from typing_extensions import TypedDict  # pydantic needs this TypedDict before Python 3.12
 
 from mcp.server.mcpserver import MCPServer
 
