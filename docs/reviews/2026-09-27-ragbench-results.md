@@ -90,3 +90,23 @@ FinQA and TAT-QA are unchanged. Because the citation problem was found on this d
 ### Post-fix 2: names (ADR-0008)
 
 Fabrications planted into names (`COVID-19` → `COVID-12`) were the biggest recall gap, so names are now checked against same-shaped names in the documents ([ADR-0008](../adr/0008-names-are-checked-against-their-siblings.md), measured first in `bench/name_experiment.py`). On the other ten datasets, fabrications caught rose from 88.0% to **95.4%**. Precision is 49.6%, recall 9.4%, and 2.7% of adherent responses are flagged. At equal flag counts the figures are hardfacts 51.2% and RAGAS 39.3%. A hostile review of the first version found a quadratic slowdown and a hyphen-merging false "Supported" (`X1-2` matching `X12`), and both were fixed before this run.
+
+### A second blind audit, at the current checker (post-fix)
+
+Sampled with a new seed (1) from the 128 adherent responses in the ten datasets that the current checker still flags, down from 219. The two auditors agreed on 52 of 60 verdicts (κ 0.82), lower than the first audit's 0.97, mostly on whether a value was invented or not a claim at all ([files](../../bench/audit/ragbench-postfix/)).
+
+| verdict | first audit | this audit |
+|---|---:|---:|
+| invented | 16 | 15 |
+| derived | 5 | 12 |
+| not a claim | 30 | 14 |
+| missed support | 9 | 19 |
+| **checker errors** | **65%** | **55%** |
+
+The fixes halved the "not a claim" errors, and flags on correct answers fell from 219 to 128. The errors that remain are formats:
+- contract dates as written in CUAD: "the 19th day of December 1997", "October 1,1996"
+- space-grouped amounts: `$97 884`, `£244 200`
+- citation forms the rule doesn't cover: `[Context 1]`, "(contexts 1 and 2)", years in bibliography entries
+- one-offs: "sixth" for 6th, "08.00 h", "eight to ten thousand" for 8,000
+
+This is a modest improvement, not a solved problem.

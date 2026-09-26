@@ -4,6 +4,7 @@
     # ...two independent auditors per batch write bench/audit/ragbench/verdicts-NN.jsonl and
     #    bench/audit/ragbench/second/verdicts-NN.jsonl...
     uv run python bench/ragbench_audit.py summarize
+    # a later checker: --name ragbench-postfix --seed 1 on both commands
 
 hardfacts flags an unexplained value in 4.6% of the adherent responses in the ten non-numeric
 subsets. Either the annotator passed a wrong number or hardfacts is wrong. Auditors see the value,
@@ -29,7 +30,13 @@ from hardfacts import check  # noqa: E402
 OUT = HERE / "audit" / "ragbench"
 
 
+def _out(name: str) -> Path:
+    return HERE / "audit" / name
+
+
 def sample(args) -> int:
+    global OUT
+    OUT = _out(args.name)
     rng = random.Random(args.seed)
     pool = []
     for r in rows(HERE / "data" / "ragbench"):
@@ -48,7 +55,7 @@ def sample(args) -> int:
         (OUT / "cases" / f"{case}.txt").write_text(
             "\n\n".join(f"===== DOCUMENT {k} =====\n{d}" for k, d in enumerate(sources)), encoding="utf-8")
         cases.append({"case": case, "subset": r["subset"], "kind": c.kind, "claim": c.text,
-                      "response": r["response"], "sources_file": f"bench/audit/ragbench/cases/{case}.txt"})
+                      "response": r["response"], "sources_file": f"bench/audit/{args.name}/cases/{case}.txt"})
     size = -(-len(cases) // args.batches)
     for i in range(args.batches):
         with open(OUT / f"batch-{i + 1:02d}.jsonl", "w", encoding="utf-8") as f:
@@ -64,7 +71,9 @@ def _verdicts(folder: Path) -> list[dict]:
             for line in p.read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
-def summarize(_args) -> int:
+def summarize(args) -> int:
+    global OUT
+    OUT = _out(args.name)
     first, second = _verdicts(OUT), {v["case"]: v["verdict"] for v in _verdicts(OUT / "second")}
     bad = [v for v in first if v.get("verdict") not in VERDICTS]
     if bad:
@@ -90,7 +99,9 @@ def main() -> int:
     s.add_argument("--n", type=int, default=60)
     s.add_argument("--batches", type=int, default=2)
     s.add_argument("--seed", type=int, default=0)
-    sub.add_parser("summarize")
+    s.add_argument("--name", default="ragbench")
+    m = sub.add_parser("summarize")
+    m.add_argument("--name", default="ragbench")
     args = ap.parse_args()
     return sample(args) if args.cmd == "sample" else summarize(args)
 

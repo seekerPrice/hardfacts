@@ -476,11 +476,11 @@ _MONTH = rf"({_alternation(_MONTH_NAMES)}|(?:{_alternation(_MONTH_ABBREVIATIONS)
 _DAY = r"(\d{1,2})(?!\d)(?:st|nd|rd|th|hb)?"  # "hb": Malay haribulan, "3hb Oktober"
 _YEAR = r"(\d{4})"
 _ISO_DATE = _compile(r"(?<![\w.])(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?![\d])")
-_COMMA = r"\s?,?\s+"  # "July 22, 1947", and tokenised text's "July 22 , 1947"
+_COMMA = r"(?:\s?,\s*|\s+)"  # "July 22, 1947", tokenised text's "July 22 , 1947", and a contract's "October 1,1996"
 _YEAR2 = r"'?(\d{2})(?![.:]\d)(?=\s*(?:[.,;:)!?]|$))(?!\s*,?\s*\d{4})"
 """A two-digit year only where a sentence could end ("3 Oct 26."), and never before a full year ("Oct 26, 2025")."""
 _MONTH_FIRST = _compile(rf"{_MONTH}(?:\s+{_DAY}(?!\s?%)(?:{_COMMA}{_YEAR})?|{_COMMA}{_YEAR})(?!\w|:\d)", re.I)
-_DAY_FIRST = _compile(rf"(?<![\w.]){_DAY}[ \t](?:of\s+)?{_MONTH}(?:{_COMMA}{_YEAR}|[ \t]+{_YEAR2})?(?!\w|:\d)", re.I)
+_DAY_FIRST = _compile(rf"(?<![\w.]){_DAY}[ \t](?:day\s+of\s+|of\s+)?{_MONTH}(?:{_COMMA}{_YEAR}|[ \t]+{_YEAR2})?(?!\w|:\d)", re.I)
 """"3 October 2026", "3 Oct 26": the day and month on one line, one space apart (a table's
 "3  Oct 26, 2025" is a count and a date); a two-digit year never after a comma ("3 March, 45")."""
 _DAY_FIRST_RANGE = _compile(rf"(?<![\w.]){_DAY}(?:\s?[-–]\s?|\s+(?:and|&|to)\s+){_DAY}[ \t](?:of\s+)?{_MONTH}(?:{_COMMA}{_YEAR})?(?!\w|:\d)", re.I)

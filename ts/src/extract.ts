@@ -447,12 +447,12 @@ const MONTH = `(${alternation(MONTH_NAMES)}|(?:${alternation(MONTH_ABBREVIATIONS
 const DAY = String.raw`(\d{1,2})(?!\d)(?:st|nd|rd|th|hb)?`; // "hb": Malay haribulan, "3hb Oktober"
 const YEAR = String.raw`(\d{4})`;
 const ISO_DATE = compile(String.raw`(?<![\w.])(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?![\d])`);
-const COMMA = String.raw`\s?,?\s+`; // "July 22, 1947", and tokenised text's "July 22 , 1947"
+const COMMA = String.raw`(?:\s?,\s*|\s+)`; // "July 22, 1947", tokenised text's "July 22 , 1947", and a contract's "October 1,1996"
 /** A two-digit year only where a sentence could end ("3 Oct 26."), and never before a full year ("Oct 26, 2025"). */
 const YEAR2 = String.raw`'?(\d{2})(?![.:]\d)(?=\s*(?:[.,;:)!?]|$))(?!\s*,?\s*\d{4})`;
 const MONTH_FIRST = compile(String.raw`${MONTH}(?:\s+${DAY}(?!\s?%)(?:${COMMA}${YEAR})?|${COMMA}${YEAR})(?!\w|:\d)`, { ignoreCase: true });
 /** Day and month one space apart on one line; a two-digit year never after a comma ("3 March, 45"). */
-const DAY_FIRST = compile(String.raw`(?<![\w.])${DAY}[ \t](?:of\s+)?${MONTH}(?:${COMMA}${YEAR}|[ \t]+${YEAR2})?(?!\w|:\d)`, { ignoreCase: true });
+const DAY_FIRST = compile(String.raw`(?<![\w.])${DAY}[ \t](?:day\s+of\s+|of\s+)?${MONTH}(?:${COMMA}${YEAR}|[ \t]+${YEAR2})?(?!\w|:\d)`, { ignoreCase: true });
 const DAY_FIRST_RANGE = compile(String.raw`(?<![\w.])${DAY}(?:\s?[-–]\s?|\s+(?:and|&|to)\s+)${DAY}[ \t](?:of\s+)?${MONTH}(?:${COMMA}${YEAR})?(?!\w|:\d)`, { ignoreCase: true });
 const HYPHEN_DATE = compile(String.raw`(?<![\w.-])(\d{1,2})-${MONTH}-(\d{4}|\d{2})(?![\w-])`, { ignoreCase: true });
 /** After the second day of "May 2nd and 3rd place": a rank, not a date. */

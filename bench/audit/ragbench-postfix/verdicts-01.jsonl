@@ -1,0 +1,30 @@
+{"case": "pubmedqa_pubmedqa_12822", "verdict": "derived", "evidence": "Doc0: 3152 DS fetuses, 'only 1709 (54%) ... identified'; missed=1443/3152=45.8%≈46% (response's '(1709/3152)' parenthetical is the identified fraction, but 46% missed is correct)", "derived_correct": "yes"}
+{"case": "hagrid_hagrid_4098_0", "verdict": "derived", "evidence": "Doc0: 'premiered in Kuwait on September 14, 1979 ... running until April 6, 1990' = ~10.6 years; docs state no '11'", "derived_correct": "unclear"}
+{"case": "pubmedqa_pubmedqa_12776", "verdict": "missed_support", "evidence": "Doc3: 'cost per live birth of $97 884 for women aged 40-42 years'"}
+{"case": "hagrid_hagrid_3059_1", "verdict": "not_a_claim", "evidence": "'4' is a citation marker in '[4, 6]' / '[1, 4]'"}
+{"case": "hagrid_hagrid_3428_1", "verdict": "invented", "evidence": "Doc0: 'Israel's area is approximately , which includes of inland water' — number blank; 20,770 / 20770 absent"}
+{"case": "hagrid_hagrid_1376_1", "verdict": "not_a_claim", "evidence": "'3' is a citation marker in '[3, 4]'"}
+{"case": "cuad_OMINTO,INC_03_29_2004-EX-10-RESELLER AGREEMENT__Expiration Date", "verdict": "missed_support", "evidence": "Doc0: 'entered into as of the 19 day of March, 2004 (the \"EFFECTIVE DATE\")'"}
+{"case": "covidqa_152", "verdict": "missed_support", "evidence": "Doc0: 'CD40-ligand', 'CD40L ... type II membrane glycoprotein'"}
+{"case": "hagrid_hagrid_567_1", "verdict": "not_a_claim", "evidence": "'1998' is the year in a bibliography entry (Kirby, Hannibal's Army, Osprey); no Kirby/1998 in docs — citation formatting, not an answer claim"}
+{"case": "hagrid_hagrid_2931_1", "verdict": "invented", "evidence": "Doc1: 'The area of Turkey is ; \"land:\" , \"water:\" .' — values blank; 13,930/13930 absent"}
+{"case": "hagrid_hagrid_2635_0", "verdict": "missed_support", "evidence": "Doc0: 'at 10.30 pm on 20 July [1970, per surrounding '7 July 1970'] ... suffered a massive heart attack and died'"}
+{"case": "hagrid_hagrid_3025_1", "verdict": "not_a_claim", "evidence": "'7' is a citation marker in '[4, 5, 7]'"}
+{"case": "pubmedqa_pubmedqa_53291", "verdict": "not_a_claim", "evidence": "'T4N0M0' is the name of the patient subgroup; docs: 'non-metastatic T4N0 nasopharyngeal cancer patients' (equivalent staging)"}
+{"case": "hagrid_hagrid_924_0", "verdict": "invented", "evidence": "Doc1: 'The heaviest land mammal has a weight up to , the African bush elephant' — value blank; no '12' / 'twelve' tonnes"}
+{"case": "hagrid_hagrid_1406_1", "verdict": "invented", "evidence": "Docs give only '8:46:40: Flight 11 crashes'; no date / 'September 11' / 9/11 anywhere"}
+{"case": "cuad_ORBSATCORP_08_17_2007-EX-7.3-STRATEGIC ALLIANCE AGREEMENT__Expiration Date", "verdict": "derived", "evidence": "Doc0: 'made and entered into this 9th day of September 2005'; 'term ... will be for 12 months' -> September 9, 2006", "derived_correct": "yes"}
+{"case": "hagrid_hagrid_119_1", "verdict": "not_a_claim", "evidence": "'1' is the citation marker '[Context 1]'"}
+{"case": "pubmedqa_pubmedqa_12822", "verdict": "derived", "evidence": "Doc0: 3152 DS fetuses, 1709 (54%) identified -> 1443 missed = 45.8% ≈ 46%", "derived_correct": "yes"}
+{"case": "hagrid_hagrid_1406_0", "verdict": "invented", "evidence": "Docs give only '8:46:40: Flight 11 crashes'; no date / 'September 11' / 9/11 anywhere"}
+{"case": "hagrid_hagrid_3350_0", "verdict": "not_a_claim", "evidence": "URL in the response's reference list (britannica March-of-Tuscany); docs contain March of Tuscany text but no URL — citation formatting"}
+{"case": "pubmedqa_pubmedqa_53676", "verdict": "not_a_claim", "evidence": "'1 may' is a fragment of 'sVEGFR-1 may play a role' — part of a name"}
+{"case": "hagrid_hagrid_4112_0", "verdict": "derived", "evidence": "Doc0: '12 June 1929 – February or March 1945' -> age 15 at death; 16 is not reachable", "derived_correct": "no"}
+{"case": "techqa_techqa_DEV_Q280", "verdict": "missed_support", "evidence": "Doc: 'Using ITX V9.0.0.x with IIB10.0.0.x'"}
+{"case": "covidqa_1281", "verdict": "invented", "evidence": "Doc0: '80,793 confirmed cases and 3,169 deaths on the Chinese mainland' — no date given; 'March 11' / '11 March' / 3/11 absent"}
+{"case": "hagrid_hagrid_2253_1", "verdict": "not_a_claim", "evidence": "'2' is a citation marker in '(contexts 1 and 2)'"}
+{"case": "techqa_techqa_DEV_Q077", "verdict": "not_a_claim", "evidence": "'24' is the product version in 'SPSS 24' (the user's setup); docs mention Statistics 17/18 only, no 24 — part of a product name"}
+{"case": "hagrid_hagrid_1007_0", "verdict": "not_a_claim", "evidence": "'2021' is the year in a bibliography entry (H&R Block, 2021); docs contain no 2021 / H&R Block — citation formatting"}
+{"case": "cuad_NakedBrandGroupInc_20150731_POS AM (on S-1)_EX-10.75_9196027_EX-10.75_Endorsement Agreement__Expiration Date", "verdict": "missed_support", "evidence": "Doc0: 'dated as of this 15th day of June, 2015 (\"Effective Date\")'"}
+{"case": "covidqa_1494", "verdict": "invented", "evidence": "Docs: only 'Denmark 1.1%'; no '95%' / credible interval anywhere"}
+{"case": "pubmedqa_pubmedqa_9068", "verdict": "derived", "evidence": "Doc2: 'only 195 (47.0 per cent) said that they would have attended an Accident and Emergency department ... the remainder' -> 53%", "derived_correct": "yes"}

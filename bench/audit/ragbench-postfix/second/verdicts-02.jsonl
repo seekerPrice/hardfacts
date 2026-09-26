@@ -1,0 +1,30 @@
+{"case": "expertqa_expertqa_909", "verdict": "invented", "evidence": "No 6 / six in docs; onset stated only as \"as early as two hours after\" and DTs \"within 2 to 5 days\""}
+{"case": "hagrid_hagrid_2909_1", "verdict": "invented", "evidence": "Doc 5: \"P. bibroni can reach up to in straight carapace length, and in weight\" - numbers/units stripped; 110 nowhere"}
+{"case": "pubmedqa_pubmedqa_28059", "verdict": "missed_support", "evidence": "\"produced a £244 200/year cost saving for Portsmouth Hospitals' Trust\""}
+{"case": "hagrid_hagrid_3321_1", "verdict": "missed_support", "evidence": "Doc 1: \"eight to ten thousand gondolas during the 17th and 18th century\""}
+{"case": "pubmedqa_pubmedqa_39725", "verdict": "derived", "evidence": "\"no adverse effects occurred in 92.5% and minor effects ... 7.0%\", moderate 30 + major 4 of n=7269; 100-92.5 = 7.5", "derived_correct": "yes"}
+{"case": "hagrid_hagrid_2635_1", "verdict": "missed_support", "evidence": "\"at 10.30 pm on 20 July, while in 11 Downing Street, he suffered a massive heart attack\" (year 1970 from surrounding text)"}
+{"case": "msmarco_9179", "verdict": "derived", "evidence": "Doc 2 \"cost per terabyte $3182\" is for a different (DIY/Hadoop) build; Doc 1 says the Extreme Data Platform 1700 is \"$2,000 per terabyte\"", "derived_correct": "no"}
+{"case": "pubmedqa_pubmedqa_41037", "verdict": "invented", "evidence": "Docs say \"Softcast\" throughout; no mention of 3M as manufacturer"}
+{"case": "pubmedqa_pubmedqa_50596", "verdict": "missed_support", "evidence": "\"CXRs from 1980 to 2008 of 90 973 participating miners were studied\""}
+{"case": "pubmedqa_pubmedqa_25209", "verdict": "derived", "evidence": "\"84% specify health-based admissions criteria\"; 100-84 = 16", "derived_correct": "yes"}
+{"case": "hotpotqa_5a79f27e5542990198eaf014", "verdict": "missed_support", "evidence": "\"Harold Edward Holt ... ( ; 5 August 190817 December 1967)\""}
+{"case": "pubmedqa_pubmedqa_9218", "verdict": "missed_support", "evidence": "\"Twenty-six 12-17year old obese adolescents\""}
+{"case": "pubmedqa_pubmedqa_19496", "verdict": "missed_support", "evidence": "\"Patients on aspirin and a P2Y12receptor inhibitor within 48 hours before isolated CABG\""}
+{"case": "hotpotqa_5ae2fffe55429928c423959c", "verdict": "missed_support", "evidence": "\"Linda Lingle ... was the sixth Governor of Hawaii from 2002 until 2010\""}
+{"case": "pubmedqa_pubmedqa_25312", "verdict": "missed_support", "evidence": "\"deliveries occurring between midnight and 08.00 h\""}
+{"case": "techqa_techqa_DEV_Q044", "verdict": "not_a_claim", "evidence": "CVE-2017-1699 absent from docs; response only says the docs do not mention it (echoes the question)"}
+{"case": "techqa_techqa_DEV_Q196", "verdict": "not_a_claim", "evidence": "18.1 absent from docs (only Modeler 14.1 etc.); span restates the user's own installer version from the question"}
+{"case": "pubmedqa_pubmedqa_57002", "verdict": "invented", "evidence": "No 2015 / MDG in docs; MDG-4 target \"by 2015\" is outside knowledge"}
+{"case": "techqa_techqa_DEV_Q154", "verdict": "not_a_claim", "evidence": "No 7.1 in docs (Impact 3.1/4/5.1/6 only); span restates the user's own version \"running Impact 7.1.0.11\" from the question"}
+{"case": "pubmedqa_pubmedqa_29891", "verdict": "derived", "evidence": "\"Most of the respondents (62%; n = 2195) would accept cells\"; \"over 60%\" is a rounded bound of 62%", "derived_correct": "yes"}
+{"case": "cuad_NETGEAR,INC_04_21_2003-EX-10.16- AMENDMENT #2 TO THE DISTRIBUTION AGREEMENT__Non-Compete", "verdict": "missed_support", "evidence": "\"This Amendment is entered into effective October 1,1996 (\\\"Amendment Date\\\")\""}
+{"case": "hagrid_hagrid_2669_0", "verdict": "not_a_claim", "evidence": "URL is in a bibliography/citation list appended to the answer; docs contain no URLs"}
+{"case": "cuad_PROLONGINTERNATIONALCORP_03_23_1998-EX-10.16-SPONSORSHIP AGREEMENT__Agreement Date", "verdict": "missed_support", "evidence": "\"made and entered into this 19th day of December 1997\""}
+{"case": "hagrid_hagrid_3020_0", "verdict": "invented", "evidence": "Doc says only \"the second under head coach Mike McCoy\"; no 2014 anywhere"}
+{"case": "cuad_BOLIVARMININGCORP_05_23_2003-EX-2.1-VISP WEB SITE BUILDING AND HOSTING AGREEMENT__Expiration Date", "verdict": "derived", "evidence": "\"made on this 12th day of May 2003\" + \"a term of five years from the date of this document\"", "derived_correct": "yes"}
+{"case": "techqa_techqa_DEV_Q085", "verdict": "not_a_claim", "evidence": "\"Fix Pack 11\" restates the question; response says docs do not cover it (docs mention WebGUI 8.1.0.0 only)"}
+{"case": "cuad_NETGEAR,INC_04_21_2003-EX-10.16- AMENDMENT #2 TO THE DISTRIBUTION AGREEMENT__Expiration Date", "verdict": "missed_support", "evidence": "\"This Amendment is entered into effective October 1,1996 (\\\"Amendment Date\\\")\""}
+{"case": "msmarco_5235", "verdict": "derived", "evidence": "Docs give $120,606, $121,017, $124,622, Med. $125,000; \"between $120,000 and $125,000\" is a rounded range", "derived_correct": "yes"}
+{"case": "msmarco_3759", "verdict": "missed_support", "evidence": "\"would cost 3x 13p = £0.39p per hour to run\""}
+{"case": "pubmedqa_pubmedqa_807", "verdict": "not_a_claim", "evidence": "No 2010 in docs; response states there is no 2010 data (echoes the question's 2007-2010 framing)"}

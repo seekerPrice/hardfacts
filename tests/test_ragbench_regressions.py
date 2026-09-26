@@ -54,3 +54,15 @@ def test_a_middle_dot_between_digits_is_a_decimal_point():
     assert check("The rate was 12·5%.", ["12.5%"]).ok
     assert not check("The rate was 12·6%.", ["12.5%"]).ok
     assert [(c.text, c.value) for c in check("A 37·8°C fever", []).claims][0][0] == "37·8°C"
+
+
+# The second RAGBench audit: dates as contracts write them (CUAD).
+def test_contract_dates_the_nth_day_of_month():
+    assert check("The Effective Date is March 19, 2004.", ['entered into as of the 19 day of March, 2004 (the "EFFECTIVE DATE")']).ok
+    assert check("It is dated December 19, 1997.", ["made and entered into this 19th day of December 1997"]).ok
+    assert not check("It is dated December 18, 1997.", ["made and entered into this 19th day of December 1997"]).ok
+
+
+def test_a_year_right_after_the_comma_is_still_the_dates_year():
+    assert check("The Amendment Date is October 1, 1996.", ['entered into effective October 1,1996 ("Amendment Date")']).ok
+    assert not check("The Amendment Date is October 1, 1997.", ['entered into effective October 1,1996']).ok

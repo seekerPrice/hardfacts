@@ -1,0 +1,30 @@
+{"case": "pubmedqa_pubmedqa_12822", "verdict": "derived", "evidence": "2815 (89%) identified by triple screen; with ultrasound only 1709 (54%) identified -> 1443/3152 = 45.8% missed", "derived_correct": "yes"}
+{"case": "hagrid_hagrid_4098_0", "verdict": "derived", "evidence": "premiered September 14, 1979 ... running until April 6, 1990 -> ~10.6 years run; '11 years old' is a rounded duration", "derived_correct": "unclear"}
+{"case": "pubmedqa_pubmedqa_12776", "verdict": "missed_support", "evidence": "cost per live birth of $97 884 for women aged 40-42 years"}
+{"case": "hagrid_hagrid_3059_1", "verdict": "not_a_claim", "evidence": "citation marker [4, 6]"}
+{"case": "hagrid_hagrid_3428_1", "verdict": "invented", "evidence": "source: 'Israel's area is approximately , which includes of inland water' (number blank)"}
+{"case": "hagrid_hagrid_1376_1", "verdict": "not_a_claim", "evidence": "citation marker [3, 4]"}
+{"case": "cuad_OMINTO,INC_03_29_2004-EX-10-RESELLER AGREEMENT__Expiration Date", "verdict": "missed_support", "evidence": "entered into as of the 19 day of March, 2004 (the \"EFFECTIVE DATE\")"}
+{"case": "covidqa_152", "verdict": "missed_support", "evidence": "CD40-ligand / CD40L named throughout ('Identification and characterisation of the CD40-ligand')"}
+{"case": "hagrid_hagrid_567_1", "verdict": "invented", "evidence": "no Kirby / Osprey / 1998 in documents; bibliography entry introduced by response"}
+{"case": "hagrid_hagrid_2931_1", "verdict": "invented", "evidence": "source: 'The area of Turkey is ; \"land:\" , \"water:\" .' (numbers blank)"}
+{"case": "hagrid_hagrid_2635_0", "verdict": "missed_support", "evidence": "at 10.30 pm on 20 July, while in 11 Downing Street, he suffered a massive heart attack (year 1970 in same passage)"}
+{"case": "hagrid_hagrid_3025_1", "verdict": "not_a_claim", "evidence": "citation marker [4, 5, 7]"}
+{"case": "pubmedqa_pubmedqa_53291", "verdict": "missed_support", "evidence": "non-metastatic T4N0 nasopharyngeal cancer patients (= T4N0M0)"}
+{"case": "hagrid_hagrid_924_0", "verdict": "invented", "evidence": "source: 'The heaviest land mammal has a weight up to , the African bush elephant' (number blank); 12 not stated"}
+{"case": "hagrid_hagrid_1406_1", "verdict": "invented", "evidence": "documents give only '8:46:40: Flight 11 crashes into the north face of the North Tower'; no date"}
+{"case": "cuad_ORBSATCORP_08_17_2007-EX-7.3-STRATEGIC ALLIANCE AGREEMENT__Expiration Date", "verdict": "derived", "evidence": "made and entered into this 9th day of September 2005; 'The term of the Agreement will be for 12 months' -> September 9, 2006", "derived_correct": "yes"}
+{"case": "hagrid_hagrid_119_1", "verdict": "not_a_claim", "evidence": "'[Context 1]' reference marker"}
+{"case": "pubmedqa_pubmedqa_12822", "verdict": "derived", "evidence": "3152 DS fetuses, only 1709 (54%) identified with ultrasound -> 1443 (46%) missed", "derived_correct": "yes"}
+{"case": "hagrid_hagrid_1406_0", "verdict": "invented", "evidence": "documents give only '8:46:40: Flight 11 crashes ...'; no date"}
+{"case": "hagrid_hagrid_3350_0", "verdict": "invented", "evidence": "no URL or britannica.com in documents"}
+{"case": "pubmedqa_pubmedqa_53676", "verdict": "not_a_claim", "evidence": "span is 'sVEGFR-1 may play a role' - not a date"}
+{"case": "hagrid_hagrid_4112_0", "verdict": "derived", "evidence": "12 June 1929 - February or March 1945 -> age 15 at death; 16 is wrong", "derived_correct": "no"}
+{"case": "techqa_techqa_DEV_Q280", "verdict": "missed_support", "evidence": "Using ITX V9.0.0.x with IIB10.0.0.x (ITX = renamed WTX)"}
+{"case": "covidqa_1281", "verdict": "invented", "evidence": "'As of March 11th' not in documents; only '3,169 deaths on the Chinese mainland' with no date"}
+{"case": "hagrid_hagrid_2253_1", "verdict": "not_a_claim", "evidence": "'(contexts 1 and 2)' reference marker"}
+{"case": "techqa_techqa_DEV_Q077", "verdict": "invented", "evidence": "searched for 24 / version 24 / V24; only 'HISTORICAL NUMBER 91124'; no SPSS version stated"}
+{"case": "hagrid_hagrid_1007_0", "verdict": "invented", "evidence": "no H&R Block or 2021 in documents (years present: 1898, 2009, 2012, 2016)"}
+{"case": "cuad_NakedBrandGroupInc_20150731_POS AM (on S-1)_EX-10.75_9196027_EX-10.75_Endorsement Agreement__Expiration Date", "verdict": "missed_support", "evidence": "dated as of this 15th day of June, 2015 (\"Effective Date\")"}
+{"case": "covidqa_1494", "verdict": "invented", "evidence": "documents: 'Denmark 1.1%' only; no 95% credible interval"}
+{"case": "pubmedqa_pubmedqa_9068", "verdict": "derived", "evidence": "only 195 (47.0 per cent) said they would have attended A&E; remainder -> 53%", "derived_correct": "yes"}

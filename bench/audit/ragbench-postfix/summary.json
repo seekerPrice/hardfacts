@@ -1,0 +1,29 @@
+{
+  "audited": 60,
+  "verdicts": {
+    "derived": 12,
+    "missed_support": 19,
+    "not_a_claim": 14,
+    "invented": 15
+  },
+  "correct_flags": 0.45,
+  "invented": 0.25,
+  "checker_errors": 0.55,
+  "second_auditor": {
+    "cases": 60,
+    "four_way_agreement": 0.8667,
+    "four_way_kappa": 0.8201,
+    "flag_correct_agreement": 0.8833,
+    "flag_correct_kappa": 0.7651,
+    "disagreements": [
+      "not_a_claim vs invented",
+      "not_a_claim vs missed_support",
+      "not_a_claim vs invented",
+      "not_a_claim vs invented",
+      "not_a_claim vs invented",
+      "invented vs not_a_claim",
+      "invented vs not_a_claim",
+      "invented vs not_a_claim"
+    ]
+  }
+}
