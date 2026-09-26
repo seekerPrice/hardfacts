@@ -135,8 +135,9 @@ def _lent_years(reading: str, anchor: str) -> list[str]:
         month, day = int(reading[5:7]), int(reading[8:10])
         a_month, a_day = int(anchor[5:7]), int(anchor[8:10]) if anchor[8] != "X" else 15
         centre = _ordinal(year, a_month, a_day)
-        candidates += [y for y in (year - 1, year + 1)
-                       if _ordinal(y, month, day) is not None and abs(_ordinal(y, month, day) - centre) <= 183]
+        if centre is not None:  # "Today is 31 April": no real anchor, so no neighbouring year
+            candidates += [y for y in (year - 1, year + 1)
+                           if _ordinal(y, month, day) is not None and abs(_ordinal(y, month, day) - centre) <= 183]
     valid = [y for y in candidates if reading[8] == "X" or _ordinal(y, int(reading[5:7]), int(reading[8:10])) is not None]
     if not valid and reading[5:10] == "02-29":  # "Feb 29" means a leap year: the nearest one
         valid = [min((y for y in range(year - 3, year + 5) if _ordinal(y, 2, 29) is not None), key=lambda y: (abs(y - year), y))]
@@ -261,12 +262,38 @@ _SPACE = " \t\n\r\f\v"
 def _parse_json(text: str) -> Any:
     """A JSON object or array written as a string, or None."""
     t = text.strip(_SPACE)
-    if not t or t[0] not in "{[":
+    if not t or t[0] not in "{[" or _too_deep(t):
         return None
     try:
         return json.loads(t, parse_constant=_no_constant)  # NaN and Infinity aren't JSON (JSON.parse agrees)
     except ValueError:
         return None
+
+
+_DEEPEST = 200
+"""Nesting deeper than this is no tool result; json.loads would recurse into a RecursionError."""
+
+
+def _too_deep(text: str) -> bool:
+    """Brackets nest deeper than _DEEPEST, counting outside JSON strings."""
+    depth, in_string, escaped = 0, False, False
+    for ch in text:
+        if in_string:
+            if escaped:
+                escaped = False
+            elif ch == "\\":
+                escaped = True
+            elif ch == '"':
+                in_string = False
+        elif ch == '"':
+            in_string = True
+        elif ch in "[{":
+            depth += 1
+            if depth > _DEEPEST:
+                return True
+        elif ch in "]}":
+            depth -= 1
+    return False
 
 
 def _no_constant(name: str) -> Any:

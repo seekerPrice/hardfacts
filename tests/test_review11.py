@@ -121,3 +121,14 @@ def test_currency_keys_are_matched_by_word():
 def test_the_six_month_window_counts_days():
     assert check("It arrives 1 June 2026.", ["Today is 31 December 2025. ETA Jun 1."]).ok
     assert check("It arrives 29 February 2028.", ["Today is 15 August 2027. ETA Feb 29."]).ok
+
+
+# Round 14 of hostile review.
+def test_deeply_nested_json_text_is_not_parsed_and_does_not_crash():
+    for n in (1000, 100000):
+        check("It costs USD 50.", ["[" * n + "]" * n])
+
+
+def test_an_anchor_date_that_does_not_exist_lends_no_neighbouring_year():
+    check("It arrives 2 July 2025.", ["Today is 31 April 2025. ETA Jul 2."])
+    check("It arrives 2 January 2025.", ["Today is 30 February 2025. ETA Jan 2."])

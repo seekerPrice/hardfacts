@@ -19,6 +19,8 @@ The repository is public on GitHub. Nothing is on PyPI or npm yet (see ROADMAP.m
     - Currency keys are matched by word, so `ccy_code` counts and "recurring" doesn't.
     - The half-year window counts days, and "Feb 29" reads as the nearest leap year.
     - The TypeScript walk no longer overflows the stack on a large array.
+  - **Round 14, a review of round 13:** a deeply nested JSON-looking string crashed Python's parser (`RecursionError` at 1,000 levels on Python 3.10). Nesting deeper than 200 is no longer parsed. An anchor date that doesn't exist ("Today is 31 April") no longer raises.
+  - After these rounds, τ²-bench fabrications caught are 98.8%, up from 98.2%, with the same 4,859 flags (post-fix, not held-out).
   - Time zones, invented country codes, last-digit references matching phone numbers, and weekdays are recorded in ROADMAP.md.
 - **Names with digits** (new Kind `name`, [ADR-0008](docs/adr/0008-names-are-checked-against-their-siblings.md)). `COVID-12` is flagged when a source says `COVID-19`, and `H2N1` when it says `H1N1`. A name is checked only against same-shaped names in the sources, so a name no source mentions still passes. On RAGBench, fabrications planted into names are caught 96% of the time, up from 46%, and 1 of 10,125 correct responses is newly flagged.
 - **Middle-dot decimals** (`37·8°C`) are read as decimals.

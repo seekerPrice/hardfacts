@@ -517,10 +517,12 @@ function lentYears(reading: string, anchor: string): string[] {
   const candidates = [year];
   if (anchor[5] !== "X" && reading[5] !== "X" && reading[8] !== "X") {
     const [month, day] = [Number(reading.slice(5, 7)), Number(reading.slice(8, 10))];
-    const centre = ordinal(year, Number(anchor.slice(5, 7)), anchor[8] !== "X" ? Number(anchor.slice(8, 10)) : 15)!;
-    for (const y of [year - 1, year + 1]) {
-      const o = ordinal(y, month, day);
-      if (o !== null && Math.abs(o - centre) <= 183) candidates.push(y);
+    const centre = ordinal(year, Number(anchor.slice(5, 7)), anchor[8] !== "X" ? Number(anchor.slice(8, 10)) : 15);
+    if (centre !== null) { // "Today is 31 April": no real anchor, so no neighbouring year
+      for (const y of [year - 1, year + 1]) {
+        const o = ordinal(y, month, day);
+        if (o !== null && Math.abs(o - centre) <= 183) candidates.push(y);
+      }
     }
   }
   let valid = candidates.filter((y) => reading[8] === "X" || ordinal(y, Number(reading.slice(5, 7)), Number(reading.slice(8, 10))) !== null);
@@ -635,10 +637,29 @@ function isCurrencyKey(key: string): boolean {
   return (key.match(KEY_WORD) ?? []).some((w) => ["currency", "ccy", "cur", "curr"].includes(w.toLowerCase()));
 }
 
+/** Nesting deeper than this is no tool result (and Python's json.loads would recurse too deep). */
+const DEEPEST = 200;
+
+/** Brackets nest deeper than DEEPEST, counting outside JSON strings. */
+function tooDeep(text: string): boolean {
+  let [depth, inString, escaped] = [0, false, false];
+  for (const ch of text) {
+    if (inString) {
+      if (escaped) escaped = false;
+      else if (ch === "\\") escaped = true;
+      else if (ch === '"') inString = false;
+    } else if (ch === '"') inString = true;
+    else if (ch === "[" || ch === "{") {
+      if (++depth > DEEPEST) return true;
+    } else if (ch === "]" || ch === "}") depth--;
+  }
+  return false;
+}
+
 /** A JSON object or array written as a string, or undefined. */
 function parseJson(text: string): unknown {
   const t = text.replace(SPACE, "");
-  if (!t || !"{[".includes(t[0])) return undefined;
+  if (!t || !"{[".includes(t[0]) || tooDeep(t)) return undefined;
   try {
     return JSON.parse(t);
   } catch {

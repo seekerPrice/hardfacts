@@ -79,3 +79,5 @@ Of the 31 audited checker errors, 25 clear. All 18 audited inventions and all 71
 - "i5/32GB/256GB": a model name keeps a spec one identifier, because the review showed "i7/16GB/1TB" passing against "i5/16GB/1TB".
 
 Both are deliberate trades of a missed support for a caught invention (ADR-0003 applies to doubt, not to known holes).
+
+Re-scored at `b7554d4`, after rounds 7–14 of hostile review, the names Kind, the currency-key rule and the Malaysian-text fixes (`tau2bench-b7554d4-postfix.json`): the flags are unchanged at 4,859, replies flagged stay at 5.6%, and planted fabrications caught rise from 98.2% to **98.8%**.
