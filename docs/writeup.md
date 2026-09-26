@@ -132,6 +132,51 @@ The obvious design searches the source data for operands. I measured it before b
 
 One more lesson came from τ-bench. A differential run of both ports on its real tool results found 22% of turns rendered differently, because JavaScript reorders integer-like object keys and has no `1518.0`. Neither RAGTruth nor 120,000 fuzzed texts had exercised that. Python now renders the JavaScript way. Test your port on the data your users will send, not only on the data you have.
 
+## Two held-out tests, and the predictions that failed
+
+Everything above was tuned on data I had read. So twice, the predictions and their fail thresholds were written down and committed before a single held-out output was checked.
+
+**τ²-bench** had four newer support agents and a telecom domain nobody had tuned on. 98.2% of planted fabrications were caught, as predicted. The precision prediction failed: 19.7% of flags were the checker's own mistakes, against at most 10% predicted, and 39% in telecom. Telecom agents write things like "5G/4G/3G/2G" and "your line ending in 2002", which the τ-bench-era rules had never seen. The failure is published as a failure, and the fixes are labelled post-fix.
+
+**RAGBench** had 11,802 answers over twelve RAG datasets, with the scores of the checkers people actually deploy stored beside each one. On the ten ordinary datasets, with each checker flagging the same number of answers, 41% of hardfacts' flagged answers were unfaithful. The others:
+
+| checker | flagged answers that were unfaithful |
+|---|---:|
+| hardfacts | 41% |
+| RAGAS | 39% |
+| GPT-3.5 judge | 27% |
+| TruLens | 15% |
+
+That sentence needs three others next to it:
+- RAGAS wins on six of the ten datasets taken one at a time.
+- hardfacts sees only about one unfaithful answer in nine, because most are wrong in prose.
+- On financial-table QA it fails outright, flagging 62% of correct answers, because a percentage change isn't a Derivation. I had predicted at most 40%.
+
+A blind audit of its flags on the "correct" answers found the biggest checker error of the project. Citation markers like `[1, 2]` were being read as claims. That was fixed, and a hostile review then showed that the first fix also hid answers written as bracketed lists.
+
+## Measure before building
+
+Four features were prototyped as experiments before any code went in:
+
+| feature | result | built? |
+|---|---|---|
+| ratio Derivations | the loose version "explained" 2.3% of planted fabrications by coincidence; the strict one explained only 8% of the table flags | no |
+| date-difference Derivations | the support data held only 10 flagged day counts in total | no |
+| space-grouped thousands (`90 973`) | would have fixed 1 answer in 11,802 | no |
+| names with digits (`COVID-19` → `COVID-12`, [ADR-0008](adr/0008-names-are-checked-against-their-siblings.md)) | name fabrications caught went from 46% to 96%, for 1 new false alarm in 10,125 correct answers | yes |
+
+## Reviews that attack the fixes
+
+Every batch of fixes got its own hostile review, and most reviews found something. The fixes for the τ²-bench errors let "3/16 inch" in a source vouch for "March 16". The Malaysian-text fixes let an invented `十块五毛五` pass as 10.5. The first whole-library review found the worst hole left: tool JSON writes amounts as bare numbers, so `{"amount": 50, "currency": "MYR"}` supported "USD 50".
+
+The fix for that hole went through three more rounds:
+1. It first read any currency code anywhere in a source, so "USD accepted" in a note flagged a correct RM 50.
+2. It made one input take 277 seconds.
+3. It stopped working when the JSON arrived as a string, which is how tool messages usually arrive.
+4. At the end, it crashed Python on 1,000 levels of nesting.
+
+Each was fixed test-first in both languages, and each fix was then checked against every RAGTruth and τ-bench output for side effects. After fourteen rounds, planted fabrications caught on τ²-bench rose from 98.2% to 98.8%, with the same number of flags.
+
 ## What it can't do
 
 The big limitation is **binding**. If the source says Gordon is worth $2.1 billion and the output gives that to Andrew, the value has provenance and the check passes. When a real source value is moved to the wrong place, hardfacts catches 22%, almost all where Kinds happen to disagree (a swapped time or date). (This write-up first said 42%; a benchmark bug counted fragment swaps as binding errors, and the deep-check audit caught it.) Binding needs real context, a parse or a model, so it belongs in the layer above. **Derived values** are flagged even when correct, but when the reply's own values produce them, the flag shows the working. It can't tell right operands from wrong ones. And prose claims are out of scope by design.
