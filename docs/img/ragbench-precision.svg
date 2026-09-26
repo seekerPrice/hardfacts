@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" width="640" height="240" role="img" aria-labelledby="t d">
+<title id="t">Precision at equal flag counts, RAGBench (10 non-numeric datasets)</title>
+<desc id="d">hardfacts (no model calls): 41.0%; RAGAS faithfulness: 39.0%; GPT-3.5 judge: 27.1%; TruLens groundedness: 14.8%; share of unfaithful responses overall: 22.1%</desc>
+<style>
+.bg{fill:#fcfcfb}.ink{fill:#1f2328}.muted{fill:#59636e}.grid{stroke:#e6e8eb}.base{stroke:#59636e}.us{fill:#2c4bb3}.them{fill:#9aa3ad}
+@media (prefers-color-scheme:dark){.bg{fill:#1a1a19}.ink{fill:#e6e8eb}.muted{fill:#9aa3ad}.grid{stroke:#2e3238}.base{stroke:#9aa3ad}.us{fill:#6f86e8}.them{fill:#5f6670}}
+text{font:13px -apple-system,Segoe UI,Helvetica,Arial,sans-serif}.h{font-weight:600;font-size:14px}
+</style>
+<rect class="bg" width="640" height="240" rx="8"/>
+<text class="ink h" x="16" y="26">Of the responses each checker flags, how many are really unfaithful?</text>
+<text class="muted" x="16" y="44">RAGBench, 10 non-numeric datasets, same number of flags each, GPT-4 labels (pre-registered run)</text>
+<line class="grid" x1="200.0" x2="200.0" y1="52" y2="204"/>
+<text class="muted" x="200.0" y="220" text-anchor="middle">0%</text>
+<line class="grid" x1="326.7" x2="326.7" y1="52" y2="204"/>
+<text class="muted" x="326.7" y="220" text-anchor="middle">20%</text>
+<line class="grid" x1="453.3" x2="453.3" y1="52" y2="204"/>
+<text class="muted" x="453.3" y="220" text-anchor="middle">40%</text>
+<line class="grid" x1="580.0" x2="580.0" y1="52" y2="204"/>
+<text class="muted" x="580.0" y="220" text-anchor="middle">60%</text>
+<text class="ink" x="190" y="72" text-anchor="end" font-weight="600">hardfacts (no model calls)</text>
+<path class="us" d="M200,56 h255.3 q4,0 4,4 v14 q0,4 -4,4 h-255.3 z"/>
+<text class="ink" x="465.3" y="72">41.0%</text>
+<text class="ink" x="190" y="106" text-anchor="end">RAGAS faithfulness</text>
+<path class="them" d="M200,90 h243.0 q4,0 4,4 v14 q0,4 -4,4 h-243.0 z"/>
+<text class="ink" x="453.0" y="106">39.0%</text>
+<text class="ink" x="190" y="140" text-anchor="end">GPT-3.5 judge</text>
+<path class="them" d="M200,124 h167.8 q4,0 4,4 v14 q0,4 -4,4 h-167.8 z"/>
+<text class="ink" x="377.8" y="140">27.1%</text>
+<text class="ink" x="190" y="174" text-anchor="end">TruLens groundedness</text>
+<path class="them" d="M200,158 h89.7 q4,0 4,4 v14 q0,4 -4,4 h-89.7 z"/>
+<text class="ink" x="299.7" y="174">14.8%</text>
+<line class="base" x1="340.1" x2="340.1" y1="48" y2="204" stroke-dasharray="3 3"/>
+<text class="muted" x="344.1" y="202">22% of all responses are unfaithful</text>
+</svg>

@@ -112,6 +112,8 @@ The known gaps, with their numbers, are in [ROADMAP.md](ROADMAP.md).
 
 ## Results at a glance
 
+<img src="docs/img/ragbench-precision.svg" alt="On RAGBench, at equal flag counts: hardfacts 41.0% of flagged responses unfaithful, RAGAS 39.0%, GPT-3.5 judge 27.1%, TruLens 14.8%; base rate 22%" width="640">
+
 | benchmark | what was measured | hardfacts | naive "every number must appear" check |
 |---|---|---:|---:|
 | RAGTruth test split (17,790 human-labelled responses; test scored once per release) | share of flags on a labelled hallucination | **0.758** | 0.221 |
