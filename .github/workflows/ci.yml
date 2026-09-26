@@ -12,8 +12,8 @@ jobs:
       matrix:
         python: ["3.10", "3.11", "3.12", "3.13", "3.14"]
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
         with:
           python-version: ${{ matrix.python }}
       - run: uv sync
@@ -31,8 +31,8 @@ jobs:
       run:
         working-directory: ts
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
       - run: npm ci
@@ -44,9 +44,9 @@ jobs:
     # Regression gate on RAGTruth train, plus the Python/TypeScript differential test.
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
       - run: uv sync

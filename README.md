@@ -77,6 +77,7 @@ Integration examples, all runnable offline:
 - [LangChain `create_agent` middleware](examples/langchain_middleware.py): checks each final answer, sends the feedback back to the model once, then hands off (runs offline with a fake model)
 - [Vercel AI SDK v7 verify-and-retry](ts/examples/ai-sdk-verify-and-retry.ts)
 - [Free pre-filter → sampled LLM judge, with cost maths](examples/prefilter_router.py)
+- [In CI](docs/ci.md): gate recorded conversations with `hardfacts report --fail-over`, or assert in eval tests
 - [MCP server](integrations/mcp/): `check_hard_facts` as a tool any agent (Claude Code, Claude Desktop, Cursor) can call on its own draft
 
 ## What it checks
