@@ -12,6 +12,12 @@
   "sources": "{\"current_item\": {\"item_id\": \"7292993796\", \"price\": 94.8, \"capacity\": \"1.5L\"}, \"new_item\": {\"item_id\": \"3761330360\", \"price\": 101.12, \"material\": \"ceramic\", \"capacity\": \"2L\"}, \"payment_method_id\": \"gift_card_7250692\"}"
  },
  {
+  "id": "wrong-currency",
+  "label": "Wrong currency",
+  "output": "Good news! Your refund of USD 45.90 for order #W4821 was approved and will reach your card ending in 4242 within 5 working days.",
+  "sources": "{\"order_id\": \"#W4821\", \"refund\": {\"amount\": 45.9, \"currency\": \"MYR\"}, \"payment_method\": \"visa_4242\", \"refund_eta_days\": 5}"
+ },
+ {
   "id": "manglish",
   "label": "Manglish",
   "output": "Boss, refund RM1.2k untuk order ORD-2024-0012 akan masuk dalam 7 hari bekerja ya. Kalau ada masalah, email support@kedai.my. Terima kasih!",
