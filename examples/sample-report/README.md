@@ -6,7 +6,7 @@ These are what `hardfacts report` produces, rebuilt from the benchmark data by `
 |---|---|---:|---:|
 | [`support-agents.html`](support-agents.html) | every reply GPT-4o wrote as a retail and an airline support agent in [τ-bench](https://github.com/sierra-research/tau-bench)'s published runs (MIT), checked against the tool definitions, policy, user turns and tool results it had seen | 220 / 4,937 (4.5%) | 113 |
 | [`business-listings.html`](business-listings.html) | 900 business write-ups by six LLMs from Yelp-style JSON records (RAGTruth test split, Data2txt; MIT, ParticleMedia) | 102 / 900 (11.3%) | 102 |
-| [`rag-answers.html`](rag-answers.html) | 6,170 RAG answers over medical, legal, technical, manual and open-web documents: the ten non-numeric datasets of [RAGBench](https://huggingface.co/datasets/galileo-ai/ragbench) (CC BY 4.0, Galileo). FinQA and TAT-QA are left out, because hardfacts flags their ratio calculations | 267 / 6,170 (4.3%) | 260 |
+| [`rag-answers.html`](rag-answers.html) | 6,170 RAG answers over medical, legal, technical, manual and open-web documents: the ten non-numeric datasets of [RAGBench](https://huggingface.co/datasets/galileo-ai/ragbench) (CC BY 4.0, Galileo). FinQA and TAT-QA are left out, because hardfacts flags their ratio calculations | 257 / 6,170 (4.2%) | 250 |
 
 ```bash
 uv run hardfacts report transcripts.jsonl --html report.html --json report.json --fail-over 0.05

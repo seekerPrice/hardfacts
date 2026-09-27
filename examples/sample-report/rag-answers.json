@@ -1,12 +1,12 @@
 {
   "responses": 6170,
-  "responses_with_unsupported": 267,
-  "unsupported_rate": 0.0433,
-  "responses_with_unexplained": 260,
+  "responses_with_unsupported": 257,
+  "unsupported_rate": 0.0417,
+  "responses_with_unexplained": 250,
   "unsupported_with_derivation": 19,
-  "hard_facts": 11185,
+  "hard_facts": 11167,
   "hard_facts_by_kind": {
-    "quantity": 7266,
+    "quantity": 7248,
     "percent": 1341,
     "name": 1032,
     "date": 537,
@@ -19,13 +19,13 @@
     "email": 3
   },
   "unsupported_by_kind": {
-    "quantity": 364,
-    "date": 88,
+    "quantity": 357,
+    "date": 78,
     "identifier": 73,
     "url": 73,
     "percent": 39,
     "name": 11,
-    "money": 9,
+    "money": 8,
     "email": 2,
     "temperature": 1,
     "time": 1
@@ -138,25 +138,9 @@
     {
       "id": "cuad/BOLIVARMININGCORP_05_23_2003-EX-2.1-VISP WEB SITE BUILDING AND HOSTING AGREEMENT__Expiration Date",
       "kind": "date",
-      "text": "May 12, 2003",
-      "before": ", the initial term of the contract is for 5 years from the date of the document, which is ",
-      "after": ". Therefore, the initial term of the contract will expire on",
-      "derivation": null
-    },
-    {
-      "id": "cuad/BOLIVARMININGCORP_05_23_2003-EX-2.1-VISP WEB SITE BUILDING AND HOSTING AGREEMENT__Expiration Date",
-      "kind": "date",
       "text": "May 12, 2008",
       "before": "cument, which is May 12, 2003. Therefore, the initial term of the contract will expire on ",
       "after": ".",
-      "derivation": null
-    },
-    {
-      "id": "cuad/NETGEAR,INC_04_21_2003-EX-10.16- AMENDMENT #2 TO THE DISTRIBUTION AGREEMENT__Non-Compete",
-      "kind": "date",
-      "text": "October 1, 1996",
-      "before": "ain geographies:\n\n1. During the initial one-year period starting from the Amendment Date (",
-      "after": "), Ingram Micro shall be the only distributor appointed by N",
       "derivation": null
     },
     {
@@ -170,25 +154,9 @@
     {
       "id": "cuad/NETGEAR,INC_04_21_2003-EX-10.16- AMENDMENT #2 TO THE DISTRIBUTION AGREEMENT__Expiration Date",
       "kind": "date",
-      "text": "October 1, 1996",
-      "before": "According to the context provided:\n\nThe Amendment is entered into effective ",
-      "after": " (\"Amendment Date\"). \n\nSection 2 of the Amendment states tha",
-      "derivation": null
-    },
-    {
-      "id": "cuad/NETGEAR,INC_04_21_2003-EX-10.16- AMENDMENT #2 TO THE DISTRIBUTION AGREEMENT__Expiration Date",
-      "kind": "date",
       "text": "October 1, 1997",
       "before": "pointed by NETGEAR in [*]...\"\n\nTherefore, the initial term of the contract will expire on ",
       "after": ", one year after the Amendment Date of October 1, 1996.",
-      "derivation": null
-    },
-    {
-      "id": "cuad/NETGEAR,INC_04_21_2003-EX-10.16- AMENDMENT #2 TO THE DISTRIBUTION AGREEMENT__Expiration Date",
-      "kind": "date",
-      "text": "October 1, 1996",
-      "before": "term of the contract will expire on October 1, 1997, one year after the Amendment Date of ",
-      "after": ".",
       "derivation": null
     },
     {
@@ -208,35 +176,11 @@
       "derivation": null
     },
     {
-      "id": "cuad/MOVADOGROUPINC_04_30_2003-EX-10.28-ENDORSEMENT AGREEMENT__Effective Date",
-      "kind": "date",
-      "text": "April 4, 2003",
-      "before": "According to the document, the Endorsement Agreement is dated ",
-      "after": ", as stated in the last section:\n\n\"IN WITNESS WHEREOF, the p",
-      "derivation": null
-    },
-    {
-      "id": "cuad/MOVADOGROUPINC_04_30_2003-EX-10.28-ENDORSEMENT AGREEMENT__Effective Date",
-      "kind": "date",
-      "text": "April 4, 2003",
-      "before": "ent as of this 4th day of April, 2003.\"\n\nTherefore, the effective date of the contract is ",
-      "after": ".",
-      "derivation": null
-    },
-    {
       "id": "cuad/ORBSATCORP_08_17_2007-EX-7.3-STRATEGIC ALLIANCE AGREEMENT__Expiration Date",
       "kind": "date",
       "text": "September 9, 2006",
       "before": "red into on September 9, 2005. Therefore, the initial term of the contract will expire on ",
       "after": ".",
-      "derivation": null
-    },
-    {
-      "id": "cuad/OMINTO,INC_03_29_2004-EX-10-RESELLER AGREEMENT__Expiration Date",
-      "kind": "date",
-      "text": "March 19, 2004",
-      "before": "greement, the initial term of the contract will expire 1 year after the Effective Date of ",
-      "after": ". Therefore, the initial term of the contract will expire on",
       "derivation": null
     },
     {
@@ -253,30 +197,6 @@
       "text": "1.4",
       "before": "itation for the counterparty to bring claims.\n\nThe key relevant sections are:\n\n1. Article ",
       "after": ": This section states that the termination of the JV Agreeme",
-      "derivation": null
-    },
-    {
-      "id": "cuad/PROLONGINTERNATIONALCORP_03_23_1998-EX-10.16-SPONSORSHIP AGREEMENT__Agreement Date",
-      "kind": "date",
-      "text": "December 19, 1997",
-      "before": "The date of the contract is ",
-      "after": ", as stated in the first paragraph:\n\n\"THIS SPONSORSHIP AGREE",
-      "derivation": null
-    },
-    {
-      "id": "cuad/VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT__Effective Date",
-      "kind": "date",
-      "text": "April 7, 2003",
-      "before": "According to the agreement, the Effective Date of the contract is ",
-      "after": ".",
-      "derivation": null
-    },
-    {
-      "id": "cuad/NakedBrandGroupInc_20150731_POS AM (on S-1)_EX-10.75_9196027_EX-10.75_Endorsement Agreement__Expiration Date",
-      "kind": "date",
-      "text": "June 15, 2015",
-      "before": "is Agreement shall be for a period of four (4) years, commencing on the Effective Date of ",
-      "after": ". Therefore, the initial term of the agreement will expire o",
       "derivation": null
     },
     {
@@ -960,22 +880,6 @@
       "derivation": null
     },
     {
-      "id": "hagrid/hagrid_2253_1",
-      "kind": "quantity",
-      "text": "2",
-      "before": "owing that someone else could do it, resulting in no one actually helping (contexts 1 and ",
-      "after": "). Factors like ambiguity, group cohesiveness, and mutual de",
-      "derivation": null
-    },
-    {
-      "id": "hagrid/hagrid_2253_1",
-      "kind": "quantity",
-      "text": "2",
-      "before": "eness, and mutual denial of a situation's severity contribute to this phenomenon (context ",
-      "after": "). Reference: ,",
-      "derivation": null
-    },
-    {
       "id": "hagrid/hagrid_2294_1",
       "kind": "url",
       "text": "MDText.com",
@@ -1149,14 +1053,6 @@
       "text": "1849",
       "before": "Ivan Petrovich Pavlov lived from ",
       "after": " to 1936 .",
-      "derivation": null
-    },
-    {
-      "id": "hagrid/hagrid_119_1",
-      "kind": "quantity",
-      "text": "1",
-      "before": "Bengal is 232,752 sq km in total. [Context ",
-      "after": "] Reference: ",
       "derivation": null
     },
     {
@@ -1432,14 +1328,6 @@
       "derivation": null
     },
     {
-      "id": "hagrid/hagrid_1779_0",
-      "kind": "quantity",
-      "text": "1",
-      "before": "The Silent Hill series was published by Konami. [Context ",
-      "after": ": \"Silent Hill is a survival horror video game for the PlayS",
-      "derivation": null
-    },
-    {
       "id": "hagrid/hagrid_3035_1",
       "kind": "quantity",
       "text": "2",
@@ -1629,6 +1517,118 @@
       "text": "655",
       "before": "Its Place in the History of War,\" in Journal of Military History, vol. 62, no. 3, pp. 637-",
       "after": ", July 1998. \"The Sino-Japanese War at Sea 1894,\" IMDb, 2012",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2029_0",
+      "kind": "date",
+      "text": "July 1998",
+      "before": "lace in the History of War,\" in Journal of Military History, vol. 62, no. 3, pp. 637-655, ",
+      "after": ". \"The Sino-Japanese War at Sea 1894,\" IMDb, 2012. [Online].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2029_0",
+      "kind": "url",
+      "text": "https://www.imdb.com/title/tt5481966/",
+      "before": "637-655, July 1998. \"The Sino-Japanese War at Sea 1894,\" IMDb, 2012. [Online]. Available: ",
+      "after": ". [Accessed: 02-Jun-2021]. J. A. Rusk and Y.-H. Lee, \"The Ca",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2029_0",
+      "kind": "date",
+      "text": "02-Jun-2021",
+      "before": "1894,\" IMDb, 2012. [Online]. Available: https://www.imdb.com/title/tt5481966/. [Accessed: ",
+      "after": "]. J. A. Rusk and Y.-H. Lee, \"The Causes and Consequences of",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2029_0",
+      "kind": "quantity",
+      "text": "13",
+      "before": "First Sino-Japanese War, 1894–1895,\" in The Korean Journal of International Studies, vol. ",
+      "after": ", no. 2, pp. 309-332, December 2015. \"The Sino-Japanese War ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2029_0",
+      "kind": "quantity",
+      "text": "2",
+      "before": "no-Japanese War, 1894–1895,\" in The Korean Journal of International Studies, vol. 13, no. ",
+      "after": ", pp. 309-332, December 2015. \"The Sino-Japanese War at Sea ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2029_0",
+      "kind": "quantity",
+      "text": "309",
+      "before": "nese War, 1894–1895,\" in The Korean Journal of International Studies, vol. 13, no. 2, pp. ",
+      "after": "-332, December 2015. \"The Sino-Japanese War at Sea 1894,\" Wi",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2029_0",
+      "kind": "quantity",
+      "text": "332",
+      "before": " War, 1894–1895,\" in The Korean Journal of International Studies, vol. 13, no. 2, pp. 309-",
+      "after": ", December 2015. \"The Sino-Japanese War at Sea 1894,\" Wikipe",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2029_0",
+      "kind": "date",
+      "text": "December 2015",
+      "before": " 1894–1895,\" in The Korean Journal of International Studies, vol. 13, no. 2, pp. 309-332, ",
+      "after": ". \"The Sino-Japanese War at Sea 1894,\" Wikipedia, 21-May-202",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2029_0",
+      "kind": "date",
+      "text": "21-May-2021",
+      "before": "l. 13, no. 2, pp. 309-332, December 2015. \"The Sino-Japanese War at Sea 1894,\" Wikipedia, ",
+      "after": ". [Online]. Available: https://en.wikipedia.org/wiki/The_Sin",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2029_0",
+      "kind": "url",
+      "text": "https://en.wikipedia.org/wiki/The_Sino-Japanese_War_at_Sea_1894",
+      "before": "r 2015. \"The Sino-Japanese War at Sea 1894,\" Wikipedia, 21-May-2021. [Online]. Available: ",
+      "after": ". [Accessed: 02-June-2021].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_2029_0",
+      "kind": "date",
+      "text": "02-June-2021",
+      "before": "]. Available: https://en.wikipedia.org/wiki/The_Sino-Japanese_War_at_Sea_1894. [Accessed: ",
+      "after": "].",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_567_1",
+      "kind": "quantity",
+      "text": "1998",
+      "before": " and cavalry to exploit during battles . J. T. Kirby, Hannibal's Army, Osprey Publishing, ",
+      "after": ". P. Schmitt Pantel, A History of Women in the West: Volume ",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_567_1",
+      "kind": "quantity",
+      "text": "201",
+      "before": "Osprey Publishing, 1998. P. Schmitt Pantel, A History of Women in the West: Volume I, pp. ",
+      "after": "-202, Harvard University Press, 1992. L. Rawlings, Hannibal,",
+      "derivation": null
+    },
+    {
+      "id": "hagrid/hagrid_567_1",
+      "kind": "quantity",
+      "text": "202",
+      "before": "ey Publishing, 1998. P. Schmitt Pantel, A History of Women in the West: Volume I, pp. 201-",
+      "after": ", Harvard University Press, 1992. L. Rawlings, Hannibal, Rou",
       "derivation": null
     }
   ]
