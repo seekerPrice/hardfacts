@@ -72,3 +72,11 @@ def test_context_and_passage_citations_are_not_claims():
     assert _claims("Portugal is 92,212 sq km in total. [Context 1]") == [("quantity", "92,212")]
     assert _claims("No one was actually helping (contexts 1 and 2).") == []
     assert _claims("See [Passage 3] and [Document 2].") == []
+
+
+# Space-grouped thousands right after a currency sign (the second RAGBench audit).
+def test_a_space_grouped_amount_after_a_currency_sign_is_one_amount():
+    assert check("The cost per live birth was $97,884.", ["a cost per live birth of $97 884 for women aged 40-42"]).ok
+    assert check("It saved £244,200 a year.", ["has produced a £244 200/year cost saving"]).ok
+    assert not check("It saved £244,300 a year.", ["has produced a £244 200/year cost saving"]).ok
+    assert [c.text for c in check("Table 2 100 patients", []).claims] == ["2", "100"]  # plain numbers are unchanged

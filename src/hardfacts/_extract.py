@@ -661,8 +661,11 @@ _MONEY_MAGNITUDE = (
     rf"(?:\s?({_MAGNITUDE_WORD})\b|\s?((?i:mil|bn|mn|tn))\b|((?i:[kmbt]))(?!\w|-(?!RM|Rp|Rs|[A-Z]{{1,2}}\$)[A-Za-z]))?"
 )
 """A one-letter suffix must touch the number ("$3M"), so "RM20 T-shirt" is not 20 trillion; "$5K-$10K" is a range."""
+_SPACE_GROUPED = r"\d{1,3}(?: \d{3})+(?![\d.,]?\d)"
+"""Thousands grouped by spaces, read only right after a currency sign: "$97 884", "£244 200" (The Lancet).
+Plain numbers keep their spaces as separators: "Table 2 100 patients" is 2 and 100."""
 _MONEY_BEFORE = _compile(
-    rf"(?<![\w$])({_alternation(list(_PREFIX_CURRENCIES) + list(_CODES))})\s?({NUM}){_MONEY_MAGNITUDE}",
+    rf"(?<![\w$])({_alternation(list(_PREFIX_CURRENCIES) + list(_CODES))})\s?({_SPACE_GROUPED}|{NUM}){_MONEY_MAGNITUDE}",
 )
 _MONEY_AFTER = _compile(
     rf"(?<![\w.])({NUM})(?:\s?({_MAGNITUDE_WORD})\b)?\s?"
@@ -690,7 +693,7 @@ def _money(text: str, words: Words) -> Iterator[Fact]:
         symbol, number, word, suffix, letter = m.groups()
         currency = _currency(symbol)
         magnitude = word or suffix or letter
-        value, numbers = scale(_dot_thousands(number, currency, magnitude), magnitude)
+        value, numbers = scale(_dot_thousands(number.replace(" ", ""), currency, magnitude), magnitude)
         yield Fact("money", m.start(), m.end(), m.group(), (currency, value), numbers)
     for m in _MONEY_AFTER.finditer(text):
         number, word, name = m.groups()

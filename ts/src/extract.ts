@@ -650,8 +650,13 @@ export function currency(token: string): string {
 }
 
 const MONEY_MAGNITUDE = String.raw`(?:\s?(${MAGNITUDE_WORD})\b|\s?((?i:mil|bn|mn|tn))\b|((?i:[kmbt]))(?!\w|-(?!RM|Rp|Rs|[A-Z]{1,2}\$)[A-Za-z]))?`;
+/**
+ * Thousands grouped by spaces, read only right after a currency sign: "$97 884", "£244 200" (The Lancet).
+ * Plain numbers keep their spaces as separators: "Table 2 100 patients" is 2 and 100.
+ */
+const SPACE_GROUPED = String.raw`\d{1,3}(?: \d{3})+(?![\d.,]?\d)`;
 const MONEY_BEFORE = compile(
-  String.raw`(?<![\w$])(${alternation([...Object.keys(PREFIX_CURRENCIES), ...CODES])})\s?(${NUM})${MONEY_MAGNITUDE}`,
+  String.raw`(?<![\w$])(${alternation([...Object.keys(PREFIX_CURRENCIES), ...CODES])})\s?(${SPACE_GROUPED}|${NUM})${MONEY_MAGNITUDE}`,
 );
 const MONEY_AFTER = compile(
   String.raw`(?<![\w.])(${NUM})(?:\s?(${MAGNITUDE_WORD})\b)?\s?` +
@@ -672,7 +677,7 @@ function* money(text: string): Generator<Fact> {
     const [, symbol, number, word, suffix, letter] = m;
     const code = currency(symbol);
     const magnitude = word || suffix || letter;
-    const [value, numbers] = scale(dotThousands(number, code, magnitude), magnitude);
+    const [value, numbers] = scale(dotThousands(number.replace(/ /g, ""), code, magnitude), magnitude);
     yield fact("money", ...span(m), m[0], [code, value], numbers);
   }
   for (const m of MONEY_AFTER.all(text)) {
