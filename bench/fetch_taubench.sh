@@ -7,7 +7,7 @@ cd "$(dirname "$0")"
 mkdir -p data/taubench
 base=https://raw.githubusercontent.com/sierra-research/tau-bench/59a200c6d575d595120f1cb70fea53cef0632f6b/historical_trajectories
 for f in gpt-4o-airline gpt-4o-retail sonnet-35-new-airline sonnet-35-new-retail; do
-  [ -s "data/taubench/$f.json" ] || curl -fsSL "$base/$f.json" -o "data/taubench/$f.json"
+  [ -s "data/taubench/$f.json" ] || curl -fsSL --retry 4 --retry-all-errors "$base/$f.json" -o "data/taubench/$f.json"
 done
 # The tool definitions (JSON schemas) the agents were given: part of every prompt, not of the trajectories.
 tools=https://raw.githubusercontent.com/sierra-research/tau-bench/59a200c6d575d595120f1cb70fea53cef0632f6b/tau_bench/envs
@@ -22,7 +22,7 @@ for domain in airline retail; do
   mkdir -p "data/taubench/tools/$domain"
   names=$airline; [ "$domain" = retail ] && names=$retail
   for t in $names; do
-    [ -s "data/taubench/tools/$domain/$t.py" ] || curl -fsSL "$tools/$domain/tools/$t.py" -o "data/taubench/tools/$domain/$t.py"
+    [ -s "data/taubench/tools/$domain/$t.py" ] || curl -fsSL --retry 4 --retry-all-errors "$tools/$domain/tools/$t.py" -o "data/taubench/tools/$domain/$t.py"
   done
 done
 echo "tau-bench trajectories and tool definitions ready in bench/data/taubench/"

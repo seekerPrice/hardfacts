@@ -5,6 +5,6 @@ cd "$(dirname "$0")"
 mkdir -p data
 base=https://raw.githubusercontent.com/ParticleMedia/RAGTruth/main/dataset
 for f in response.jsonl source_info.jsonl; do
-  [ -s "data/$f" ] || curl -fsSL "$base/$f" -o "data/$f"
+  [ -s "data/$f" ] || curl -fsSL --retry 4 --retry-all-errors "$base/$f" -o "data/$f"
 done
 echo "RAGTruth ready in bench/data/"

@@ -13,9 +13,9 @@ for run in \
   gpt-4.1-mini-2025-04-14_{airline,retail,telecom}_base \
   o4-mini-2025-04-16_{airline,retail,telecom}_default; do
   f="${run}_gpt-4.1-2025-04-14_4trials.json"
-  [ -s "data/tau2/$f" ] || curl -fsSL "$base/data/tau2/results/final/$f" -o "data/tau2/$f"
+  [ -s "data/tau2/$f" ] || curl -fsSL --retry 4 --retry-all-errors "$base/data/tau2/results/final/$f" -o "data/tau2/$f"
 done
 for domain in airline retail telecom; do
-  [ -s "data/tau2/tools/$domain.py" ] || curl -fsSL "$base/src/tau2/domains/$domain/tools.py" -o "data/tau2/tools/$domain.py"
+  [ -s "data/tau2/tools/$domain.py" ] || curl -fsSL --retry 4 --retry-all-errors "$base/src/tau2/domains/$domain/tools.py" -o "data/tau2/tools/$domain.py"
 done
 echo "tau2-bench runs ready in bench/data/tau2/"
