@@ -121,3 +121,14 @@ Contract dates, more citation forms, space-grouped amounts and the bounded ratio
 - at equal flag counts, hardfacts scores **53.4%** against RAGAS's 39.1%
 
 Table QA: 61.3% of correct answers flagged. All of these are post-fix numbers. The held-out result is the scorecard at the top of this page.
+
+### Final post-fix figures (`ragbench-531e895-postfix.json`)
+
+These are after round 16, which withdrew ratio Derivations ([ADR-0007](../adr/0007-derivations-come-from-the-output.md)) and fixed telco-plan amounts, fractions and CSV rows. On the other ten datasets:
+- precision **50.8%**
+- recall 9.3%
+- 2.6% of adherent responses flagged
+- fabrications caught 95.4%
+- at equal flag counts, **52.5%** against RAGAS's 38.8%
+
+Table QA is back to 61.8% of correct answers flagged. All of these are post-fix numbers.
