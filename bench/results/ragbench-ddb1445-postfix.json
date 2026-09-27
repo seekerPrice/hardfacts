@@ -1,0 +1,426 @@
+{
+ "dataset": "RAGBench test @ 97808f3",
+ "commit": "ddb1445",
+ "by_subset": {
+  "ALL": {
+   "responses": 11802,
+   "not_adherent": 1677,
+   "flagged": 3726,
+   "response_precision": 0.0931,
+   "response_recall": 0.2069,
+   "adherent_flagged": 0.3337,
+   "flags_in_unsupported_sentence": 0.0316,
+   "planted": 6991,
+   "fabrications_caught": 0.9831,
+   "baselines_at_equal_flags": {
+    "ragas_faithfulness": {
+     "flagged": 3714,
+     "precision": 0.1734,
+     "hardfacts_precision_same_rows": 0.0934
+    },
+    "trulens_groundedness": {
+     "flagged": 3723,
+     "precision": 0.1663,
+     "hardfacts_precision_same_rows": 0.0932
+    },
+    "gpt3_adherence": {
+     "flagged": 3725,
+     "precision": 0.1546,
+     "hardfacts_precision_same_rows": 0.0932
+    }
+   }
+  },
+  "numeric (finqa, tatqa)": {
+   "responses": 5632,
+   "not_adherent": 312,
+   "flagged": 3480,
+   "response_precision": 0.0632,
+   "response_recall": 0.7051,
+   "adherent_flagged": 0.6128,
+   "flags_in_unsupported_sentence": 0.0174,
+   "planted": 4720,
+   "fabrications_caught": 0.9972,
+   "baselines_at_equal_flags": {
+    "ragas_faithfulness": {
+     "flagged": 3476,
+     "precision": 0.0748,
+     "hardfacts_precision_same_rows": 0.0633
+    },
+    "trulens_groundedness": {
+     "flagged": 3478,
+     "precision": 0.0684,
+     "hardfacts_precision_same_rows": 0.0633
+    },
+    "gpt3_adherence": {
+     "flagged": 3480,
+     "precision": 0.0718,
+     "hardfacts_precision_same_rows": 0.0632
+    }
+   }
+  },
+  "other ten": {
+   "responses": 6170,
+   "not_adherent": 1365,
+   "flagged": 246,
+   "response_precision": 0.5163,
+   "response_recall": 0.093,
+   "adherent_flagged": 0.0248,
+   "flags_in_unsupported_sentence": 0.3968,
+   "planted": 2271,
+   "fabrications_caught": 0.9538,
+   "baselines_at_equal_flags": {
+    "ragas_faithfulness": {
+     "flagged": 238,
+     "precision": 0.3908,
+     "hardfacts_precision_same_rows": 0.5336
+    },
+    "trulens_groundedness": {
+     "flagged": 245,
+     "precision": 0.1796,
+     "hardfacts_precision_same_rows": 0.5184
+    },
+    "gpt3_adherence": {
+     "flagged": 245,
+     "precision": 0.2286,
+     "hardfacts_precision_same_rows": 0.5184
+    }
+   }
+  },
+  "covidqa": {
+   "responses": 246,
+   "not_adherent": 39,
+   "flagged": 9,
+   "response_precision": 0.4444,
+   "response_recall": 0.1026,
+   "adherent_flagged": 0.0242,
+   "flags_in_unsupported_sentence": 0.4545,
+   "planted": 79,
+   "fabrications_caught": 0.9873,
+   "baselines_at_equal_flags": {
+    "ragas_faithfulness": {
+     "flagged": 8,
+     "precision": 0.5,
+     "hardfacts_precision_same_rows": 0.5
+    },
+    "trulens_groundedness": {
+     "flagged": 9,
+     "precision": 0.1111,
+     "hardfacts_precision_same_rows": 0.4444
+    },
+    "gpt3_adherence": {
+     "flagged": 9,
+     "precision": 0.2222,
+     "hardfacts_precision_same_rows": 0.4444
+    }
+   }
+  },
+  "cuad": {
+   "responses": 510,
+   "not_adherent": 38,
+   "flagged": 10,
+   "response_precision": 0.0,
+   "response_recall": 0.0,
+   "adherent_flagged": 0.0212,
+   "flags_in_unsupported_sentence": 0.0,
+   "planted": 189,
+   "fabrications_caught": 0.8677,
+   "baselines_at_equal_flags": {
+    "ragas_faithfulness": {
+     "flagged": 9,
+     "precision": 0.6667,
+     "hardfacts_precision_same_rows": 0.0
+    },
+    "trulens_groundedness": {
+     "flagged": 9,
+     "precision": 0.0,
+     "hardfacts_precision_same_rows": 0.0
+    },
+    "gpt3_adherence": {
+     "flagged": 9,
+     "precision": 0.1111,
+     "hardfacts_precision_same_rows": 0.0
+    }
+   }
+  },
+  "delucionqa": {
+   "responses": 184,
+   "not_adherent": 12,
+   "flagged": 1,
+   "response_precision": 0.0,
+   "response_recall": 0.0,
+   "adherent_flagged": 0.0058,
+   "flags_in_unsupported_sentence": 0.0,
+   "planted": 49,
+   "fabrications_caught": 1.0,
+   "baselines_at_equal_flags": {
+    "ragas_faithfulness": {
+     "flagged": 1,
+     "precision": 0.0,
+     "hardfacts_precision_same_rows": 0.0
+    },
+    "trulens_groundedness": {
+     "flagged": 1,
+     "precision": 0.0,
+     "hardfacts_precision_same_rows": 0.0
+    },
+    "gpt3_adherence": {
+     "flagged": 1,
+     "precision": 1.0,
+     "hardfacts_precision_same_rows": 0.0
+    }
+   }
+  },
+  "emanual": {
+   "responses": 132,
+   "not_adherent": 14,
+   "flagged": 1,
+   "response_precision": 1.0,
+   "response_recall": 0.0714,
+   "adherent_flagged": 0.0,
+   "flags_in_unsupported_sentence": 0.0,
+   "planted": 13,
+   "fabrications_caught": 1.0,
+   "baselines_at_equal_flags": {
+    "ragas_faithfulness": {
+     "flagged": 1,
+     "precision": 1.0,
+     "hardfacts_precision_same_rows": 1.0
+    },
+    "trulens_groundedness": {
+     "flagged": 1,
+     "precision": 0.0,
+     "hardfacts_precision_same_rows": 1.0
+    },
+    "gpt3_adherence": {
+     "flagged": 1,
+     "precision": 1.0,
+     "hardfacts_precision_same_rows": 1.0
+    }
+   }
+  },
+  "expertqa": {
+   "responses": 203,
+   "not_adherent": 108,
+   "flagged": 20,
+   "response_precision": 0.85,
+   "response_recall": 0.1574,
+   "adherent_flagged": 0.0316,
+   "flags_in_unsupported_sentence": 0.6875,
+   "planted": 21,
+   "fabrications_caught": 0.8095,
+   "baselines_at_equal_flags": {
+    "ragas_faithfulness": {
+     "flagged": 20,
+     "precision": 0.65,
+     "hardfacts_precision_same_rows": 0.85
+    },
+    "trulens_groundedness": {
+     "flagged": 20,
+     "precision": 0.7,
+     "hardfacts_precision_same_rows": 0.85
+    },
+    "gpt3_adherence": {
+     "flagged": 20,
+     "precision": 0.8,
+     "hardfacts_precision_same_rows": 0.85
+    }
+   }
+  },
+  "finqa": {
+   "responses": 2294,
+   "not_adherent": 196,
+   "flagged": 1845,
+   "response_precision": 0.0775,
+   "response_recall": 0.7296,
+   "adherent_flagged": 0.8112,
+   "flags_in_unsupported_sentence": 0.019,
+   "planted": 1965,
+   "fabrications_caught": 0.9954,
+   "baselines_at_equal_flags": {
+    "ragas_faithfulness": {
+     "flagged": 1841,
+     "precision": 0.0913,
+     "hardfacts_precision_same_rows": 0.0777
+    },
+    "trulens_groundedness": {
+     "flagged": 1843,
+     "precision": 0.089,
+     "hardfacts_precision_same_rows": 0.0776
+    },
+    "gpt3_adherence": {
+     "flagged": 1845,
+     "precision": 0.0938,
+     "hardfacts_precision_same_rows": 0.0775
+    }
+   }
+  },
+  "hagrid": {
+   "responses": 1318,
+   "not_adherent": 211,
+   "flagged": 79,
+   "response_precision": 0.4937,
+   "response_recall": 0.1848,
+   "adherent_flagged": 0.0361,
+   "flags_in_unsupported_sentence": 0.4317,
+   "planted": 755,
+   "fabrications_caught": 0.9483,
+   "baselines_at_equal_flags": {
+    "ragas_faithfulness": {
+     "flagged": 78,
+     "precision": 0.3205,
+     "hardfacts_precision_same_rows": 0.5
+    },
+    "trulens_groundedness": {
+     "flagged": 79,
+     "precision": 0.3671,
+     "hardfacts_precision_same_rows": 0.4937
+    },
+    "gpt3_adherence": {
+     "flagged": 79,
+     "precision": 0.443,
+     "hardfacts_precision_same_rows": 0.4937
+    }
+   }
+  },
+  "hotpotqa": {
+   "responses": 390,
+   "not_adherent": 32,
+   "flagged": 4,
+   "response_precision": 0.25,
+   "response_recall": 0.0312,
+   "adherent_flagged": 0.0084,
+   "flags_in_unsupported_sentence": 0.2,
+   "planted": 132,
+   "fabrications_caught": 0.9773,
+   "baselines_at_equal_flags": {
+    "ragas_faithfulness": {
+     "flagged": 4,
+     "precision": 0.75,
+     "hardfacts_precision_same_rows": 0.25
+    },
+    "trulens_groundedness": {
+     "flagged": 4,
+     "precision": 0.5,
+     "hardfacts_precision_same_rows": 0.25
+    },
+    "gpt3_adherence": {
+     "flagged": 4,
+     "precision": 0.0,
+     "hardfacts_precision_same_rows": 0.25
+    }
+   }
+  },
+  "msmarco": {
+   "responses": 423,
+   "not_adherent": 55,
+   "flagged": 5,
+   "response_precision": 0.2,
+   "response_recall": 0.0182,
+   "adherent_flagged": 0.0109,
+   "flags_in_unsupported_sentence": 0.0,
+   "planted": 129,
+   "fabrications_caught": 1.0,
+   "baselines_at_equal_flags": {
+    "ragas_faithfulness": {
+     "flagged": 5,
+     "precision": 0.6,
+     "hardfacts_precision_same_rows": 0.2
+    },
+    "trulens_groundedness": {
+     "flagged": 5,
+     "precision": 0.2,
+     "hardfacts_precision_same_rows": 0.2
+    },
+    "gpt3_adherence": {
+     "flagged": 5,
+     "precision": 0.6,
+     "hardfacts_precision_same_rows": 0.2
+    }
+   }
+  },
+  "pubmedqa": {
+   "responses": 2450,
+   "not_adherent": 725,
+   "flagged": 50,
+   "response_precision": 0.42,
+   "response_recall": 0.029,
+   "adherent_flagged": 0.0168,
+   "flags_in_unsupported_sentence": 0.125,
+   "planted": 829,
+   "fabrications_caught": 0.9771,
+   "baselines_at_equal_flags": {
+    "ragas_faithfulness": {
+     "flagged": 49,
+     "precision": 0.4286,
+     "hardfacts_precision_same_rows": 0.4286
+    },
+    "trulens_groundedness": {
+     "flagged": 50,
+     "precision": 0.32,
+     "hardfacts_precision_same_rows": 0.42
+    },
+    "gpt3_adherence": {
+     "flagged": 50,
+     "precision": 0.5,
+     "hardfacts_precision_same_rows": 0.42
+    }
+   }
+  },
+  "tatqa": {
+   "responses": 3338,
+   "not_adherent": 116,
+   "flagged": 1635,
+   "response_precision": 0.0471,
+   "response_recall": 0.6638,
+   "adherent_flagged": 0.4836,
+   "flags_in_unsupported_sentence": 0.0153,
+   "planted": 2755,
+   "fabrications_caught": 0.9985,
+   "baselines_at_equal_flags": {
+    "ragas_faithfulness": {
+     "flagged": 1635,
+     "precision": 0.0502,
+     "hardfacts_precision_same_rows": 0.0471
+    },
+    "trulens_groundedness": {
+     "flagged": 1635,
+     "precision": 0.0483,
+     "hardfacts_precision_same_rows": 0.0471
+    },
+    "gpt3_adherence": {
+     "flagged": 1635,
+     "precision": 0.0416,
+     "hardfacts_precision_same_rows": 0.0471
+    }
+   }
+  },
+  "techqa": {
+   "responses": 314,
+   "not_adherent": 131,
+   "flagged": 67,
+   "response_precision": 0.6418,
+   "response_recall": 0.3282,
+   "adherent_flagged": 0.1311,
+   "flags_in_unsupported_sentence": 0.4083,
+   "planted": 75,
+   "fabrications_caught": 0.8133,
+   "baselines_at_equal_flags": {
+    "ragas_faithfulness": {
+     "flagged": 63,
+     "precision": 0.4444,
+     "hardfacts_precision_same_rows": 0.6825
+    },
+    "trulens_groundedness": {
+     "flagged": 67,
+     "precision": 0.4179,
+     "hardfacts_precision_same_rows": 0.6418
+    },
+    "gpt3_adherence": {
+     "flagged": 67,
+     "precision": 0.4627,
+     "hardfacts_precision_same_rows": 0.6418
+    }
+   }
+  }
+ }
+}

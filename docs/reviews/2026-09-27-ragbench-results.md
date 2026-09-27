@@ -110,3 +110,14 @@ The fixes halved the "not a claim" errors, and flags on correct answers fell fro
 - one-offs: "sixth" for 6th, "08.00 h", "eight to ten thousand" for 8,000
 
 This is a modest improvement, not a solved problem.
+
+### Post-fix 3: after the second audit's fixes (`ragbench-ddb1445-postfix.json`)
+
+Contract dates, more citation forms, space-grouped amounts and the bounded ratio search were all added. On the other ten datasets:
+- precision is **51.6%**
+- recall is 9.3%
+- 2.5% of adherent responses are flagged
+- fabrications caught: 95.4%
+- at equal flag counts, hardfacts scores **53.4%** against RAGAS's 39.1%
+
+Table QA: 61.3% of correct answers flagged. All of these are post-fix numbers. The held-out result is the scorecard at the top of this page.
