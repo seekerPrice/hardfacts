@@ -1,0 +1,45 @@
+name: Wrong verdict
+description: hardfacts flagged a value it shouldn't have, or passed one it should have flagged
+labels: ["wrong verdict"]
+body:
+  - type: dropdown
+    id: direction
+    attributes:
+      label: Which way was it wrong?
+      options:
+        - False alarm (flagged a value the sources support)
+        - Missed (passed a value the sources don't support)
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: The LLM output you checked, as short as still reproduces it. Replace personal data with made-up values of the same shape.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: What the model was given. Separate sources with a line of `---`. JSON is fine.
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: value
+    attributes:
+      label: The value, and the verdict you expected
+      placeholder: '"RM 12.90" should be Supported: the source says "shipping_fee": 12.9 with "currency": "MYR"'
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit, and Python or TypeScript
+      placeholder: "commit 662d833, Python 3.13"
+  - type: markdown
+    attributes:
+      value: |
+        Output, sources and the expected verdict are enough for a failing test, which is where every fix here starts. If the text isn't English, say which language; Bahasa Melayu and 中文 reports from native speakers are especially useful.

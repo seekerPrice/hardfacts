@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Try it in the browser first
+    url: https://seekerprice.github.io/hardfacts/
+    about: The demo runs the real library. Paste your output and sources to see the verdict before filing.
