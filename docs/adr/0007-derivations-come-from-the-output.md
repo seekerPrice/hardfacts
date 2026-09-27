@@ -19,15 +19,11 @@ Decisions:
 - The operand Claims are of the same Kind as the target. A multiplier is a Supported whole number from 2 to 9 ("2 passengers").
 - The operations are a difference of two operands, a sum of 2 to 5, and one operand times a multiplier. The search order is fixed and shared by both ports: differences, then sums by size, then products, each over operands in ascending order. Sums of 4 or 5 are tried only for up to 16 operands, and sums of 3 only for up to 60, which bounds the cost.
 - Date arithmetic ("move it by one day") is not covered.
-- **Amended 2026-09-27: ratios.** A percentage stated to at least one decimal is also searched as a ÷ b × 100 or (a − b) ÷ b × 100, over two Supported numbers, or two Supported amounts in one currency. The result is rounded half-up to the Claim's own decimals, and the search runs last, on the same work budget.
+- **Ratios were built and then withdrawn (2026-09-27).** A search for a ÷ b × 100 and (a − b) ÷ b × 100, for a percentage stated to a decimal, was measured first (`bench/ratio_experiment.py --strict`: 8% of flags on correct table answers explained, 0.03% of planted fabrications) and built. Two hostile reviews then took it apart:
+  - Round 15 showed chance matches grow with the number of values in a reply (42% of random percentages "explained" at 20 numbers), so the search was cut to the three nearest values.
+  - Round 16 showed a worse problem that no bound fixes. The commonest percentage error, a change taken on the wrong base ("from RM120 to RM150, an increase of 20.0%", when it is 25%), got a Derivation, `(RM150 − RM120) ÷ RM150`, and left `unexplained`, which silences the Stop hook and the retry loop. For a difference or a sum, a Derivation shows which values were combined. For a percentage, the error lies in the choice of base, so the working hides it.
 
-  Measured before building (`bench/ratio_experiment.py`):
-  - The loose version, with any percentage and also means, "explained" 2.3% of planted fabrications, and was rejected.
-  - The strict one explained 8% of the flags on correct FinQA/TAT-QA answers, and 0.03% of fabrications.
-
-  The first build searched every number in the reply. A hostile review (round 15) showed that chance matches grow with the number of values: a random one-decimal percentage found some ratio 13% of the time with 12 numbers in the reply, and 42% with 20. A chance Derivation takes a value out of `unexplained`, which silences the Stop hook and the retry loop, so that build was withdrawn.
-
-  A ratio now uses only the **three Supported values written nearest the percentage**, within 200 characters. That caps the candidates at 6 ordered pairs and 2 formulas, and keeps a random one-decimal percentage explained about 1% of the time however long the reply is. Bounded, it moves RAGBench table QA from 61.9% to 61.4% of correct answers flagged, and leaves τ²-bench unchanged (1.0% of caught fabrications explained by coincidence). The gain is small, because most table answers combine values written far apart. A whole percentage ("35%") is never searched.
+  The benefit was small (table QA 61.9% → 61.3% of correct answers flagged), and the harm fell on the exact error it would be trusted to catch. A percentage is never searched as a ratio.
 
 Considered, and rejected:
 - **Operands from the Sources.** See the table above.

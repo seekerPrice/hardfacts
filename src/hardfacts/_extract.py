@@ -37,7 +37,7 @@ Recogniser = Callable[[str, Words], Iterator[Fact]]
 
 # --------------------------------------------------------------------------- numbers
 
-NUM = r"(?<![\d,.])\d{1,3}\.\d{3},\d{1,2}(?!\d|[.,]\d|\])|\d{1,3}(?:\.\d{3}){2,}(?:,\d{1,2})?(?!\d|\.\d)|\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+"
+NUM = r"(?<![\d,.])\d{1,3}\.\d{3},\d{1,2}(?!\d|[.,]\d|\]|[ \t]*\n)|\d{1,3}(?:\.\d{3}){2,}(?:,\d{1,2})?(?!\d|\.\d)|\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+"
 """A number: European 1.500,00, dot-thousands with 2+ groups (1.500.000), comma-thousands (1,500,000), plain, or .5."""
 MAGNITUDE_WORDS = {"thousand": 10**3, "lakh": 10**5, "lakhs": 10**5, "million": 10**6, "crore": 10**7,
                    "crores": 10**7, "billion": 10**9, "trillion": 10**12}
@@ -501,17 +501,32 @@ _NUMERIC_MONTH_DAY = _compile(r"(?<![\w./])(\d{1,2})/(\d{1,2})(?![\w/]|[.,]\d|\s
 """"on 5/19", "by 22/05": a date without a year only when one part is over 12, so the order can't be
 misread; "1/2", "5/6" and "24/7" stay what they were."""
 _DATE_WORD = _compile(
-    r"(?:\b(?:on|by|until|till|due|before|after|from|since|through|thru|to|and|dated?|valid|effective|expires?|expiring|"
-    r"departs?|departing|arrives?|arriving|returns?|returning|starts?|starting|ends?|ending|"
-    r"deliver(?:y|s|ed)?|ship(?:s|ped|ping)?|dispatch(?:ed)?|eta|sampai)|[-–])\s*\Z", re.I)
+    r"\b(?:on|by|until|till|due|before|after|since|dated?|valid|effective|expires?|expiring|"
+    r"departs?|departing|arrives?|arriving|returns?|returning|"
+    r"deliver(?:y|s|ed)?|ship(?:s|ped|ping)?|dispatch(?:ed)?|eta|sampai)\s*\Z", re.I)
 """A numeric month/day needs a date word before it: "on 5/19", "from 5/19 to 5/22". Without one,
-"3/16 inch", "16/9" and "7/13 games" are fractions, and a Source's fraction must not vouch for a date.
-A range to another date is date enough: "3/19 - 3/30/2017"."""
+"3/16 inch", "16/9", "7/13 games", "improved from 7/20" and "dilute to 1/20" are fractions, and a
+Source's fraction must not vouch for a date. A range with a real date on its other side is date enough:
+"3/19 - 3/30/2017", "from 5/19 to 5/22" (round 16 of hostile review took "to", "and" and "from" out)."""
 _STRONG_DATE_WORD = _compile(r"\b(?:on|dated?|due|expires?|expiring|departs?|departing|arrives?|arriving|returns?|returning|deliver(?:y|s|ed)?|ship(?:s|ped|ping)?|dispatch(?:ed)?|eta|sampai)\s*\Z", re.I)
 """Only these make "3/10" a date when either order could be one: "arrive 3/10", "on 10/3", "due 1/2"."""
 _FRACTION_OF = _compile(r"\s*(?:of\b|cups?\b|inch(?:es)?\b|hours?\b|miles?\b|teaspoons?\b|tablespoons?\b)", re.I)
 """After "on 3/4" or "shipped 2/3": "of the days", "cup", "inch" make it a fraction."""
-_TO_A_DATE = _compile(r"\s*(?:[-–]|to|through|thru|until)\s*\d{1,2}/\d{1,2}(?!\d)", re.I)
+_TO_A_DATE = _compile(r"\s*(?:[-–]|to|through|thru|until)\s*(\d{1,2})/(\d{1,2})(?!\d)", re.I)
+_FROM_A_DATE = _compile(r"(?<![\d/])(\d{1,2})/(\d{1,2})\s*(?:[-–]|to|through|thru|until)\s*\Z", re.I)
+
+
+def _could_be_a_day(a: int, b: int) -> bool:
+    """Either order of "a/b" names a day and month: 5/22 and 22/5 do, 15/20 doesn't."""
+    return (1 <= a <= 12 and 1 <= b <= 31) or (1 <= b <= 12 and 1 <= a <= 31)
+
+
+def _range_of_dates(text: str, start: int, end: int) -> bool:
+    """"3/19 - 3/30/2017", "from 5/19 to 5/22": a real date on the other side of a range."""
+    after = _TO_A_DATE.match(text, end)
+    before = _FROM_A_DATE.search(text[max(0, start - 20):start])
+    return bool((after and _could_be_a_day(int(after.group(1)), int(after.group(2))))
+                or (before and _could_be_a_day(int(before.group(1)), int(before.group(2)))))
 
 
 def _date_value(year, month, day) -> str | None:
@@ -594,7 +609,7 @@ def _dates(text: str, words: Words, in_source: bool = False) -> Iterator[Fact]:
     for m in _NUMERIC_MONTH_DAY.finditer(text):
         a, b = int(m.group(1)), int(m.group(2))
         before = text[max(0, m.start() - 20):m.start()]
-        if (a > 12 and b > 12) or not a or not b or not (_DATE_WORD.search(before) or _TO_A_DATE.match(text, m.end())):
+        if (a > 12 and b > 12) or not a or not b or not (_DATE_WORD.search(before) or _range_of_dates(text, m.start(), m.end())):
             continue  # "13/20" is neither; "3/16 inch" has no date word
         if a <= 12 and b <= 12 and (not _STRONG_DATE_WORD.search(before) or _FRACTION_OF.match(text, m.end())):
             continue  # "after 1/2 hour", "and 1/4 cup": either order is a fraction first
@@ -661,9 +676,10 @@ _MONEY_MAGNITUDE = (
     rf"(?:\s?({_MAGNITUDE_WORD})\b|\s?((?i:mil|bn|mn|tn))\b|((?i:[kmbt]))(?!\w|-(?!RM|Rp|Rs|[A-Z]{{1,2}}\$)[A-Za-z]))?"
 )
 """A one-letter suffix must touch the number ("$3M"), so "RM20 T-shirt" is not 20 trillion; "$5K-$10K" is a range."""
-_SPACE_GROUPED = r"\d{1,3}(?: \d{3})+(?![\d.,]?\d)"
+_SPACE_GROUPED = r"\d{1,3}(?: \d{3})+(?=[/.,;:)]|\s*$)(?![.,]\d)"
 """Thousands grouped by spaces, read only right after a currency sign: "$97 884", "£244 200" (The Lancet).
-Plain numbers keep their spaces as separators: "Table 2 100 patients" is 2 and 100."""
+Plain numbers keep their spaces as separators: "Table 2 100 patients" is 2 and 100. The group must end
+the phrase ("£244 200/year", "$97 884."), because "RM99 150GB" and "$10 100 SMS" are a price and a quantity."""
 _MONEY_BEFORE = _compile(
     rf"(?<![\w$])({_alternation(list(_PREFIX_CURRENCIES) + list(_CODES))})\s?({_SPACE_GROUPED}|{NUM}){_MONEY_MAGNITUDE}",
 )
@@ -1186,6 +1202,8 @@ def extract(text: str, *, claims: bool = False) -> list[Fact]:
 _MAJOR_UNIT = _compile(rf"\s+({_alternation(_SUFFIX_CURRENCIES)})\b", re.I)
 _MINOR_JOIN = _compile(r"\s+(?:(?:and|dan)\s+)?", re.I)
 _MINOR_UNIT = _compile(r"\s+(?:cents?|sen)\b", re.I)
+_PER_UNIT = _compile(r"\s*(?:/|per\b|each\b|a\s|setiap\b)", re.I)
+"""After "20 cents": a rate ("per minute", "/SMS", "setiap SMS"), not the cents of the amount before it."""
 _MINOR_ALONE = _compile(r"\s*(¢)|(?:\s+|-)(cents?|sen)\b", re.I)
 """A minor unit on its own is a hundredth: "50 sen" is RM0.50, "50 cents" and "50¢" are $0.50."""
 
@@ -1209,7 +1227,7 @@ def _spelled_amounts(scan: str, text: str, facts: list[Fact]) -> list[Fact]:
             alone = _MINOR_ALONE.match(scan, f.end) if f.kind == "quantity" else None
             if alone:
                 amount = EXACT.divide(f.value, Decimal(100))
-                unit = "MYR" if (alone.group(2) or "").lower() == "sen" else "$"
+                unit = "MYR" if (alone.group(2) or "").lower() == "sen" else None  # "cents": ringgit or dollars
                 out.append(Fact("money", f.start, alone.end(), text[f.start:alone.end()], (unit, amount), frozenset({amount, f.value})))
             else:
                 out.append(f)
@@ -1219,7 +1237,8 @@ def _spelled_amounts(scan: str, text: str, facts: list[Fact]) -> list[Fact]:
         join = _MINOR_JOIN.match(scan, end)
         minor_unit = nxt and _MINOR_UNIT.match(scan, nxt.end)
         if (join and nxt and nxt.kind == "quantity" and nxt.start == join.end() and minor_unit
-                and nxt.value == nxt.value.to_integral_value() and 0 <= nxt.value < 100):
+                and nxt.value == nxt.value.to_integral_value() and 0 <= nxt.value < 100
+                and major == major.to_integral_value() and not _PER_UNIT.match(scan, minor_unit.end())):
             amount = EXACT.add(major, EXACT.divide(nxt.value, Decimal(100)))
             stop = minor_unit.end()
             out.append(Fact("money", f.start, stop, text[f.start:stop], (currency, amount), frozenset({amount, major})))

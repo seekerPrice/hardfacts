@@ -39,7 +39,7 @@ function group(m: RegExpExecArray, g: number): string | undefined {
 
 // --------------------------------------------------------------------------- numbers
 
-const NUM = String.raw`(?<![\d,.])\d{1,3}\.\d{3},\d{1,2}(?!\d|[.,]\d|\])|\d{1,3}(?:\.\d{3}){2,}(?:,\d{1,2})?(?!\d|\.\d)|\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+`;
+const NUM = String.raw`(?<![\d,.])\d{1,3}\.\d{3},\d{1,2}(?!\d|[.,]\d|\]|[ \t]*\n)|\d{1,3}(?:\.\d{3}){2,}(?:,\d{1,2})?(?!\d|\.\d)|\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+`;
 export const MAGNITUDE_WORDS: Record<string, number> = {
   thousand: 1e3, lakh: 1e5, lakhs: 1e5, million: 1e6, crore: 1e7, crores: 1e7, billion: 1e9, trillion: 1e12,
 };
@@ -489,11 +489,24 @@ const NUMERIC_MONTH_DAY = compile(String.raw`(?<![\w./])(\d{1,2})/(\d{1,2})(?![\
 const STRONG_DATE_WORD = compile(String.raw`\b(?:on|dated?|due|expires?|expiring|departs?|departing|arrives?|arriving|returns?|returning|deliver(?:y|s|ed)?|ship(?:s|ped|ping)?|dispatch(?:ed)?|eta|sampai)\s*$`, { ignoreCase: true });
 /** After "on 3/4" or "shipped 2/3": "of the days", "cup", "inch" make it a fraction. */
 const FRACTION_OF = compile(String.raw`\s*(?:of\b|cups?\b|inch(?:es)?\b|hours?\b|miles?\b|teaspoons?\b|tablespoons?\b)`, { ignoreCase: true });
-const TO_A_DATE = compile(String.raw`\s*(?:[-–]|to|through|thru|until)\s*\d{1,2}/\d{1,2}(?!\d)`, { ignoreCase: true });
+const TO_A_DATE = compile(String.raw`\s*(?:[-–]|to|through|thru|until)\s*(\d{1,2})/(\d{1,2})(?!\d)`, { ignoreCase: true });
+const FROM_A_DATE = compile(String.raw`(?<![\d/])(\d{1,2})/(\d{1,2})\s*(?:[-–]|to|through|thru|until)\s*$`, { ignoreCase: true });
+
+/** Either order of "a/b" names a day and month: 5/22 and 22/5 do, 15/20 doesn't. */
+function couldBeADay(a: number, b: number): boolean {
+  return (a >= 1 && a <= 12 && b >= 1 && b <= 31) || (b >= 1 && b <= 12 && a >= 1 && a <= 31);
+}
+
+/** "3/19 - 3/30/2017", "from 5/19 to 5/22": a real date on the other side of a range. */
+function rangeOfDates(text: string, start: number, end: number): boolean {
+  const after = TO_A_DATE.at(text, end);
+  const before = FROM_A_DATE.search(codePointsBefore(text, start, 20));
+  return Boolean((after && couldBeADay(Number(after[1]), Number(after[2]))) || (before && couldBeADay(Number(before[1]), Number(before[2]))));
+}
 const DATE_WORD = compile(
-  String.raw`(?:\b(?:on|by|until|till|due|before|after|from|since|through|thru|to|and|dated?|valid|effective|expires?|expiring|` +
-    String.raw`departs?|departing|arrives?|arriving|returns?|returning|starts?|starting|ends?|ending|` +
-    String.raw`deliver(?:y|s|ed)?|ship(?:s|ped|ping)?|dispatch(?:ed)?|eta|sampai)|[-–])\s*$`,
+  String.raw`\b(?:on|by|until|till|due|before|after|since|dated?|valid|effective|expires?|expiring|` +
+    String.raw`departs?|departing|arrives?|arriving|returns?|returning|` +
+    String.raw`deliver(?:y|s|ed)?|ship(?:s|ped|ping)?|dispatch(?:ed)?|eta|sampai)\s*$`,
   { ignoreCase: true },
 );
 const ISO_DATETIME = compile(
@@ -585,7 +598,7 @@ function* dates(text: string, ws: Words, inSource = false): Generator<Fact> {
     const [a, b] = [Number(m[1]), Number(m[2])];
     const start = span(m)[0];
     const before = codePointsBefore(text, start, 20);
-    if ((a > 12 && b > 12) || !a || !b || (DATE_WORD.search(before) === null && TO_A_DATE.at(text, span(m)[1]) === null)) {
+    if ((a > 12 && b > 12) || !a || !b || (DATE_WORD.search(before) === null && !rangeOfDates(text, start, span(m)[1]))) {
       continue; // "13/20" is neither; "3/16 inch" has no date word
     }
     if (a <= 12 && b <= 12 && (STRONG_DATE_WORD.search(before) === null || FRACTION_OF.at(text, span(m)[1]) !== null)) {
@@ -652,9 +665,10 @@ export function currency(token: string): string {
 const MONEY_MAGNITUDE = String.raw`(?:\s?(${MAGNITUDE_WORD})\b|\s?((?i:mil|bn|mn|tn))\b|((?i:[kmbt]))(?!\w|-(?!RM|Rp|Rs|[A-Z]{1,2}\$)[A-Za-z]))?`;
 /**
  * Thousands grouped by spaces, read only right after a currency sign: "$97 884", "£244 200" (The Lancet).
- * Plain numbers keep their spaces as separators: "Table 2 100 patients" is 2 and 100.
+ * Plain numbers keep their spaces as separators: "Table 2 100 patients" is 2 and 100. The group must end
+ * the phrase ("£244 200/year", "$97 884."), because "RM99 150GB" and "$10 100 SMS" are a price and a quantity.
  */
-const SPACE_GROUPED = String.raw`\d{1,3}(?: \d{3})+(?![\d.,]?\d)`;
+const SPACE_GROUPED = String.raw`\d{1,3}(?: \d{3})+(?=[/.,;:)]|\s*$)(?![.,]\d)`;
 const MONEY_BEFORE = compile(
   String.raw`(?<![\w$])(${alternation([...Object.keys(PREFIX_CURRENCIES), ...CODES])})\s?(${SPACE_GROUPED}|${NUM})${MONEY_MAGNITUDE}`,
 );
@@ -1182,6 +1196,8 @@ export function extract(text: string, claims = false): Fact[] {
 const MAJOR_UNIT = compile(String.raw`\s+(${alternation(Object.keys(SUFFIX_CURRENCIES))})\b`, { ignoreCase: true });
 const MINOR_JOIN = compile(String.raw`\s+(?:(?:and|dan)\s+)?`, { ignoreCase: true });
 const MINOR_UNIT = compile(String.raw`\s+(?:cents?|sen)\b`, { ignoreCase: true });
+/** After "20 cents": a rate ("per minute", "/SMS", "setiap SMS"), not the cents of the amount before it. */
+const PER_UNIT = compile(String.raw`\s*(?:/|per\b|each\b|a\s|setiap\b)`, { ignoreCase: true });
 /** A minor unit on its own is a hundredth: "50 sen" is RM0.50, "50 cents" and "50¢" are $0.50. */
 const MINOR_ALONE = compile(String.raw`\s*(¢)|(?:\s+|-)(cents?|sen)\b`, { ignoreCase: true });
 
@@ -1215,7 +1231,7 @@ function spelledAmounts(scan: string, text: string, facts: Fact[]): Fact[] {
       const alone = f.kind === "quantity" ? MINOR_ALONE.at(scan, f.end) : null;
       if (alone) {
         const amount = divideBy100(f.value as Dec);
-        const unit = (alone[2] ?? "").toLowerCase() === "sen" ? "MYR" : "$";
+        const unit = (alone[2] ?? "").toLowerCase() === "sen" ? "MYR" : null; // "cents": ringgit or dollars
         const stop = span(alone)[1];
         out.push(fact("money", f.start, stop, text.slice(f.start, stop), [unit, amount], [amount, f.value as Dec]));
       } else out.push(f);
@@ -1226,7 +1242,7 @@ function spelledAmounts(scan: string, text: string, facts: Fact[]): Fact[] {
     const minorUnit = next ? MINOR_UNIT.at(scan, next.end) : null;
     const minor = next?.value as Dec;
     if (join && next && next.kind === "quantity" && next.start === span(join)[1] && minorUnit
-      && /^\d{1,2}$/.test(minor)) {
+      && /^\d{1,2}$/.test(minor) && !major.includes(".") && PER_UNIT.at(scan, span(minorUnit)[1]) === null) {
       const amount = add(major, dec(`0.${minor.padStart(2, "0")}`));
       const stop = span(minorUnit)[1];
       out.push(fact("money", f.start, stop, text.slice(f.start, stop), [currency, amount], [amount, major]));

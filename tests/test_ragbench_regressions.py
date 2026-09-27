@@ -76,7 +76,36 @@ def test_context_and_passage_citations_are_not_claims():
 
 # Space-grouped thousands right after a currency sign (the second RAGBench audit).
 def test_a_space_grouped_amount_after_a_currency_sign_is_one_amount():
-    assert check("The cost per live birth was $97,884.", ["a cost per live birth of $97 884 for women aged 40-42"]).ok
+    assert check("The cost per live birth was $97,884.", ["a cost per live birth of $97 884."]).ok
+    # "$97 884 for women" reads like "$10 100 SMS" (a price, then a count), so a group followed by a word
+    # is not joined: that audited case is given up to keep telco plans right (round 16)
+    assert not check("The cost per live birth was $97,884.", ["a cost per live birth of $97 884 for women"]).ok
     assert check("It saved £244,200 a year.", ["has produced a £244 200/year cost saving"]).ok
     assert not check("It saved £244,300 a year.", ["has produced a £244 200/year cost saving"]).ok
     assert [c.text for c in check("Table 2 100 patients", []).claims] == ["2", "100"]  # plain numbers are unchanged
+
+
+# Round 16 of hostile review.
+def test_a_plan_amount_followed_by_a_quantity_is_not_one_amount():
+    assert check("Postpaid Max is RM99 with 150GB data.", ["Postpaid Max: RM99 150GB data"]).ok
+    assert not check("Postpaid Max is RM99,150.", ["Postpaid Max: RM99 150GB data"]).ok
+    assert check("It's RM50 and fully refundable.", ["Paid RM50 100% refundable"]).ok
+
+
+def test_a_per_unit_minor_amount_is_not_added_to_the_amount_before_it():
+    assert check("The fee is $3.50 and 20 cents per minute.", ["Connection fee $3.50; 20 cents/minute"]).ok
+    assert check("Caj RM5 dan 20 sen setiap SMS.", ["RM5 caj, 20 sen setiap SMS"]).ok
+
+
+def test_fractions_and_scores_after_weak_words_are_not_dates():
+    for text in ("Accuracy improved from 7/20 to 15/20.", "Dilute to 1/20 strength.", "Use a 3/8 and 5/16 inch drill bit."):
+        assert "date" not in [c.kind for c in check(text, []).claims], text
+    assert ("date", "5/22") in [(c.kind, c.text) for c in check("from 5/19 to 5/22", []).claims]
+
+
+def test_a_csv_row_is_not_a_european_number():
+    assert check("It weighs 2.5 kg, quantity 12.", ["weight_kg,qty\n2.500,12\n"]).ok
+
+
+def test_cents_name_no_particular_currency():
+    assert check("Each SMS costs 50 cents.", [{"amount": 0.5, "currency": "MYR"}]).ok

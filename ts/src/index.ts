@@ -317,7 +317,6 @@ class Search {
           if (mul(a, BigInt(m)) === goal) return made("×", [first.get(a)!, this.multipliers.get(m)!]);
         }
       }
-      if (target.kind === "percent") return this.ratio(target, goal);
     } catch (e) {
       if (e instanceof OutOfBudget) return null;
       throw e;
@@ -325,90 +324,6 @@ class Search {
     return null;
   }
 
-  /**
-   * A percentage stated to a decimal, as a ÷ b × 100 or (a − b) ÷ b × 100 over two of the three
-   * Supported numbers (or same-currency amounts) written nearest to it, within RATIO_REACH
-   * characters, rounded half-up to the Claim's decimals. The candidates never grow with the reply:
-   * with every number in a long reply, a random one-decimal percentage found some ratio 42% of
-   * the time at 20 numbers (round 15 of hostile review); with three, about 1%. A whole percentage is
-   * never searched. Measured first in bench/ratio_experiment.py --strict.
-   */
-  private ratio(target: Claim, goal: Dec): Derivation | null {
-    const places = decimalPlaces(target.text);
-    if (!places) return null;
-    for (const [values, first] of this.near(target)) {
-      for (const a of values) {
-        for (const b of values) {
-          if (a === b) continue;
-          this.budget.spend();
-          if (compare(percentOf(a, b, places), goal) === 0) {
-            return { expression: `${first.get(a)!.text} ÷ ${first.get(b)!.text} × 100`, operands: [[...first.get(a)!.span], [...first.get(b)!.span]] };
-          }
-          const change = percentOf(sub(a, b), b, places);
-          if (compare(change.startsWith("-") ? change.slice(1) : change, goal) === 0) { // written the way round that gives the stated value
-            const [high, low] = compare(change, "0") > 0 ? [first.get(a)!, first.get(b)!] : [first.get(b)!, first.get(a)!];
-            return { expression: `(${high.text} − ${low.text}) ÷ ${first.get(b)!.text} × 100`, operands: [[...high.span], [...low.span]] };
-          }
-        }
-      }
-    }
-    return null;
-  }
-
-  /** The three Supported numbers or amounts written nearest the target, grouped by Kind and currency. */
-  private near(target: Claim): [Dec[], Map<Dec, Claim>][] {
-    const gap = (c: Claim) => Math.max(c.span[0] - target.span[1], target.span[0] - c.span[1], 0);
-    const close = this.claims
-      .filter((c) => c.supported && (c.kind === "quantity" || c.kind === "money") && compare(claimAmount(c), "0") > 0 && gap(c) <= RATIO_REACH)
-      .sort((x, y) => gap(x) - gap(y) || x.span[0] - y.span[0])
-      .slice(0, RATIO_OPERANDS)
-      .sort((x, y) => x.span[0] - y.span[0]);
-    const groups = new Map<string, [string, string, Map<Dec, Claim>]>();
-    for (const c of close) {
-      const code = c.kind === "money" ? String((c.value as (string | null)[])[0] ?? "None") : "None";
-      const key = `${c.kind}\u0000${code}`;
-      if (!groups.has(key)) groups.set(key, [c.kind, code, new Map()]);
-      const first = groups.get(key)![2];
-      if (!first.has(claimAmount(c))) first.set(claimAmount(c), c);
-    }
-    return [...groups.values()]
-      .sort((x, y) => (x[0] < y[0] ? -1 : x[0] > y[0] ? 1 : x[1] < y[1] ? -1 : x[1] > y[1] ? 1 : 0))
-      .map(([, , first]) => [[...first.keys()].sort(compare), first]);
-  }
-}
-
-/** Characters between a percentage and the values a ratio may use. */
-const RATIO_REACH = 200;
-/** The values a ratio may use, nearest first: 6 ordered pairs, 2 formulas. */
-const RATIO_OPERANDS = 3;
-
-/** Decimals a number is written with: "37.9%" has 1, "35%" none. */
-function decimalPlaces(text: string): number {
-  const m = /[0-9]\.([0-9]+)/.exec(text);
-  return m ? m[1].length : 0;
-}
-
-/** a × 100 ÷ b, rounded half-up (away from zero) to `places` decimals; its absolute value when `absolute`. */
-function percentOf(a: Dec, b: Dec, places: number, absolute = false): Dec {
-  const [na, sa] = scaled(a);
-  const [nb, sb] = scaled(b);
-  let num = na * 100n * 10n ** BigInt(sb + places);
-  let den = nb * 10n ** BigInt(sa);
-  const negative = (num < 0n) !== (den < 0n);
-  if (num < 0n) num = -num;
-  if (den < 0n) den = -den;
-  const q = (2n * num + den) / (2n * den);
-  const digits = q.toString().padStart(places + 1, "0");
-  const text = `${digits.slice(0, -places)}.${digits.slice(-places)}`;
-  return dec(negative && !absolute && q !== 0n ? `-${text}` : text);
-}
-
-/** A decimal string as an integer and a power-of-ten scale: "-1.25" is [-125n, 2]. */
-function scaled(d: Dec): [bigint, number] {
-  const negative = d.startsWith("-");
-  const [whole, frac = ""] = (negative ? d.slice(1) : d).split(".");
-  const n = BigInt(whole + frac);
-  return [negative ? -n : n, frac.length];
 }
 
 // ---------------------------------------------------------------------------- the index

@@ -7,7 +7,8 @@ The repository is public on GitHub. Nothing is on PyPI or npm yet (see ROADMAP.m
 - **Contract dates** (found by a second RAGBench audit): "the 19th day of December 1997" and "October 1,1996" are read as dates.
 - **More citation forms**: `[Context 1]`, `[Passage 3]` and "(contexts 1 and 2)" are not claims.
 - **Space-grouped amounts** right after a currency sign (`$97 884`, `£244 200`) are one amount. Plain numbers keep their spaces as separators.
-- **Percentages computed from the reply's own values show their working** ([ADR-0007](docs/adr/0007-derivations-come-from-the-output.md), amended): "a return of 37.9%" carries `(137.90 − 100.00) ÷ 100.00 × 100`, for a percentage stated to a decimal, using only the three values written nearest it. The first build used every number in the reply, and a hostile review (round 15) showed chance matches then grow with the reply (42% of random percentages at 20 numbers). Bounded, table QA goes from 61.9% to 61.4% of correct answers flagged, and τ²-bench coincidences stay at 1.0%.
+- **Ratio Derivations were built, then withdrawn** ([ADR-0007](docs/adr/0007-derivations-come-from-the-output.md)): a percentage on the wrong base, the commonest percentage error, got "explained" and dropped out of `unexplained` (round 16 of hostile review).
+- **Round 16, a whole-library review:** telco plans ("RM99 150GB" is not RM99,150), per-unit minor amounts ("$3.50 and 20 cents per minute"), fractions after weak words ("improved from 7/20"), CSV rows (not European numbers) and "cents" (ringgit or dollars) are all read correctly.
 - **Hostile reviews, rounds 8–10:**
   - round 8, of the citation rule: 1 high (an answer written as a bracketed list, "the scores were [7, 8, 9]", went unchecked)
   - round 9, of names: 1 high (quadratic time on 20,000 names) and 3 low (hyphens merging digit runs, full-width digits)
