@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use hardfacts or its benchmark results, please cite it as below."
+title: "hardfacts: deterministic provenance checks for the numbers, dates, amounts and identifiers in LLM output"
+type: software
+authors:
+  - family-names: "Loo"
+    given-names: "Tan Yu Heng"
+    alias: "Lucas"
+repository-code: "https://github.com/seekerPrice/hardfacts"
+url: "https://seekerprice.github.io/hardfacts/"
+license: MIT
+date-released: "2026-09-27"
+keywords:
+  - hallucination detection
+  - LLM evaluation
+  - RAG
+  - faithfulness
+  - guardrails
